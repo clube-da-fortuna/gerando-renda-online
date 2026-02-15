@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clube da Fortuna - Comunidade de Afiliados</title>
+    <title>Clube da Fortuna - Blog de Finanças e Investimentos</title>
     <style>
         * {
             margin: 0;
@@ -13,1401 +13,504 @@
         }
 
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            background-color: #f5f5f5;
         }
 
-        /* Tela de Login */
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .login-box {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .login-box h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 28px;
-        }
-
-        .login-box h2 span {
-            color: #764ba2;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: 500;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: #764ba2;
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1a2a3a, #2c3e50);
             color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo p {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            color: #1a2a3a;
+            padding: 0.8rem 1.5rem;
             border: none;
             border-radius: 5px;
-            font-size: 16px;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
             transition: transform 0.3s;
         }
 
-        .btn-login:hover {
-            transform: translateY(-2px);
+        .login-btn:hover {
+            transform: scale(1.05);
         }
 
-        .register-link {
-            text-align: center;
-            margin-top: 20px;
-            color: #666;
-        }
-
-        .register-link a {
-            color: #764ba2;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            text-align: center;
+        /* Modal de Login */
+        .modal {
             display: none;
-        }
-
-        /* Dashboard Principal */
-        .dashboard {
-            display: none;
-            min-height: 100vh;
-        }
-
-        .dashboard.active {
-            display: block;
-        }
-
-        /* Navbar */
-        .navbar {
-            background: white;
-            padding: 15px 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .logo span {
-            color: #764ba2;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .username {
-            font-weight: 600;
-            color: #555;
-        }
-
-        .btn-logout {
-            padding: 8px 20px;
-            background: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .btn-logout:hover {
-            background: #c82333;
-        }
-
-        /* Conteúdo Principal */
-        .main-content {
-            padding: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .welcome-message {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .welcome-message h1 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .welcome-message p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* Sistema de Anúncios */
-        .ad-space {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            min-height: 100px;
-            background: rgba(255, 255, 255, 0.05);
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
             border-radius: 10px;
-            margin: 20px 0;
-            transition: all 0.3s;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
         }
 
-        .ad-space iframe {
-            max-width: 100%;
-            border-radius: 10px;
-        }
-
-        .ad-label {
-            font-size: 12px;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Layout Builder */
-        .layout-builder {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .layout-builder h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .layout-controls {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .btn-layout {
-            padding: 10px 20px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn-layout:hover {
-            background: #0056b3;
-            transform: translateY(-2px);
-        }
-
-        .btn-layout.danger {
-            background: #dc3545;
-        }
-
-        .btn-layout.danger:hover {
-            background: #c82333;
-        }
-
-        .btn-layout.success {
-            background: #28a745;
-        }
-
-        .btn-layout.success:hover {
-            background: #218838;
-        }
-
-        /* Layout Grid */
-        .site-layout {
-            min-height: 400px;
-            position: relative;
-        }
-
-        .layout-row {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .layout-column {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        .layout-sidebar {
-            width: 300px;
-            background: rgba(118, 75, 162, 0.1);
-            border-radius: 10px;
-            padding: 15px;
-        }
-
-        .layout-main {
-            flex: 1;
-            background: rgba(102, 126, 234, 0.1);
-            border-radius: 10px;
-            padding: 15px;
-        }
-
-        .layout-section {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px dashed #764ba2;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .section-actions {
-            display: flex;
-            gap: 5px;
-        }
-
-        .btn-section {
-            padding: 5px 10px;
-            font-size: 12px;
-            background: #6c757d;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        .btn-section:hover {
-            background: #5a6268;
-        }
-
-        .ad-code-input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #e0e0e0;
-            border-radius: 5px;
-            font-size: 14px;
-            font-family: monospace;
-            margin-bottom: 10px;
-        }
-
-        .ad-preview {
-            background: #f8f9fa;
-            border-radius: 5px;
-            padding: 15px;
+        .modal-content h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
             text-align: center;
-            color: #666;
-            border: 1px dashed #ccc;
-        }
-
-        /* Produtos de Afiliados */
-        .products-section {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .products-section h2 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .products-section > p {
-            color: #666;
-            margin-bottom: 25px;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .product-card {
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            transition: all 0.3s;
-            background: #f8f9fa;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card:hover {
-            border-color: #764ba2;
-            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .product-card h3 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-
-        .product-card .product-description {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 15px;
-            line-height: 1.5;
-            flex: 1;
-        }
-
-        .product-category {
-            display: inline-block;
-            padding: 4px 10px;
-            background: #e9ecef;
-            border-radius: 15px;
-            font-size: 12px;
-            color: #495057;
-            margin-bottom: 15px;
-            align-self: flex-start;
-        }
-
-        .product-link-btn {
-            display: inline-block;
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 600;
-            text-align: center;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .product-link-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Chat */
-        .chat-section {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            margin-top: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .chat-section h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .chat-container {
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chat-messages {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-
-        .message {
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 5px;
-            background: white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .message .message-user {
-            font-weight: 600;
-            color: #764ba2;
-            margin-bottom: 5px;
-        }
-
-        .message .message-time {
-            font-size: 12px;
-            color: #999;
-            float: right;
-        }
-
-        .message .message-text {
-            color: #333;
-            line-height: 1.5;
-        }
-
-        .chat-input-area {
-            display: flex;
-            gap: 10px;
-        }
-
-        .chat-input {
-            flex-grow: 1;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .chat-input:focus {
-            outline: none;
-            border-color: #764ba2;
-        }
-
-        .btn-send {
-            padding: 12px 25px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .btn-send:hover {
-            background: #0056b3;
-        }
-
-        /* Painel Admin */
-        .admin-panel {
-            margin-top: 30px;
-        }
-
-        .admin-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .tab-btn {
-            padding: 10px 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            color: #666;
-            border-radius: 5px;
-            transition: all 0.3s;
-        }
-
-        .tab-btn:hover {
-            background: #f0f0f0;
-        }
-
-        .tab-btn.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .tab-content {
-            display: none;
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Listas Admin */
-        .users-list, .products-list, .ads-list {
-            max-height: 500px;
-            overflow-y: auto;
-        }
-
-        .list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .list-item:last-child {
-            border-bottom: none;
-        }
-
-        .item-details {
-            flex-grow: 1;
-        }
-
-        .item-title {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .item-subtitle {
-            font-size: 12px;
-            color: #666;
-        }
-
-        .item-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-admin {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .btn-admin:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-admin.primary {
-            background: #007bff;
-            color: white;
-        }
-
-        .btn-admin.success {
-            background: #28a745;
-            color: white;
-        }
-
-        .btn-admin.warning {
-            background: #ffc107;
-            color: #333;
-        }
-
-        .btn-admin.danger {
-            background: #dc3545;
-            color: white;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 1rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #34495e;
         }
 
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group input {
             width: 100%;
-            padding: 10px;
-            border: 2px solid #e0e0e0;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            font-size: 14px;
+            font-size: 1rem;
         }
 
-        .form-group textarea {
+        .form-group input:focus {
+            outline: none;
+            border-color: #f1c40f;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #1a2a3a, #2c3e50);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #2c3e50, #1a2a3a);
+        }
+
+        .close-btn {
+            float: right;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: #7f8c8d;
+        }
+
+        .close-btn:hover {
+            color: #34495e;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 0.5rem;
+            text-align: center;
+            display: none;
+        }
+
+        /* Área Administrativa */
+        .admin-area {
+            display: none;
+            background-color: #ecf0f1;
+            padding: 2rem;
+            min-height: calc(100vh - 200px);
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #bdc3c7;
+        }
+
+        .admin-header h2 {
+            color: #2c3e50;
+        }
+
+        .logout-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .article-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .article-form h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .article-form input,
+        .article-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .article-form textarea {
+            height: 200px;
             resize: vertical;
-            min-height: 100px;
         }
 
-        /* Responsividade */
-        @media (max-width: 768px) {
-            .layout-row {
-                flex-direction: column;
-            }
-            
-            .layout-sidebar {
-                width: 100%;
-            }
-            
-            .navbar {
-                flex-direction: column;
-                text-align: center;
-            }
+        .publish-btn {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Artigos */
+        .articles-section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .articles-section h2 {
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .article-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .article-image {
+            height: 200px;
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-content h3 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-date {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-excerpt {
+            color: #34495e;
+            line-height: 1.6;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
         }
     </style>
 </head>
 <body>
-    <!-- Tela de Login -->
-    <div class="login-container" id="loginContainer">
-        <div class="login-box">
-            <h2>Clube da <span>Fortuna</span></h2>
-            <div class="error-message" id="errorMessage"></div>
-            <div class="input-group">
-                <label for="username">Usuário</label>
-                <input type="text" id="username" placeholder="Digite seu usuário">
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <h1>Clube da Fortuna</h1>
+                <p>Seu guia para independência financeira</p>
             </div>
-            <div class="input-group">
-                <label for="password">Senha</label>
-                <input type="password" id="password" placeholder="Digite sua senha">
+            <button class="login-btn" onclick="openModal()">Área do Administrador</button>
+        </div>
+    </header>
+
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Login Administrativo</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">Usuário:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="submit-btn">Entrar</button>
+                <div id="errorMessage" class="error-message">Usuário ou senha incorretos!</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Área Administrativa -->
+    <div id="adminArea" class="admin-area">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h2>Painel de Controle - Escrever Novo Artigo</h2>
+                <button class="logout-btn" onclick="logout()">Sair</button>
             </div>
-            <button class="btn-login" onclick="login()">Entrar</button>
-            <div class="register-link">
-                Não tem uma conta? <a href="#" onclick="showRegister()">Criar conta</a>
+            
+            <div class="article-form">
+                <h3>Escrever Novo Artigo</h3>
+                <input type="text" id="articleTitle" placeholder="Título do Artigo" required>
+                <input type="text" id="articleImage" placeholder="URL da Imagem (opcional)">
+                <textarea id="articleContent" placeholder="Escreva seu artigo aqui..." required></textarea>
+                <button class="publish-btn" onclick="publishArticle()">Publicar Artigo</button>
             </div>
         </div>
     </div>
 
-    <!-- Dashboard Principal -->
-    <div class="dashboard" id="dashboard">
-        <nav class="navbar">
-            <div class="logo">Clube da <span>Fortuna</span></div>
-            <div class="user-info">
-                <span class="username" id="currentUser"></span>
-                <button class="btn-logout" onclick="logout()">Sair</button>
-            </div>
-        </nav>
-
-        <div class="main-content">
-            <div class="welcome-message">
-                <h1 id="welcomeMessage">Bem-vindo ao Clube da Fortuna!</h1>
-                <p>Escolha um produto abaixo, clique no link e comece a divulgar. Ganhe comissões reais por cada venda realizada!</p>
-            </div>
-
-            <!-- Layout Builder (visível apenas para admin) -->
-            <div class="admin-panel" id="adminPanel">
-                <div class="admin-tabs">
-                    <button class="tab-btn active" onclick="switchTab('layout')">Layout de Anúncios</button>
-                    <button class="tab-btn" onclick="switchTab('products')">Produtos</button>
-                    <button class="tab-btn" onclick="switchTab('users')">Usuários</button>
-                </div>
-
-                <!-- Aba de Layout -->
-                <div class="tab-content active" id="layoutTab">
-                    <h2>Construtor de Layout de Anúncios</h2>
-                    <p style="color: #666; margin-bottom: 20px;">Adicione quantos anúncios quiser em qualquer posição da página.</p>
-                    
-                    <div class="layout-controls">
-                        <button class="btn-layout success" onclick="addSection('top')">+ Adicionar Anúncio no Topo</button>
-                        <button class="btn-layout success" onclick="addSection('sidebar-left')">+ Adicionar Anúncio na Sidebar Esquerda</button>
-                        <button class="btn-layout success" onclick="addSection('sidebar-right')">+ Adicionar Anúncio na Sidebar Direita</button>
-                        <button class="btn-layout success" onclick="addSection('between-products')">+ Adicionar Anúncio Entre Produtos</button>
-                        <button class="btn-layout success" onclick="addSection('before-chat')">+ Adicionar Anúncio Antes do Chat</button>
-                        <button class="btn-layout success" onclick="addSection('after-chat')">+ Adicionar Anúncio Após o Chat</button>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="adCode">Código do Anúncio (cole o código completo)</label>
-                        <textarea id="adCode" class="ad-code-input" rows="5" placeholder='Ex: <script> atOptions = {...}; </script><script src="..."></script>'></textarea>
-                    </div>
-
-                    <div id="adsList" class="ads-list">
-                        <!-- Lista de anúncios será carregada aqui -->
-                    </div>
-                </div>
-
-                <!-- Aba de Produtos -->
-                <div class="tab-content" id="productsTab">
-                    <h2>Gerenciar Produtos</h2>
-                    
-                    <h3>Adicionar Novo Produto</h3>
-                    <form id="productForm">
-                        <div class="form-group">
-                            <label for="productName">Nome do Produto</label>
-                            <input type="text" id="productName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="productDescription">Descrição</label>
-                            <textarea id="productDescription" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="productLink">Link de Afiliado</label>
-                            <input type="url" id="productLink" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="productCategory">Categoria</label>
-                            <select id="productCategory">
-                                <option value="academia">Academia</option>
-                                <option value="pizzaria">Pizzaria</option>
-                                <option value="bebidas">Bebidas</option>
-                                <option value="hamburgueria">Hamburgueria</option>
-                                <option value="construcao">Construção</option>
-                                <option value="supermercado">Supermercado</option>
-                                <option value="informatica">Informática</option>
-                                <option value="nutricao">Nutrição</option>
-                                <option value="blogueira">Blogueira</option>
-                                <option value="celular">Celular</option>
-                                <option value="beleza">Beleza</option>
-                                <option value="advocacia">Advocacia</option>
-                            </select>
-                        </div>
-                        <button type="button" class="btn-admin success" onclick="addProduct()">Adicionar Produto</button>
-                    </form>
-                    
-                    <h3 style="margin-top: 30px;">Produtos Cadastrados</h3>
-                    <div id="productsList" class="products-list" style="margin-top: 15px;">
-                        <!-- Lista de produtos será carregada aqui -->
-                    </div>
-                </div>
-
-                <!-- Aba de Usuários -->
-                <div class="tab-content" id="usersTab">
-                    <h2>Gerenciar Usuários</h2>
-                    <div id="usersList" class="users-list">
-                        <!-- Lista de usuários será carregada aqui -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Espaços para Anúncios (gerados dinamicamente) -->
-            <div id="adSpaces"></div>
-
-            <!-- Seção de Produtos para Afiliados -->
-            <div class="products-section">
-                <h2>📦 Produtos para Divulgar</h2>
-                <p>Clique no botão abaixo para acessar o link de afiliado e começar a divulgar. Ganhe comissão por cada venda!</p>
-                
-                <div class="products-grid" id="productsGrid">
-                    <!-- Produtos serão carregados aqui -->
-                </div>
-            </div>
-
-            <!-- Seção do Chat -->
-            <div class="chat-section" id="chatSection">
-                <h2>💬 Chat da Comunidade</h2>
-                <p style="color: #666; margin-bottom: 15px;">Compartilhe dicas de divulgação e tire dúvidas com outros membros!</p>
-                <div class="chat-container">
-                    <div class="chat-messages" id="chatMessages">
-                        <!-- Mensagens serão carregadas aqui -->
-                    </div>
-                    <div class="chat-input-area">
-                        <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua mensagem...">
-                        <button class="btn-send" onclick="sendMessage()">Enviar</button>
-                    </div>
-                </div>
-            </div>
+    <!-- Artigos Publicados -->
+    <section class="articles-section">
+        <h2>Últimos Artigos</h2>
+        <div id="articlesGrid" class="articles-grid">
+            <!-- Artigos serão inseridos aqui via JavaScript -->
         </div>
-    </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Clube da Fortuna - Todos os direitos reservados</p>
+    </footer>
 
     <script>
-        // Banco de dados simulado
-        let users = JSON.parse(localStorage.getItem('users')) || [];
-        let messages = JSON.parse(localStorage.getItem('messages')) || [];
-        let products = JSON.parse(localStorage.getItem('products')) || [];
-        let adSpaces = JSON.parse(localStorage.getItem('adSpaces')) || [];
-        let currentUser = null;
+        // Usuário cadastrado
+        const ADMIN_USER = {
+            username: 'wilsonadm',
+            password: 'Wsds1997'
+        };
 
-        // Lista inicial de produtos da Hotmart
-        const initialProducts = [
-            {
-                id: 1,
-                name: "Pack 127 Artes Editáveis no Canva Para academias",
-                description: "Artes profissionais para academia prontas para editar no Canva",
-                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/1423P88220620",
-                category: "academia"
-            },
-            {
-                id: 2,
-                name: "Pack 270 Artes Editáveis no Canva Para Pizzarias",
-                description: "Artes completas para pizzarias, totalmente editáveis",
-                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9654P87801939",
-                category: "pizzaria"
-            },
-            {
-                id: 3,
-                name: "100 Encartes de Bebidas Editáveis No Canva Para Depósitos",
-                description: "Encartes profissionais para depósitos de bebidas",
-                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9320187800799",
-                category: "bebidas"
-            },
-            {
-                id: 4,
-                name: "450 Artes Editáveis para Transformar a Identidade da sua Hamburgueria",
-                description: "Pacote completo para hamburguerias com 450 artes",
-                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9478487801329",
-                category: "hamburgueria"
-            },
-            {
-                id: 5,
-                name: "Pack 49 Artes Para Depósitos de Construções Editáveis no Canva",
-                description: "Artes para depósitos de materiais de construção",
-                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9392691056037",
-                category: "construcao"
-            },
-            {
-                id: 6,
-                name: "Pack 100 Artes Editáveis no Canva Para Supermercado",
-                description: "100 artes profissionais para supermercados",
-                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9186P91055046",
-                category: "supermercado"
-            }
-        ];
+        // Array para armazenar os artigos
+        let articles = JSON.parse(localStorage.getItem('articles')) || [];
 
-        // Inicializar produtos se não existirem
-        if (products.length === 0) {
-            products = initialProducts;
-            localStorage.setItem('products', JSON.stringify(products));
+        // Funções do Modal
+        function openModal() {
+            document.getElementById('loginModal').style.display = 'block';
         }
 
-        // Criar usuário admin padrão se não existir
-        function createAdminUser() {
-            const adminExists = users.some(u => u.username === 'wilsonadm');
-            if (!adminExists) {
-                users.push({
-                    username: 'wilsonadm',
-                    password: 'Wsds1997',
-                    isAdmin: true,
-                    active: true
-                });
-                localStorage.setItem('users', JSON.stringify(users));
+        function closeModal() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('loginForm').reset();
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        // Fechar modal clicando fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('loginModal');
+            if (event.target == modal) {
+                closeModal();
             }
         }
 
-        // Chamar a função para criar admin
-        createAdminUser();
-
-        // Funções de Login/Registro
-        function showRegister() {
-            const username = prompt("Digite um nome de usuário:");
-            if (!username) return;
-
-            const password = prompt("Digite uma senha:");
-            if (!password) return;
-
-            const userExists = users.some(u => u.username === username);
-            if (userExists) {
-                showError("Usuário já existe!");
-                return;
-            }
-
-            users.push({
-                username: username,
-                password: password,
-                isAdmin: false,
-                active: true
-            });
-
-            localStorage.setItem('users', JSON.stringify(users));
-            alert("Usuário criado com sucesso! Faça o login.");
-        }
-
-        function login() {
+        // Função de Login
+        function handleLogin(event) {
+            event.preventDefault();
+            
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            const user = users.find(u => u.username === username && u.password === password);
-
-            if (user) {
-                if (!user.active) {
-                    showError("Usuário desativado. Contate o administrador.");
-                    return;
-                }
-
-                currentUser = user;
-                document.getElementById('currentUser').textContent = username;
-                document.getElementById('welcomeMessage').innerHTML = `Bem-vindo, ${username}!`;
-                document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('dashboard').classList.add('active');
-
-                // Mostrar painel admin se for admin
-                if (user.isAdmin) {
-                    document.getElementById('adminPanel').style.display = 'block';
-                    loadUsersList();
-                    loadProductsList();
-                    loadAdsList();
-                }
-
-                loadProducts();
-                loadMessages();
-                renderAdSpaces();
+            if (username === ADMIN_USER.username && password === ADMIN_USER.password) {
+                // Login bem-sucedido
+                sessionStorage.setItem('loggedIn', 'true');
+                closeModal();
+                showAdminArea();
             } else {
-                showError("Usuário ou senha inválidos!");
+                // Login falhou
+                document.getElementById('errorMessage').style.display = 'block';
             }
         }
 
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            setTimeout(() => {
-                errorDiv.style.display = 'none';
-            }, 3000);
+        // Mostrar área administrativa
+        function showAdminArea() {
+            if (sessionStorage.getItem('loggedIn') === 'true') {
+                document.getElementById('adminArea').style.display = 'block';
+                document.querySelector('.articles-section').style.marginTop = '0';
+            }
         }
 
+        // Verificar se já está logado ao carregar a página
+        window.onload = function() {
+            displayArticles();
+            if (sessionStorage.getItem('loggedIn') === 'true') {
+                showAdminArea();
+            }
+        }
+
+        // Logout
         function logout() {
-            currentUser = null;
-            document.getElementById('loginContainer').style.display = 'flex';
-            document.getElementById('dashboard').classList.remove('active');
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
+            sessionStorage.removeItem('loggedIn');
+            document.getElementById('adminArea').style.display = 'none';
         }
 
-        // Funções do Admin - Layout de Anúncios
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        // Publicar artigo
+        function publishArticle() {
+            const title = document.getElementById('articleTitle').value;
+            const image = document.getElementById('articleImage').value;
+            const content = document.getElementById('articleContent').value;
 
-            if (tab === 'layout') {
-                document.querySelectorAll('.tab-btn')[0].classList.add('active');
-                document.getElementById('layoutTab').classList.add('active');
-                loadAdsList();
-            } else if (tab === 'products') {
-                document.querySelectorAll('.tab-btn')[1].classList.add('active');
-                document.getElementById('productsTab').classList.add('active');
-                loadProductsList();
-            } else {
-                document.querySelectorAll('.tab-btn')[2].classList.add('active');
-                document.getElementById('usersTab').classList.add('active');
-                loadUsersList();
-            }
-        }
-
-        function addSection(position) {
-            const adCode = document.getElementById('adCode').value.trim();
-            
-            if (!adCode) {
-                alert("Cole o código do anúncio primeiro!");
-                return;
-            }
-
-            const newAd = {
-                id: Date.now(),
-                position: position,
-                code: adCode,
-                active: true
-            };
-
-            adSpaces.push(newAd);
-            localStorage.setItem('adSpaces', JSON.stringify(adSpaces));
-            
-            document.getElementById('adCode').value = '';
-            loadAdsList();
-            renderAdSpaces();
-            
-            alert("Anúncio adicionado com sucesso!");
-        }
-
-        function deleteAd(adId) {
-            if (confirm("Tem certeza que deseja remover este anúncio?")) {
-                adSpaces = adSpaces.filter(ad => ad.id !== adId);
-                localStorage.setItem('adSpaces', JSON.stringify(adSpaces));
-                loadAdsList();
-                renderAdSpaces();
-            }
-        }
-
-        function toggleAd(adId) {
-            const adIndex = adSpaces.findIndex(ad => ad.id === adId);
-            if (adIndex !== -1) {
-                adSpaces[adIndex].active = !adSpaces[adIndex].active;
-                localStorage.setItem('adSpaces', JSON.stringify(adSpaces));
-                loadAdsList();
-                renderAdSpaces();
-            }
-        }
-
-        function loadAdsList() {
-            const adsList = document.getElementById('adsList');
-            if (!adsList) return;
-
-            adsList.innerHTML = '<h3>Anúncios Cadastrados</h3>';
-
-            if (adSpaces.length === 0) {
-                adsList.innerHTML += '<p style="color: #666; padding: 20px;">Nenhum anúncio cadastrado ainda.</p>';
-                return;
-            }
-
-            adSpaces.forEach(ad => {
-                const positionNames = {
-                    'top': 'Topo da Página',
-                    'sidebar-left': 'Sidebar Esquerda',
-                    'sidebar-right': 'Sidebar Direita',
-                    'between-products': 'Entre Produtos',
-                    'before-chat': 'Antes do Chat',
-                    'after-chat': 'Após o Chat'
+            if (title && content) {
+                const newArticle = {
+                    id: Date.now(),
+                    title: title,
+                    image: image || '📰',
+                    content: content,
+                    excerpt: content.substring(0, 150) + '...',
+                    date: new Date().toLocaleDateString('pt-BR')
                 };
 
-                const adItem = document.createElement('div');
-                adItem.className = 'list-item';
-                adItem.innerHTML = `
-                    <div class="item-details">
-                        <div class="item-title">${positionNames[ad.position] || ad.position}</div>
-                        <div class="item-subtitle">Status: ${ad.active ? 'Ativo' : 'Inativo'}</div>
-                        <div class="item-subtitle" style="font-family: monospace; background: #f0f0f0; padding: 5px; margin-top: 5px;">
-                            Código: ${ad.code.substring(0, 50)}...
-                        </div>
-                    </div>
-                    <div class="item-actions">
-                        <button class="btn-admin ${ad.active ? 'warning' : 'success'}" onclick="toggleAd(${ad.id})">
-                            ${ad.active ? 'Desativar' : 'Ativar'}
-                        </button>
-                        <button class="btn-admin danger" onclick="deleteAd(${ad.id})">Remover</button>
-                    </div>
-                `;
-                adsList.appendChild(adItem);
-            });
-        }
-
-        function renderAdSpaces() {
-            const adSpacesContainer = document.getElementById('adSpaces');
-            if (!adSpacesContainer) return;
-
-            adSpacesContainer.innerHTML = '';
-
-            // Agrupar anúncios por posição
-            const activeAds = adSpaces.filter(ad => ad.active);
-            
-            // Renderizar anúncios do topo
-            activeAds.filter(ad => ad.position === 'top').forEach(ad => {
-                const adDiv = document.createElement('div');
-                adDiv.className = 'ad-space';
-                adDiv.innerHTML = `<div class="ad-label">Publicidade</div><div class="ad-content" data-ad="${ad.id}"></div>`;
-                adSpacesContainer.appendChild(adDiv);
+                articles.unshift(newArticle);
+                localStorage.setItem('articles', JSON.stringify(articles));
                 
-                setTimeout(() => {
-                    const contentDiv = adDiv.querySelector('.ad-content');
-                    if (contentDiv) {
-                        const script = document.createElement('script');
-                        script.innerHTML = ad.code.replace(/<script>/g, '').replace(/<\/script>/g, '');
-                        contentDiv.appendChild(script);
-                    }
-                }, 100);
-            });
-
-            // Anúncios da sidebar esquerda
-            activeAds.filter(ad => ad.position === 'sidebar-left').forEach(ad => {
-                const adDiv = document.createElement('div');
-                adDiv.className = 'ad-space';
-                adDiv.innerHTML = `<div class="ad-label">Publicidade</div><div class="ad-content" data-ad="${ad.id}"></div>`;
-                // Inserir antes dos produtos
-                const productsSection = document.querySelector('.products-section');
-                if (productsSection) {
-                    productsSection.parentNode.insertBefore(adDiv, productsSection);
-                }
-                
-                setTimeout(() => {
-                    const contentDiv = adDiv.querySelector('.ad-content');
-                    if (contentDiv) {
-                        const script = document.createElement('script');
-                        script.innerHTML = ad.code.replace(/<script>/g, '').replace(/<\/script>/g, '');
-                        contentDiv.appendChild(script);
-                    }
-                }, 100);
-            });
-
-            // Anúncios entre produtos
-            activeAds.filter(ad => ad.position === 'between-products').forEach((ad, index) => {
-                const productsGrid = document.getElementById('productsGrid');
-                if (productsGrid && productsGrid.children.length > index * 3) {
-                    const adDiv = document.createElement('div');
-                    adDiv.className = 'ad-space';
-                    adDiv.style.gridColumn = '1 / -1';
-                    adDiv.innerHTML = `<div class="ad-label">Publicidade</div><div class="ad-content" data-ad="${ad.id}"></div>`;
-                    
-                    productsGrid.insertBefore(adDiv, productsGrid.children[index * 3]);
-                    
-                    setTimeout(() => {
-                        const contentDiv = adDiv.querySelector('.ad-content');
-                        if (contentDiv) {
-                            const script = document.createElement('script');
-                            script.innerHTML = ad.code.replace(/<script>/g, '').replace(/<\/script>/g, '');
-                            contentDiv.appendChild(script);
-                        }
-                    }, 100);
-                }
-            });
-
-            // Anúncios antes do chat
-            activeAds.filter(ad => ad.position === 'before-chat').forEach(ad => {
-                const adDiv = document.createElement('div');
-                adDiv.className = 'ad-space';
-                adDiv.innerHTML = `<div class="ad-label">Publicidade</div><div class="ad-content" data-ad="${ad.id}"></div>`;
-                
-                const chatSection = document.getElementById('chatSection');
-                if (chatSection) {
-                    chatSection.parentNode.insertBefore(adDiv, chatSection);
-                    
-                    setTimeout(() => {
-                        const contentDiv = adDiv.querySelector('.ad-content');
-                        if (contentDiv) {
-                            const script = document.createElement('script');
-                            script.innerHTML = ad.code.replace(/<script>/g, '').replace(/<\/script>/g, '');
-                            contentDiv.appendChild(script);
-                        }
-                    }, 100);
-                }
-            });
-
-            // Anúncios após o chat
-            activeAds.filter(ad => ad.position === 'after-chat').forEach(ad => {
-                const adDiv = document.createElement('div');
-                adDiv.className = 'ad-space';
-                adDiv.innerHTML = `<div class="ad-label">Publicidade</div><div class="ad-content" data-ad="${ad.id}"></div>`;
-                
-                const chatSection = document.getElementById('chatSection');
-                if (chatSection) {
-                    chatSection.parentNode.insertBefore(adDiv, chatSection.nextSibling);
-                    
-                    setTimeout(() => {
-                        const contentDiv = adDiv.querySelector('.ad-content');
-                        if (contentDiv) {
-                            const script = document.createElement('script');
-                            script.innerHTML = ad.code.replace(/<script>/g, '').replace(/<\/script>/g, '');
-                            contentDiv.appendChild(script);
-                        }
-                    }, 100);
-                }
-            });
-        }
-
-        // Funções de Produtos
-        function loadProducts() {
-            const productsGrid = document.getElementById('productsGrid');
-            if (!productsGrid) return;
-
-            productsGrid.innerHTML = '';
-
-            products.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.innerHTML = `
-                    <span class="product-category">${getCategoryName(product.category)}</span>
-                    <h3>${product.name}</h3>
-                    <div class="product-description">${product.description}</div>
-                    <a href="${product.link}" target="_blank" class="product-link-btn">🔗 Acessar Link de Afiliado</a>
-                `;
-                productsGrid.appendChild(card);
-            });
-        }
-
-        function getCategoryName(category) {
-            const categories = {
-                'academia': 'Academia',
-                'pizzaria': 'Pizzaria',
-                'bebidas': 'Bebidas',
-                'hamburgueria': 'Hamburgueria',
-                'construcao': 'Construção',
-                'supermercado': 'Supermercado',
-                'informatica': 'Informática',
-                'nutricao': 'Nutrição',
-                'blogueira': 'Blogueira',
-                'celular': 'Celular',
-                'beleza': 'Beleza',
-                'advocacia': 'Advocacia'
-            };
-            return categories[category] || category;
-        }
-
-        // Funções do Admin - Produtos
-        function loadProductsList() {
-            const productsList = document.getElementById('productsList');
-            if (!productsList) return;
-
-            productsList.innerHTML = '';
-
-            products.forEach(product => {
-                const productItem = document.createElement('div');
-                productItem.className = 'list-item';
-                productItem.innerHTML = `
-                    <div class="item-details">
-                        <div class="item-title">${product.name}</div>
-                        <div class="item-subtitle">Categoria: ${getCategoryName(product.category)}</div>
-                    </div>
-                    <div class="item-actions">
-                        <button class="btn-admin danger" onclick="deleteProduct(${product.id})">Remover</button>
-                    </div>
-                `;
-                productsList.appendChild(productItem);
-            });
-        }
-
-        function addProduct() {
-            const name = document.getElementById('productName').value;
-            const description = document.getElementById('productDescription').value;
-            const link = document.getElementById('productLink').value;
-            const category = document.getElementById('productCategory').value;
-
-            if (name && description && link) {
-                const newProduct = {
-                    id: products.length + 1,
-                    name: name,
-                    description: description,
-                    link: link,
-                    category: category
-                };
-
-                products.push(newProduct);
-                localStorage.setItem('products', JSON.stringify(products));
-
                 // Limpar formulário
-                document.getElementById('productName').value = '';
-                document.getElementById('productDescription').value = '';
-                document.getElementById('productLink').value = '';
-
-                alert("Produto adicionado com sucesso!");
-                loadProducts();
-                loadProductsList();
+                document.getElementById('articleTitle').value = '';
+                document.getElementById('articleImage').value = '';
+                document.getElementById('articleContent').value = '';
+                
+                // Atualizar exibição
+                displayArticles();
+                
+                alert('Artigo publicado com sucesso!');
             } else {
-                alert("Preencha todos os campos!");
+                alert('Preencha todos os campos obrigatórios!');
             }
         }
 
-        function deleteProduct(productId) {
-            if (confirm("Tem certeza que deseja remover este produto?")) {
-                products = products.filter(p => p.id !== productId);
-                localStorage.setItem('products', JSON.stringify(products));
-                loadProducts();
-                loadProductsList();
-            }
-        }
-
-        // Funções do Admin - Usuários
-        function loadUsersList() {
-            const usersList = document.getElementById('usersList');
-            if (!usersList) return;
-
-            usersList.innerHTML = '';
-
-            users.forEach(user => {
-                if (user.username !== 'wilsonadm') {
-                    const userItem = document.createElement('div');
-                    userItem.className = 'list-item';
-                    userItem.innerHTML = `
-                        <div class="item-details">
-                            <div class="item-title">${user.username}</div>
-                            <div class="item-subtitle">Status: ${user.active ? 'Ativo' : 'Inativo'}</div>
-                        </div>
-                        <div class="item-actions">
-                            <button class="btn-admin warning" onclick="resetPassword('${user.username}')">Resetar Senha</button>
-                            <button class="btn-admin ${user.active ? 'danger' : 'success'}" onclick="toggleUserStatus('${user.username}')">
-                                ${user.active ? 'Desativar' : 'Ativar'}
-                            </button>
-                        </div>
-                    `;
-                    usersList.appendChild(userItem);
-                }
-            });
-        }
-
-        function resetPassword(username) {
-            const userIndex = users.findIndex(u => u.username === username);
-            if (userIndex !== -1) {
-                const newPassword = prompt("Digite a nova senha para o usuário " + username + ":");
-                if (newPassword) {
-                    users[userIndex].password = newPassword;
-                    localStorage.setItem('users', JSON.stringify(users));
-                    alert("Senha alterada com sucesso!");
-                }
-            }
-        }
-
-        function toggleUserStatus(username) {
-            const userIndex = users.findIndex(u => u.username === username);
-            if (userIndex !== -1) {
-                users[userIndex].active = !users[userIndex].active;
-                localStorage.setItem('users', JSON.stringify(users));
-                loadUsersList();
-            }
-        }
-
-        // Funções do Chat
-        function loadMessages() {
-            const chatMessages = document.getElementById('chatMessages');
-            if (!chatMessages) return;
-
-            chatMessages.innerHTML = '';
-
-            messages.slice(-50).forEach(msg => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = 'message';
-                messageDiv.innerHTML = `
-                    <div class="message-user">${msg.user}</div>
-                    <div class="message-time">${msg.time}</div>
-                    <div class="message-text">${msg.text}</div>
+        // Exibir artigos
+        function displayArticles() {
+            const grid = document.getElementById('articlesGrid');
+            
+            if (articles.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #7f8c8d;">
+                        <h3>Nenhum artigo publicado ainda.</h3>
+                        <p>Faça login para escrever o primeiro artigo!</p>
+                    </div>
                 `;
-                chatMessages.appendChild(messageDiv);
-            });
+                return;
+            }
 
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            grid.innerHTML = articles.map(article => `
+                <div class="article-card">
+                    <div class="article-image">
+                        ${article.image === '📰' ? '📰' : `<img src="${article.image}" alt="${article.title}" style="width:100%; height:100%; object-fit:cover;">`}
+                    </div>
+                    <div class="article-content">
+                        <h3>${article.title}</h3>
+                        <div class="article-date">${article.date}</div>
+                        <p class="article-excerpt">${article.excerpt}</p>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const text = input.value.trim();
-
-            if (text && currentUser) {
-                const message = {
-                    user: currentUser.username,
-                    text: text,
-                    time: new Date().toLocaleTimeString()
-                };
-
-                messages.push(message);
-                localStorage.setItem('messages', JSON.stringify(messages));
-
-                input.value = '';
-                loadMessages();
+        // Adicionar alguns artigos de exemplo
+        function addSampleArticles() {
+            if (articles.length === 0) {
+                const sampleArticles = [
+                    {
+                        id: 1,
+                        title: "Comece a Investir com Pouco Dinheiro",
+                        image: "💰",
+                        content: "Muitas pessoas acreditam que é preciso muito dinheiro para começar a investir, mas isso não é verdade. Com disciplina e conhecimento, é possível começar com valores baixos e construir um patrimônio sólido ao longo do tempo...",
+                        excerpt: "Muitas pessoas acreditam que é preciso muito dinheiro para começar a investir...",
+                        date: "15/02/2024"
+                    },
+                    {
+                        id: 2,
+                        title: "Os Melhores Investimentos para Iniciantes",
+                        image: "📈",
+                        content: "Para quem está começando no mundo dos investimentos, é importante escolher opções mais seguras e de fácil entendimento. Tesouro Direto, CDBs e Fundos Imobiliários são ótimas opções para dar os primeiros passos...",
+                        excerpt: "Para quem está começando no mundo dos investimentos, é importante escolher opções mais seguras...",
+                        date: "10/02/2024"
+                    }
+                ];
+                
+                articles = sampleArticles;
+                localStorage.setItem('articles', JSON.stringify(articles));
+                displayArticles();
             }
         }
 
-        // Atualizar chat a cada 3 segundos
-        setInterval(loadMessages, 3000);
+        // Chamar função para adicionar artigos de exemplo
+        addSampleArticles();
     </script>
 </body>
 </html>
