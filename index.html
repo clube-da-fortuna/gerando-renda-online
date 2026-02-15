@@ -3,435 +3,886 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Dinheiro Perdido na Internet</title>
+    <title>Clube da Fortuna - Comunidade de Ajuda Mútua</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+        }
+
+        /* Tela de Login */
+        .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        .container {
+        .login-box {
             background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 600px;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             width: 100%;
-            animation: fadeIn 0.5s ease-in;
+            max-width: 400px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h1 {
+        .login-box h2 {
+            text-align: center;
             color: #333;
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #666;
             margin-bottom: 30px;
-            font-size: 14px;
+            font-size: 28px;
         }
 
-        .stats-container {
-            background: #f7f9fc;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
+        .login-box h2 span {
+            color: #764ba2;
         }
 
-        .total-found {
-            text-align: center;
+        .input-group {
             margin-bottom: 20px;
         }
 
-        .total-label {
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
             font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
             color: #666;
+        }
+
+        .register-link a {
+            color: #764ba2;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        /* Dashboard Principal */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .logo span {
+            color: #764ba2;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .username {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .btn-logout {
+            padding: 8px 20px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-logout:hover {
+            background: #c82333;
+        }
+
+        /* Conteúdo Principal */
+        .main-content {
+            padding: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .welcome-message {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .welcome-message h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .welcome-message p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Cards de Missões */
+        .missions-section {
+            margin-bottom: 40px;
+        }
+
+        .missions-section h2 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .missions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .mission-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .mission-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .mission-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .mission-reward {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .btn-mission {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-mission:hover {
+            background: #218838;
+        }
+
+        .btn-mission.completed {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        /* Chat */
+        .chat-section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .chat-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .chat-container {
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .message .message-user {
+            font-weight: 600;
+            color: #764ba2;
             margin-bottom: 5px;
         }
 
-        .total-value {
-            font-size: 48px;
-            font-weight: bold;
-            color: #28a745;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        .message .message-time {
+            font-size: 12px;
+            color: #999;
+            float: right;
         }
 
-        .progress-container {
-            margin: 20px 0;
+        .message .message-text {
+            color: #333;
+            line-height: 1.5;
         }
 
-        .progress-info {
+        .chat-input-area {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            color: #555;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
             font-size: 14px;
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 25px;
-            background: #e0e0e0;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        .chat-input:focus {
+            outline: none;
+            border-color: #764ba2;
         }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #8BC34A);
-            border-radius: 15px;
-            transition: width 0.3s ease;
-            width: 0%;
-            position: relative;
-            animation: shimmer 2s infinite;
+        .btn-send {
+            padding: 12px 25px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
         }
 
-        @keyframes shimmer {
-            0% { opacity: 1; }
-            50% { opacity: 0.8; }
-            100% { opacity: 1; }
+        .btn-send:hover {
+            background: #0056b3;
         }
 
-        .search-status {
-            background: #fff;
+        /* Painel Admin */
+        .admin-panel {
+            display: none;
+            margin-top: 30px;
+            background: white;
             border-radius: 10px;
-            padding: 15px;
-            margin: 20px 0;
-            border: 1px solid #e0e0e0;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        .status-line {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            color: #555;
+        .admin-panel.active {
+            display: block;
         }
 
-        .status-icon {
-            width: 30px;
-            height: 30px;
-            margin-right: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .admin-panel h2 {
+            color: #333;
+            margin-bottom: 20px;
         }
 
-        .searching-text {
-            font-family: monospace;
-            color: #007bff;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0.5; }
-        }
-
-        .last-gain {
-            background: #e8f5e9;
-            border-radius: 8px;
-            padding: 8px 15px;
-            display: inline-block;
-            color: #2e7d32;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        .button-container {
+        .admin-tabs {
             display: flex;
             gap: 10px;
-            justify-content: center;
-            margin-top: 25px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
         }
 
-        .btn {
-            padding: 12px 25px;
+        .tab-btn {
+            padding: 10px 20px;
+            background: none;
             border: none;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-weight: 600;
+            color: #666;
+            border-radius: 5px 5px 0 0;
         }
 
-        .btn-start {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        .tab-btn.active {
+            color: #764ba2;
+            border-bottom: 3px solid #764ba2;
         }
 
-        .btn-start:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        .tab-content {
+            display: none;
         }
 
-        .btn-stop {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+        .tab-content.active {
+            display: block;
         }
 
-        .btn-stop:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .log-container {
-            background: #1e1e1e;
-            color: #0f0;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 20px;
-            max-height: 150px;
+        .users-list {
+            max-height: 400px;
             overflow-y: auto;
-            font-family: monospace;
-            font-size: 12px;
-            border: 1px solid #333;
         }
 
-        .log-entry {
-            margin: 3px 0;
-            border-bottom: 1px solid #333;
-            padding-bottom: 3px;
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
         }
 
-        .info-text {
-            text-align: center;
-            color: #888;
+        .user-item:last-child {
+            border-bottom: none;
+        }
+
+        .user-item .user-details {
+            flex-grow: 1;
+        }
+
+        .user-item .user-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .user-item .user-status {
             font-size: 12px;
-            margin-top: 15px;
-            font-style: italic;
+            color: #666;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-admin {
+            padding: 8px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-admin.danger {
+            background: #dc3545;
+        }
+
+        .btn-admin.warning {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .btn-admin.success {
+            background: #28a745;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>💰 Caçador de Dinheiro Perdido</h1>
-        <div class="subtitle">Vasculhando a internet atrás de centavos esquecidos...</div>
+    <!-- Tela de Login -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h2>Clube da <span>Fortuna</span></h2>
+            <div class="error-message" id="errorMessage"></div>
+            <div class="input-group">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" placeholder="Digite seu usuário">
+            </div>
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" placeholder="Digite sua senha">
+            </div>
+            <button class="btn-login" onclick="login()">Entrar</button>
+            <div class="register-link">
+                Não tem uma conta? <a href="#" onclick="showRegister()">Criar conta</a>
+            </div>
+        </div>
+    </div>
 
-        <div class="stats-container">
-            <div class="total-found">
-                <div class="total-label">Total Encontrado</div>
-                <div class="total-value" id="totalDisplay">R$ 15,33</div>
+    <!-- Dashboard Principal -->
+    <div class="dashboard" id="dashboard">
+        <nav class="navbar">
+            <div class="logo">Clube da <span>Fortuna</span></div>
+            <div class="user-info">
+                <span class="username" id="currentUser"></span>
+                <button class="btn-logout" onclick="logout()">Sair</button>
+            </div>
+        </nav>
+
+        <div class="main-content">
+            <div class="welcome-message">
+                <h1 id="welcomeMessage">Bem-vindo ao Clube da Fortuna!</h1>
+                <p>Aqui você encontra missões para ganhar dinheiro e uma comunidade pronta para ajudar. Complete as missões, converse com outros membros e construa sua fortuna!</p>
             </div>
 
-            <div class="progress-container">
-                <div class="progress-info">
-                    <span>Progresso para R$ 16,00</span>
-                    <span id="progressPercentage">0%</span>
+            <!-- Seção de Missões -->
+            <div class="missions-section">
+                <h2>Missões Disponíveis</h2>
+                <div class="missions-grid" id="missionsGrid">
+                    <!-- Missões serão carregadas aqui -->
                 </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+            </div>
+
+            <!-- Painel Admin (visível apenas para admin) -->
+            <div class="admin-panel" id="adminPanel">
+                <h2>Painel de Administração</h2>
+                <div class="admin-tabs">
+                    <button class="tab-btn active" onclick="switchTab('users')">Usuários</button>
+                    <button class="tab-btn" onclick="switchTab('missions')">Missões</button>
+                </div>
+
+                <!-- Aba de Usuários -->
+                <div class="tab-content active" id="usersTab">
+                    <div class="users-list" id="usersList">
+                        <!-- Lista de usuários será carregada aqui -->
+                    </div>
+                </div>
+
+                <!-- Aba de Missões -->
+                <div class="tab-content" id="missionsTab">
+                    <h3>Adicionar Nova Missão</h3>
+                    <form id="missionForm">
+                        <div class="form-group">
+                            <label for="missionTitle">Título da Missão</label>
+                            <input type="text" id="missionTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="missionDescription">Descrição</label>
+                            <textarea id="missionDescription" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="missionReward">Recompensa (R$)</label>
+                            <input type="number" id="missionReward" required>
+                        </div>
+                        <button type="button" class="btn-admin success" onclick="addMission()">Adicionar Missão</button>
+                    </form>
                 </div>
             </div>
-        </div>
 
-        <div class="search-status">
-            <div class="status-line">
-                <span class="status-icon">🔍</span>
-                <span>Status: <span id="searchStatus" class="searching-text">Parado</span></span>
+            <!-- Seção do Chat -->
+            <div class="chat-section">
+                <h2>Chat da Comunidade</h2>
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Mensagens serão carregadas aqui -->
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua mensagem...">
+                        <button class="btn-send" onclick="sendMessage()">Enviar</button>
+                    </div>
+                </div>
             </div>
-            <div class="status-line">
-                <span class="status-icon">⏱️</span>
-                <span>Último achado: <span id="lastGain">-</span></span>
-            </div>
-            <div class="status-line">
-                <span class="status-icon">📊</span>
-                <span>Total de achados: <span id="totalGains">0</span></span>
-            </div>
-            <div id="lastGainDisplay" class="last-gain" style="display: none;"></div>
-        </div>
-
-        <div class="button-container">
-            <button class="btn btn-start" id="startBtn" onclick="startSearch()">▶ Iniciar Busca</button>
-            <button class="btn btn-stop" id="stopBtn" onclick="stopSearch()" disabled>⏹ Parar Busca</button>
-        </div>
-
-        <div class="log-container" id="logContainer">
-            <div class="log-entry">🚀 Sistema inicializado. Clique em "Iniciar Busca" para começar a vasculhar...</div>
-        </div>
-
-        <div class="info-text">
-            💡 A cada 1-3 segundos encontraremos entre 0,0001 e 0,001 centavos<br>
-            🔄 A busca é infinita até você interromper
         </div>
     </div>
 
     <script>
-        let totalValue = 15.33;
-        const initialValue = 15.33;
-        const targetValue = 16.00;
-        let searchInterval = null;
-        let isSearching = false;
-        let gainsCount = 0;
+        // Banco de dados simulado
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        let missions = JSON.parse(localStorage.getItem('missions')) || [];
+        let messages = JSON.parse(localStorage.getItem('messages')) || [];
+        let currentUser = null;
 
-        function formatCurrency(value) {
-            return value.toFixed(2).replace('.', ',');
+        // Missões iniciais
+        const initialMissions = [
+            {
+                id: 1,
+                title: "Primeiros Passos",
+                description: "Complete seu perfil e apresente-se no chat da comunidade.",
+                reward: 10.00,
+                active: true
+            },
+            {
+                id: 2,
+                title: "Indique um Amigo",
+                description: "Convide um amigo para se juntar ao Clube da Fortuna.",
+                reward: 25.00,
+                active: true
+            },
+            {
+                id: 3,
+                title: "Ajude um Membro",
+                description: "Responda dúvidas de outros membros no chat e seja útil.",
+                reward: 15.00,
+                active: true
+            }
+        ];
+
+        // Inicializar missões se não existirem
+        if (missions.length === 0) {
+            missions = initialMissions;
+            localStorage.setItem('missions', JSON.stringify(missions));
         }
 
-        function updateDisplay() {
-            document.getElementById('totalDisplay').textContent = `R$ ${formatCurrency(totalValue)}`;
-            
-            // Calculate progress towards R$ 16,00
-            const progress = ((totalValue - initialValue) / (targetValue - initialValue)) * 100;
-            const progressPercent = Math.min(100, Math.max(0, progress));
-            
-            document.getElementById('progressBar').style.width = `${progressPercent}%`;
-            document.getElementById('progressPercentage').textContent = `${progressPercent.toFixed(2)}%`;
-        }
-
-        function addLog(message) {
-            const logContainer = document.getElementById('logContainer');
-            const logEntry = document.createElement('div');
-            logEntry.className = 'log-entry';
-            
-            const now = new Date();
-            const timestamp = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
-            
-            logEntry.textContent = `[${timestamp}] ${message}`;
-            logContainer.insertBefore(logEntry, logContainer.firstChild);
-            
-            // Keep only last 20 logs
-            while (logContainer.children.length > 20) {
-                logContainer.removeChild(logContainer.lastChild);
+        // Criar usuário admin padrão se não existir
+        function createAdminUser() {
+            const adminExists = users.some(u => u.username === 'wilsonadm');
+            if (!adminExists) {
+                users.push({
+                    username: 'wilsonadm',
+                    password: 'Wsds1997',
+                    isAdmin: true,
+                    active: true,
+                    completedMissions: []
+                });
+                localStorage.setItem('users', JSON.stringify(users));
             }
         }
 
-        function findMoney() {
-            if (!isSearching) return;
+        // Chamar a função para criar admin
+        createAdminUser();
 
-            // Generate random gain between 0.0001 and 0.001
-            const gain = Math.random() * 0.0009 + 0.0001;
-            const previousTotal = totalValue;
-            totalValue += gain;
-            gainsCount++;
+        // Funções de Login/Registro
+        function showRegister() {
+            const username = prompt("Digite um nome de usuário:");
+            if (!username) return;
 
-            // Update display
-            updateDisplay();
+            const password = prompt("Digite uma senha:");
+            if (!password) return;
 
-            // Format the gain for display
-            const gainFormatted = gain.toFixed(4).replace('.', ',');
-            const totalFormatted = totalValue.toFixed(2).replace('.', ',');
+            const userExists = users.some(u => u.username === username);
+            if (userExists) {
+                showError("Usuário já existe!");
+                return;
+            }
 
-            // Update status
-            document.getElementById('lastGain').textContent = `R$ ${gainFormatted}`;
-            document.getElementById('totalGains').textContent = gainsCount;
+            users.push({
+                username: username,
+                password: password,
+                isAdmin: false,
+                active: true,
+                completedMissions: []
+            });
 
-            // Show last gain highlight
-            const lastGainDisplay = document.getElementById('lastGainDisplay');
-            lastGainDisplay.textContent = `+ R$ ${gainFormatted}`;
-            lastGainDisplay.style.display = 'inline-block';
-            
-            // Add to log
-            addLog(`💰 Encontrou R$ ${gainFormatted} | Total: R$ ${totalFormatted}`);
+            localStorage.setItem('users', JSON.stringify(users));
+            alert("Usuário criado com sucesso! Faça o login.");
+        }
 
-            // Remove highlight after 2 seconds
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                if (!user.active) {
+                    showError("Usuário desativado. Contate o administrador.");
+                    return;
+                }
+
+                currentUser = user;
+                document.getElementById('currentUser').textContent = username;
+                document.getElementById('welcomeMessage').innerHTML = `Bem-vindo, ${username}!`;
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('dashboard').classList.add('active');
+
+                // Mostrar painel admin se for admin
+                if (user.isAdmin) {
+                    document.getElementById('adminPanel').classList.add('active');
+                    loadUsersList();
+                }
+
+                loadMissions();
+                loadMessages();
+            } else {
+                showError("Usuário ou senha inválidos!");
+            }
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
             setTimeout(() => {
-                lastGainDisplay.style.display = 'none';
-            }, 2000);
-
-            // Random search messages
-            const searchMessages = [
-                "Vasculhando fóruns antigos...",
-                "Procurando em sites esquecidos...",
-                "Revirando arquivos da deep web...",
-                "Verificando carteiras digitais abandonadas...",
-                "Analisando cookies expirados...",
-                "Buscando em servidores antigos...",
-                "Examinando backups esquecidos...",
-                "Procurando em contas inativas...",
-                "Verificando promoções antigas...",
-                "Vasculhando emails não lidos..."
-            ];
-            
-            if (Math.random() < 0.3) { // 30% chance to update status message
-                const randomMessage = searchMessages[Math.floor(Math.random() * searchMessages.length)];
-                document.getElementById('searchStatus').textContent = randomMessage;
-            }
+                errorDiv.style.display = 'none';
+            }, 3000);
         }
 
-        function startSearch() {
-            if (isSearching) return;
-            
-            isSearching = true;
-            document.getElementById('startBtn').disabled = true;
-            document.getElementById('stopBtn').disabled = false;
-            document.getElementById('searchStatus').textContent = "Iniciando busca...";
-            
-            addLog("🚀 Iniciando busca por dinheiro perdido...");
-            
-            // Clear any existing interval
-            if (searchInterval) {
-                clearInterval(searchInterval);
-            }
-            
-            // Start new interval with random timing between 1 and 3 seconds
-            function scheduleNext() {
-                if (!isSearching) return;
+        function logout() {
+            currentUser = null;
+            document.getElementById('loginContainer').style.display = 'flex';
+            document.getElementById('dashboard').classList.remove('active');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        // Funções de Missões
+        function loadMissions() {
+            const missionsGrid = document.getElementById('missionsGrid');
+            missionsGrid.innerHTML = '';
+
+            missions.filter(m => m.active).forEach(mission => {
+                const completed = currentUser.completedMissions.includes(mission.id);
+                const card = document.createElement('div');
+                card.className = 'mission-card';
+                card.innerHTML = `
+                    <h3>${mission.title}</h3>
+                    <p>${mission.description}</p>
+                    <div class="mission-reward">R$ ${mission.reward.toFixed(2)}</div>
+                    <button class="btn-mission ${completed ? 'completed' : ''}" 
+                            onclick="completeMission(${mission.id})"
+                            ${completed ? 'disabled' : ''}>
+                        ${completed ? 'Concluída' : 'Concluir Missão'}
+                    </button>
+                `;
+                missionsGrid.appendChild(card);
+            });
+        }
+
+        function completeMission(missionId) {
+            if (!currentUser.completedMissions.includes(missionId)) {
+                currentUser.completedMissions.push(missionId);
                 
-                findMoney();
-                
-                // Schedule next find with random delay
-                const nextDelay = Math.random() * 2000 + 1000; // 1 to 3 seconds
-                setTimeout(scheduleNext, nextDelay);
+                // Atualizar usuário no banco de dados
+                const userIndex = users.findIndex(u => u.username === currentUser.username);
+                users[userIndex] = currentUser;
+                localStorage.setItem('users', JSON.stringify(users));
+
+                alert(`Parabéns! Você completou a missão e ganhou R$ ${missions.find(m => m.id === missionId).reward.toFixed(2)}!`);
+                loadMissions();
             }
-            
-            scheduleNext();
         }
 
-        function stopSearch() {
-            isSearching = false;
-            
-            if (searchInterval) {
-                clearInterval(searchInterval);
-                searchInterval = null;
+        // Funções do Admin
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            if (tab === 'users') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('usersTab').classList.add('active');
+                loadUsersList();
+            } else {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('missionsTab').classList.add('active');
             }
-            
-            document.getElementById('startBtn').disabled = false;
-            document.getElementById('stopBtn').disabled = true;
-            document.getElementById('searchStatus').textContent = "Parado";
-            
-            addLog("⏹ Busca interrompida pelo usuário");
-            addLog(`📊 Total acumulado: R$ ${totalValue.toFixed(2).replace('.', ',')}`);
         }
 
-        // Initialize display
-        updateDisplay();
-        addLog("💰 Meta: R$ 16,00 | Inicial: R$ 15,33");
+        function loadUsersList() {
+            const usersList = document.getElementById('usersList');
+            usersList.innerHTML = '';
 
-        // Add keyboard support (Space to start/stop)
-        document.addEventListener('keydown', function(event) {
-            if (event.code === 'Space' && !event.repeat) {
-                event.preventDefault();
-                if (isSearching) {
-                    stopSearch();
-                } else {
-                    startSearch();
+            users.forEach(user => {
+                if (user.username !== 'wilsonadm') {
+                    const userItem = document.createElement('div');
+                    userItem.className = 'user-item';
+                    userItem.innerHTML = `
+                        <div class="user-details">
+                            <div class="user-name">${user.username}</div>
+                            <div class="user-status">${user.active ? 'Ativo' : 'Inativo'} | Missões: ${user.completedMissions.length}</div>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn-admin warning" onclick="resetPassword('${user.username}')">Resetar Senha</button>
+                            <button class="btn-admin ${user.active ? 'danger' : 'success'}" 
+                                    onclick="toggleUserStatus('${user.username}')">
+                                ${user.active ? 'Desativar' : 'Ativar'}
+                            </button>
+                        </div>
+                    `;
+                    usersList.appendChild(userItem);
+                }
+            });
+        }
+
+        function resetPassword(username) {
+            const userIndex = users.findIndex(u => u.username === username);
+            if (userIndex !== -1) {
+                const newPassword = prompt("Digite a nova senha para o usuário " + username + ":");
+                if (newPassword) {
+                    users[userIndex].password = newPassword;
+                    localStorage.setItem('users', JSON.stringify(users));
+                    alert("Senha alterada com sucesso!");
                 }
             }
-        });
+        }
+
+        function toggleUserStatus(username) {
+            const userIndex = users.findIndex(u => u.username === username);
+            if (userIndex !== -1) {
+                users[userIndex].active = !users[userIndex].active;
+                localStorage.setItem('users', JSON.stringify(users));
+                loadUsersList();
+            }
+        }
+
+        function addMission() {
+            const title = document.getElementById('missionTitle').value;
+            const description = document.getElementById('missionDescription').value;
+            const reward = parseFloat(document.getElementById('missionReward').value);
+
+            if (title && description && reward) {
+                const newMission = {
+                    id: missions.length + 1,
+                    title: title,
+                    description: description,
+                    reward: reward,
+                    active: true
+                };
+
+                missions.push(newMission);
+                localStorage.setItem('missions', JSON.stringify(missions));
+
+                // Limpar formulário
+                document.getElementById('missionTitle').value = '';
+                document.getElementById('missionDescription').value = '';
+                document.getElementById('missionReward').value = '';
+
+                alert("Missão adicionada com sucesso!");
+                loadMissions();
+            } else {
+                alert("Preencha todos os campos!");
+            }
+        }
+
+        // Funções do Chat
+        function loadMessages() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '';
+
+            messages.slice(-50).forEach(msg => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message';
+                messageDiv.innerHTML = `
+                    <div class="message-user">${msg.user}</div>
+                    <div class="message-time">${msg.time}</div>
+                    <div class="message-text">${msg.text}</div>
+                `;
+                chatMessages.appendChild(messageDiv);
+            });
+
+            // Scroll para o final
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+
+            if (text && currentUser) {
+                const message = {
+                    user: currentUser.username,
+                    text: text,
+                    time: new Date().toLocaleTimeString()
+                };
+
+                messages.push(message);
+                localStorage.setItem('messages', JSON.stringify(messages));
+
+                input.value = '';
+                loadMessages();
+            }
+        }
+
+        // Atualizar chat a cada 3 segundos
+        setInterval(loadMessages, 3000);
     </script>
 </body>
 </html>
