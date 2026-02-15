@@ -22,6 +22,9 @@
             color: white;
             padding: 1rem 2rem;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header-container {
@@ -39,6 +42,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            cursor: pointer;
         }
 
         .logo p {
@@ -81,6 +85,18 @@
             max-width: 400px;
             border-radius: 10px;
             box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .modal-content h2 {
@@ -181,6 +197,11 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
         }
 
         .article-form {
@@ -197,7 +218,8 @@
         }
 
         .article-form input,
-        .article-form textarea {
+        .article-form textarea,
+        .article-form select {
             width: 100%;
             padding: 0.8rem;
             margin-bottom: 1rem;
@@ -210,6 +232,11 @@
             resize: vertical;
         }
 
+        .article-form select {
+            background-color: white;
+            cursor: pointer;
+        }
+
         .publish-btn {
             background: linear-gradient(135deg, #27ae60, #2ecc71);
             color: white;
@@ -218,13 +245,21 @@
             border-radius: 5px;
             font-weight: bold;
             cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .publish-btn:hover {
+            transform: scale(1.02);
         }
 
         /* Artigos */
-        .articles-section {
+        .main-content {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
         }
 
         .articles-section h2 {
@@ -235,7 +270,7 @@
 
         .articles-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: 1fr;
             gap: 2rem;
         }
 
@@ -244,21 +279,35 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
         }
 
         .article-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
         }
 
         .article-image {
-            height: 200px;
-            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            height: 250px;
+            background-color: #f1c40f;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 3rem;
+            overflow: hidden;
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .article-card:hover .article-image img {
+            transform: scale(1.05);
         }
 
         .article-content {
@@ -268,17 +317,169 @@
         .article-content h3 {
             color: #2c3e50;
             margin-bottom: 0.5rem;
+            font-size: 1.3rem;
         }
 
-        .article-date {
+        .article-meta {
+            display: flex;
+            gap: 1rem;
             color: #7f8c8d;
             font-size: 0.9rem;
             margin-bottom: 1rem;
         }
 
+        .article-category {
+            background-color: #f1c40f;
+            color: #1a2a3a;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
         .article-excerpt {
             color: #34495e;
             line-height: 1.6;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar h3 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f1c40f;
+        }
+
+        .trending-articles {
+            list-style: none;
+        }
+
+        .trending-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #ecf0f1;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .trending-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .trending-number {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .trending-info h4 {
+            color: #2c3e50;
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .trending-info p {
+            color: #7f8c8d;
+            font-size: 0.8rem;
+        }
+
+        .trending-views {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #f39c12;
+            font-size: 0.8rem;
+        }
+
+        /* Artigo Completo */
+        .full-article {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .full-article-header {
+            margin-bottom: 2rem;
+        }
+
+        .full-article-header h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .full-article-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .full-article-content {
+            line-height: 1.8;
+            color: #34495e;
+        }
+
+        .full-article-content p {
+            margin-bottom: 1rem;
+        }
+
+        .back-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Categorias */
+        .category-filter {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 0.5rem 1rem;
+            background-color: #ecf0f1;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            color: white;
         }
 
         footer {
@@ -293,7 +494,7 @@
 <body>
     <header>
         <div class="header-container">
-            <div class="logo">
+            <div class="logo" onclick="showHome()">
                 <h1>Clube da Fortuna</h1>
                 <p>Seu guia para independência financeira</p>
             </div>
@@ -332,20 +533,79 @@
             <div class="article-form">
                 <h3>Escrever Novo Artigo</h3>
                 <input type="text" id="articleTitle" placeholder="Título do Artigo" required>
-                <input type="text" id="articleImage" placeholder="URL da Imagem (opcional)">
+                <input type="url" id="articleImage" placeholder="URL da Imagem (opcional - deixe vazio para usar ícone)">
+                <select id="articleCategory" required>
+                    <option value="">Selecione uma categoria</option>
+                    <option value="Investimentos">Investimentos</option>
+                    <option value="Renda Extra">Renda Extra</option>
+                    <option value="Economia">Economia</option>
+                    <option value="Ações">Ações</option>
+                    <option value="Fundos Imobiliários">Fundos Imobiliários</option>
+                    <option value="Tesouro Direto">Tesouro Direto</option>
+                </select>
                 <textarea id="articleContent" placeholder="Escreva seu artigo aqui..." required></textarea>
                 <button class="publish-btn" onclick="publishArticle()">Publicar Artigo</button>
             </div>
         </div>
     </div>
 
-    <!-- Artigos Publicados -->
-    <section class="articles-section">
-        <h2>Últimos Artigos</h2>
-        <div id="articlesGrid" class="articles-grid">
-            <!-- Artigos serão inseridos aqui via JavaScript -->
+    <!-- Conteúdo Principal -->
+    <div class="main-content">
+        <!-- Artigos -->
+        <div class="articles-section">
+            <h2>Últimos Artigos</h2>
+            
+            <div class="category-filter">
+                <button class="category-btn active" onclick="filterByCategory('todos')">Todos</button>
+                <button class="category-btn" onclick="filterByCategory('Investimentos')">Investimentos</button>
+                <button class="category-btn" onclick="filterByCategory('Renda Extra')">Renda Extra</button>
+                <button class="category-btn" onclick="filterByCategory('Economia')">Economia</button>
+                <button class="category-btn" onclick="filterByCategory('Ações')">Ações</button>
+                <button class="category-btn" onclick="filterByCategory('Fundos Imobiliários')">FIIs</button>
+            </div>
+
+            <div id="articlesGrid" class="articles-grid">
+                <!-- Artigos serão inseridos aqui via JavaScript -->
+            </div>
+
+            <div id="fullArticleContainer" style="display: none;">
+                <button class="back-btn" onclick="showHome()">← Voltar para todos os artigos</button>
+                <div id="fullArticle" class="full-article"></div>
+            </div>
         </div>
-    </section>
+
+        <!-- Sidebar com artigos mais acessados -->
+        <div class="sidebar">
+            <h3>📈 Artigos Mais Acessados</h3>
+            <div id="trendingArticles" class="trending-articles">
+                <!-- Artigos mais acessados serão inseridos aqui -->
+            </div>
+
+            <h3 style="margin-top: 2rem;">📚 Categorias</h3>
+            <div style="margin-top: 1rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer;" onclick="filterByCategory('Investimentos')">
+                    <span>Investimentos</span>
+                    <span id="catInvestimentos">0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer;" onclick="filterByCategory('Renda Extra')">
+                    <span>Renda Extra</span>
+                    <span id="catRendaExtra">0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer;" onclick="filterByCategory('Economia')">
+                    <span>Economia</span>
+                    <span id="catEconomia">0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer;" onclick="filterByCategory('Ações')">
+                    <span>Ações</span>
+                    <span id="catAcoes">0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer;" onclick="filterByCategory('Fundos Imobiliários')">
+                    <span>Fundos Imobiliários</span>
+                    <span id="catFIIs">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <p>&copy; 2024 Clube da Fortuna - Todos os direitos reservados</p>
@@ -360,6 +620,7 @@
 
         // Array para armazenar os artigos
         let articles = JSON.parse(localStorage.getItem('articles')) || [];
+        let currentCategory = 'todos';
 
         // Funções do Modal
         function openModal() {
@@ -388,12 +649,10 @@
             const password = document.getElementById('password').value;
 
             if (username === ADMIN_USER.username && password === ADMIN_USER.password) {
-                // Login bem-sucedido
                 sessionStorage.setItem('loggedIn', 'true');
                 closeModal();
                 showAdminArea();
             } else {
-                // Login falhou
                 document.getElementById('errorMessage').style.display = 'block';
             }
         }
@@ -402,16 +661,18 @@
         function showAdminArea() {
             if (sessionStorage.getItem('loggedIn') === 'true') {
                 document.getElementById('adminArea').style.display = 'block';
-                document.querySelector('.articles-section').style.marginTop = '0';
             }
         }
 
         // Verificar se já está logado ao carregar a página
         window.onload = function() {
-            displayArticles();
             if (sessionStorage.getItem('loggedIn') === 'true') {
                 showAdminArea();
             }
+            addSampleArticles();
+            updateCategoryCounts();
+            displayArticles();
+            updateTrendingArticles();
         }
 
         // Logout
@@ -424,16 +685,20 @@
         function publishArticle() {
             const title = document.getElementById('articleTitle').value;
             const image = document.getElementById('articleImage').value;
+            const category = document.getElementById('articleCategory').value;
             const content = document.getElementById('articleContent').value;
 
-            if (title && content) {
+            if (title && category && content) {
                 const newArticle = {
                     id: Date.now(),
                     title: title,
-                    image: image || '📰',
+                    image: image || null,
+                    category: category,
                     content: content,
-                    excerpt: content.substring(0, 150) + '...',
-                    date: new Date().toLocaleDateString('pt-BR')
+                    excerpt: content.substring(0, 200) + '...',
+                    date: new Date().toLocaleDateString('pt-BR'),
+                    views: 0,
+                    fullContent: content
                 };
 
                 articles.unshift(newArticle);
@@ -442,10 +707,12 @@
                 // Limpar formulário
                 document.getElementById('articleTitle').value = '';
                 document.getElementById('articleImage').value = '';
+                document.getElementById('articleCategory').value = '';
                 document.getElementById('articleContent').value = '';
                 
-                // Atualizar exibição
+                updateCategoryCounts();
                 displayArticles();
+                updateTrendingArticles();
                 
                 alert('Artigo publicado com sucesso!');
             } else {
@@ -456,61 +723,170 @@
         // Exibir artigos
         function displayArticles() {
             const grid = document.getElementById('articlesGrid');
+            const filteredArticles = currentCategory === 'todos' 
+                ? articles 
+                : articles.filter(a => a.category === currentCategory);
             
-            if (articles.length === 0) {
+            if (filteredArticles.length === 0) {
                 grid.innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #7f8c8d;">
-                        <h3>Nenhum artigo publicado ainda.</h3>
-                        <p>Faça login para escrever o primeiro artigo!</p>
+                    <div style="text-align: center; padding: 3rem; color: #7f8c8d;">
+                        <h3>Nenhum artigo encontrado nesta categoria.</h3>
                     </div>
                 `;
                 return;
             }
 
-            grid.innerHTML = articles.map(article => `
-                <div class="article-card">
+            grid.innerHTML = filteredArticles.map(article => `
+                <div class="article-card" onclick="showFullArticle(${article.id})">
                     <div class="article-image">
-                        ${article.image === '📰' ? '📰' : `<img src="${article.image}" alt="${article.title}" style="width:100%; height:100%; object-fit:cover;">`}
+                        ${article.image ? 
+                            `<img src="${article.image}" alt="${article.title}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23f1c40f%22/><text x=%2250%22 y=%2250%22 font-size=%2250%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22>📰</text></svg>'">` 
+                            : '📰'
+                        }
                     </div>
                     <div class="article-content">
                         <h3>${article.title}</h3>
-                        <div class="article-date">${article.date}</div>
+                        <div class="article-meta">
+                            <span class="article-category">${article.category}</span>
+                            <span>${article.date}</span>
+                            <span>👁️ ${article.views || 0} visualizações</span>
+                        </div>
                         <p class="article-excerpt">${article.excerpt}</p>
                     </div>
                 </div>
             `).join('');
         }
 
-        // Adicionar alguns artigos de exemplo
+        // Mostrar artigo completo
+        function showFullArticle(articleId) {
+            const article = articles.find(a => a.id === articleId);
+            if (article) {
+                // Incrementar visualizações
+                article.views = (article.views || 0) + 1;
+                localStorage.setItem('articles', JSON.stringify(articles));
+                
+                document.querySelector('.articles-grid').style.display = 'none';
+                document.querySelector('.category-filter').style.display = 'none';
+                document.getElementById('fullArticleContainer').style.display = 'block';
+                
+                document.getElementById('fullArticle').innerHTML = `
+                    <div class="full-article-header">
+                        <h2>${article.title}</h2>
+                        <div class="article-meta">
+                            <span class="article-category">${article.category}</span>
+                            <span>${article.date}</span>
+                            <span>👁️ ${article.views} visualizações</span>
+                        </div>
+                    </div>
+                    ${article.image ? 
+                        `<img src="${article.image}" alt="${article.title}" class="full-article-image" onerror="this.style.display='none'">` 
+                        : ''
+                    }
+                    <div class="full-article-content">
+                        ${article.fullContent || article.content}
+                    </div>
+                `;
+                
+                updateTrendingArticles();
+            }
+        }
+
+        // Voltar para a página inicial
+        function showHome() {
+            document.querySelector('.articles-grid').style.display = 'grid';
+            document.querySelector('.category-filter').style.display = 'flex';
+            document.getElementById('fullArticleContainer').style.display = 'none';
+        }
+
+        // Filtrar por categoria
+        function filterByCategory(category) {
+            currentCategory = category;
+            
+            // Atualizar botões ativos
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            displayArticles();
+        }
+
+        // Atualizar contagem de categorias
+        function updateCategoryCounts() {
+            document.getElementById('catInvestimentos').textContent = articles.filter(a => a.category === 'Investimentos').length;
+            document.getElementById('catRendaExtra').textContent = articles.filter(a => a.category === 'Renda Extra').length;
+            document.getElementById('catEconomia').textContent = articles.filter(a => a.category === 'Economia').length;
+            document.getElementById('catAcoes').textContent = articles.filter(a => a.category === 'Ações').length;
+            document.getElementById('catFIIs').textContent = articles.filter(a => a.category === 'Fundos Imobiliários').length;
+        }
+
+        // Atualizar artigos mais acessados
+        function updateTrendingArticles() {
+            const trending = [...articles]
+                .sort((a, b) => (b.views || 0) - (a.views || 0))
+                .slice(0, 5);
+            
+            const trendingHtml = trending.map((article, index) => `
+                <div class="trending-item" onclick="showFullArticle(${article.id})">
+                    <div class="trending-number">${index + 1}</div>
+                    <div class="trending-info">
+                        <h4>${article.title}</h4>
+                        <div class="trending-views">
+                            <span>👁️</span>
+                            <span>${article.views || 0} visualizações</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('trendingArticles').innerHTML = trendingHtml || '<p>Nenhum artigo acessado ainda.</p>';
+        }
+
+        // Adicionar artigos de exemplo com imagens reais
         function addSampleArticles() {
             if (articles.length === 0) {
                 const sampleArticles = [
                     {
                         id: 1,
                         title: "Comece a Investir com Pouco Dinheiro",
-                        image: "💰",
-                        content: "Muitas pessoas acreditam que é preciso muito dinheiro para começar a investir, mas isso não é verdade. Com disciplina e conhecimento, é possível começar com valores baixos e construir um patrimônio sólido ao longo do tempo...",
+                        image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=500&auto=format",
+                        category: "Investimentos",
+                        content: "Muitas pessoas acreditam que é preciso muito dinheiro para começar a investir, mas isso não é verdade. Com disciplina e conhecimento, é possível começar com valores baixos e construir um patrimônio sólido ao longo do tempo. Neste artigo, vamos explorar as melhores opções para quem está começando com pouco capital...",
+                        fullContent: "<p>Muitas pessoas acreditam que é preciso muito dinheiro para começar a investir, mas isso não é verdade. Com disciplina e conhecimento, é possível começar com valores baixos e construir um patrimônio sólido ao longo do tempo.</p><p><strong>1. Tesouro Direto</strong><br>O Tesouro Direto é uma das opções mais seguras para iniciantes. Com apenas R$30, você pode começar a investir em títulos públicos federais.</p><p><strong>2. CDBs</strong><br>Os Certificados de Depósito Bancário (CDBs) são emitidos por bancos e muitas vezes aceitam investimentos iniciais baixos.</p><p><strong>3. Fundos de Investimento</strong><br>Fundos permitem que você comece com pouco dinheiro e tenha uma carteira diversificada profissionalmente.</p>",
                         excerpt: "Muitas pessoas acreditam que é preciso muito dinheiro para começar a investir...",
-                        date: "15/02/2024"
+                        date: "15/02/2024",
+                        views: 150
                     },
                     {
                         id: 2,
                         title: "Os Melhores Investimentos para Iniciantes",
-                        image: "📈",
+                        image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=500&auto=format",
+                        category: "Investimentos",
                         content: "Para quem está começando no mundo dos investimentos, é importante escolher opções mais seguras e de fácil entendimento. Tesouro Direto, CDBs e Fundos Imobiliários são ótimas opções para dar os primeiros passos...",
-                        excerpt: "Para quem está começando no mundo dos investimentos, é importante escolher opções mais seguras...",
-                        date: "10/02/2024"
+                        fullContent: "<p>Para quem está começando no mundo dos investimentos, é importante escolher opções mais seguras e de fácil entendimento.</p><p><strong>Tesouro Direto</strong><br>Ideal para reserva de emergência e objetivos de curto prazo.</p><p><strong>CDBs</strong><br>Ótima opção para quem busca rentabilidade superior à poupança.</p><p><strong>Fundos Imobiliários</strong><br>Permite investir em imóveis com pouco dinheiro.</p>",
+                        excerpt: "Para quem está começando no mundo dos investimentos...",
+                        date: "10/02/2024",
+                        views: 120
+                    },
+                    {
+                        id: 3,
+                        title: "5 Maneiras de Fazer Renda Extra",
+                        image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500&auto=format",
+                        category: "Renda Extra",
+                        content: "Descubra formas práticas de aumentar sua renda mensal com trabalhos online, investimentos em dividendos e muito mais...",
+                        fullContent: "<p>Existem diversas maneiras de aumentar sua renda mensal. Confira as melhores opções:</p><p><strong>1. Trabalho Freelancer</strong><br>Plataformas como Workana e 99Freelas oferecem oportunidades.</p><p><strong>2. Investimento em Dividendos</strong><br>Ações que pagam bons dividendos podem gerar renda passiva.</p>",
+                        excerpt: "Descubra formas práticas de aumentar sua renda mensal...",
+                        date: "05/02/2024",
+                        views: 90
                     }
                 ];
                 
                 articles = sampleArticles;
                 localStorage.setItem('articles', JSON.stringify(articles));
-                displayArticles();
+                updateCategoryCounts();
+                updateTrendingArticles();
             }
         }
-
-        // Chamar função para adicionar artigos de exemplo
-        addSampleArticles();
     </script>
 </body>
 </html>
