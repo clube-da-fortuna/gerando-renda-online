@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Dinheiro Perdido na Internet</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .stats-container {
+            background: #f7f9fc;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .total-found {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .total-label {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .total-value {
+            font-size: 48px;
+            font-weight: bold;
+            color: #28a745;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-container {
+            margin: 20px 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 15px;
+            transition: width 0.3s ease;
+            width: 0%;
+            position: relative;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        .search-status {
+            background: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            border: 1px solid #e0e0e0;
+        }
+
+        .status-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .status-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .searching-text {
+            font-family: monospace;
+            color: #007bff;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0.5; }
+        }
+
+        .last-gain {
+            background: #e8f5e9;
+            border-radius: 8px;
+            padding: 8px 15px;
+            display: inline-block;
+            color: #2e7d32;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-stop {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .btn-stop:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .log-container {
+            background: #1e1e1e;
+            color: #0f0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            max-height: 150px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+            border: 1px solid #333;
+        }
+
+        .log-entry {
+            margin: 3px 0;
+            border-bottom: 1px solid #333;
+            padding-bottom: 3px;
+        }
+
+        .info-text {
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+            margin-top: 15px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Caçador de Dinheiro Perdido</h1>
+        <div class="subtitle">Vasculhando a internet atrás de centavos esquecidos...</div>
+
+        <div class="stats-container">
+            <div class="total-found">
+                <div class="total-label">Total Encontrado</div>
+                <div class="total-value" id="totalDisplay">R$ 15,33</div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span>Progresso para R$ 16,00</span>
+                    <span id="progressPercentage">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-status">
+            <div class="status-line">
+                <span class="status-icon">🔍</span>
+                <span>Status: <span id="searchStatus" class="searching-text">Parado</span></span>
+            </div>
+            <div class="status-line">
+                <span class="status-icon">⏱️</span>
+                <span>Último achado: <span id="lastGain">-</span></span>
+            </div>
+            <div class="status-line">
+                <span class="status-icon">📊</span>
+                <span>Total de achados: <span id="totalGains">0</span></span>
+            </div>
+            <div id="lastGainDisplay" class="last-gain" style="display: none;"></div>
+        </div>
+
+        <div class="button-container">
+            <button class="btn btn-start" id="startBtn" onclick="startSearch()">▶ Iniciar Busca</button>
+            <button class="btn btn-stop" id="stopBtn" onclick="stopSearch()" disabled>⏹ Parar Busca</button>
+        </div>
+
+        <div class="log-container" id="logContainer">
+            <div class="log-entry">🚀 Sistema inicializado. Clique em "Iniciar Busca" para começar a vasculhar...</div>
+        </div>
+
+        <div class="info-text">
+            💡 A cada 1-3 segundos encontraremos entre 0,0001 e 0,001 centavos<br>
+            🔄 A busca é infinita até você interromper
+        </div>
+    </div>
+
+    <script>
+        let totalValue = 15.33;
+        const initialValue = 15.33;
+        const targetValue = 16.00;
+        let searchInterval = null;
+        let isSearching = false;
+        let gainsCount = 0;
+
+        function formatCurrency(value) {
+            return value.toFixed(2).replace('.', ',');
+        }
+
+        function updateDisplay() {
+            document.getElementById('totalDisplay').textContent = `R$ ${formatCurrency(totalValue)}`;
+            
+            // Calculate progress towards R$ 16,00
+            const progress = ((totalValue - initialValue) / (targetValue - initialValue)) * 100;
+            const progressPercent = Math.min(100, Math.max(0, progress));
+            
+            document.getElementById('progressBar').style.width = `${progressPercent}%`;
+            document.getElementById('progressPercentage').textContent = `${progressPercent.toFixed(2)}%`;
+        }
+
+        function addLog(message) {
+            const logContainer = document.getElementById('logContainer');
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            
+            const now = new Date();
+            const timestamp = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+            
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            logContainer.insertBefore(logEntry, logContainer.firstChild);
+            
+            // Keep only last 20 logs
+            while (logContainer.children.length > 20) {
+                logContainer.removeChild(logContainer.lastChild);
+            }
+        }
+
+        function findMoney() {
+            if (!isSearching) return;
+
+            // Generate random gain between 0.0001 and 0.001
+            const gain = Math.random() * 0.0009 + 0.0001;
+            const previousTotal = totalValue;
+            totalValue += gain;
+            gainsCount++;
+
+            // Update display
+            updateDisplay();
+
+            // Format the gain for display
+            const gainFormatted = gain.toFixed(4).replace('.', ',');
+            const totalFormatted = totalValue.toFixed(2).replace('.', ',');
+
+            // Update status
+            document.getElementById('lastGain').textContent = `R$ ${gainFormatted}`;
+            document.getElementById('totalGains').textContent = gainsCount;
+
+            // Show last gain highlight
+            const lastGainDisplay = document.getElementById('lastGainDisplay');
+            lastGainDisplay.textContent = `+ R$ ${gainFormatted}`;
+            lastGainDisplay.style.display = 'inline-block';
+            
+            // Add to log
+            addLog(`💰 Encontrou R$ ${gainFormatted} | Total: R$ ${totalFormatted}`);
+
+            // Remove highlight after 2 seconds
+            setTimeout(() => {
+                lastGainDisplay.style.display = 'none';
+            }, 2000);
+
+            // Random search messages
+            const searchMessages = [
+                "Vasculhando fóruns antigos...",
+                "Procurando em sites esquecidos...",
+                "Revirando arquivos da deep web...",
+                "Verificando carteiras digitais abandonadas...",
+                "Analisando cookies expirados...",
+                "Buscando em servidores antigos...",
+                "Examinando backups esquecidos...",
+                "Procurando em contas inativas...",
+                "Verificando promoções antigas...",
+                "Vasculhando emails não lidos..."
+            ];
+            
+            if (Math.random() < 0.3) { // 30% chance to update status message
+                const randomMessage = searchMessages[Math.floor(Math.random() * searchMessages.length)];
+                document.getElementById('searchStatus').textContent = randomMessage;
+            }
+        }
+
+        function startSearch() {
+            if (isSearching) return;
+            
+            isSearching = true;
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('stopBtn').disabled = false;
+            document.getElementById('searchStatus').textContent = "Iniciando busca...";
+            
+            addLog("🚀 Iniciando busca por dinheiro perdido...");
+            
+            // Clear any existing interval
+            if (searchInterval) {
+                clearInterval(searchInterval);
+            }
+            
+            // Start new interval with random timing between 1 and 3 seconds
+            function scheduleNext() {
+                if (!isSearching) return;
+                
+                findMoney();
+                
+                // Schedule next find with random delay
+                const nextDelay = Math.random() * 2000 + 1000; // 1 to 3 seconds
+                setTimeout(scheduleNext, nextDelay);
+            }
+            
+            scheduleNext();
+        }
+
+        function stopSearch() {
+            isSearching = false;
+            
+            if (searchInterval) {
+                clearInterval(searchInterval);
+                searchInterval = null;
+            }
+            
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('stopBtn').disabled = true;
+            document.getElementById('searchStatus').textContent = "Parado";
+            
+            addLog("⏹ Busca interrompida pelo usuário");
+            addLog(`📊 Total acumulado: R$ ${totalValue.toFixed(2).replace('.', ',')}`);
+        }
+
+        // Initialize display
+        updateDisplay();
+        addLog("💰 Meta: R$ 16,00 | Inicial: R$ 15,33");
+
+        // Add keyboard support (Space to start/stop)
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Space' && !event.repeat) {
+                event.preventDefault();
+                if (isSearching) {
+                    stopSearch();
+                } else {
+                    startSearch();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
