@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clube da Fortuna - Comunidade de Ajuda Mútua</title>
+    <title>Clube da Fortuna - Comunidade de Afiliados</title>
     <style>
         * {
             margin: 0;
@@ -207,7 +207,7 @@
 
         .missions-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 25px;
         }
 
@@ -254,6 +254,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-weight: 600;
+            transition: background 0.3s;
         }
 
         .btn-mission:hover {
@@ -263,6 +264,139 @@
         .btn-mission.completed {
             background: #6c757d;
             cursor: not-allowed;
+        }
+
+        .btn-mission.secondary {
+            background: #007bff;
+        }
+
+        .btn-mission.secondary:hover {
+            background: #0056b3;
+        }
+
+        /* Produtos de Afiliados */
+        .products-section {
+            margin-top: 40px;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .products-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .product-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+            background: #f8f9fa;
+        }
+
+        .product-card:hover {
+            border-color: #764ba2;
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.2);
+        }
+
+        .product-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .product-card .product-link {
+            color: #007bff;
+            text-decoration: none;
+            word-break: break-all;
+            font-size: 12px;
+            display: block;
+            margin: 10px 0;
+        }
+
+        .product-card .product-link:hover {
+            text-decoration: underline;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-copy {
+            flex: 1;
+            padding: 8px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-copy:hover {
+            background: #5a6268;
+        }
+
+        .btn-select {
+            flex: 1;
+            padding: 8px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-select:hover {
+            background: #218838;
+        }
+
+        .btn-select.selected {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        /* Progresso da Missão */
+        .mission-progress {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .progress-counter {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #ffd700;
+            transition: width 0.3s;
         }
 
         /* Chat */
@@ -521,7 +655,7 @@
         <div class="main-content">
             <div class="welcome-message">
                 <h1 id="welcomeMessage">Bem-vindo ao Clube da Fortuna!</h1>
-                <p>Aqui você encontra missões para ganhar dinheiro e uma comunidade pronta para ajudar. Complete as missões, converse com outros membros e construa sua fortuna!</p>
+                <p>Aqui você encontra missões para ganhar dinheiro como afiliado. Escolha um produto, divulgue para 100 pessoas e ganhe sua comissão!</p>
             </div>
 
             <!-- Seção de Missões -->
@@ -532,12 +666,34 @@
                 </div>
             </div>
 
+            <!-- Seção de Produtos para Afiliados -->
+            <div class="products-section">
+                <h2>📦 Produtos para Divulgar (Missão de Afiliado)</h2>
+                <p style="color: #666; margin-bottom: 20px;">Escolha um produto abaixo, copie seu link de afiliado e comece a divulgar!</p>
+                
+                <!-- Progresso da Missão de Afiliado -->
+                <div class="mission-progress" id="missionProgress" style="display: none;">
+                    <h3>Progresso da Missão de Afiliado</h3>
+                    <div class="progress-counter" id="progressCount">0/100</div>
+                    <p>Pessoas que você já divulgou</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                    <button class="btn-mission" onclick="incrementDivulgacao()" style="margin-top: 15px; width: auto; padding: 10px 30px;">+1 Divulgação</button>
+                </div>
+
+                <div class="products-grid" id="productsGrid">
+                    <!-- Produtos serão carregados aqui -->
+                </div>
+            </div>
+
             <!-- Painel Admin (visível apenas para admin) -->
             <div class="admin-panel" id="adminPanel">
                 <h2>Painel de Administração</h2>
                 <div class="admin-tabs">
                     <button class="tab-btn active" onclick="switchTab('users')">Usuários</button>
                     <button class="tab-btn" onclick="switchTab('missions')">Missões</button>
+                    <button class="tab-btn" onclick="switchTab('products')">Produtos</button>
                 </div>
 
                 <!-- Aba de Usuários -->
@@ -566,11 +722,48 @@
                         <button type="button" class="btn-admin success" onclick="addMission()">Adicionar Missão</button>
                     </form>
                 </div>
+
+                <!-- Aba de Produtos -->
+                <div class="tab-content" id="productsTab">
+                    <h3>Adicionar Novo Produto de Afiliado</h3>
+                    <form id="productForm">
+                        <div class="form-group">
+                            <label for="productName">Nome do Produto</label>
+                            <input type="text" id="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productDescription">Descrição</label>
+                            <textarea id="productDescription" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="productLink">Link de Afiliado</label>
+                            <input type="url" id="productLink" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productCategory">Categoria</label>
+                            <select id="productCategory">
+                                <option value="academia">Academia</option>
+                                <option value="pizzaria">Pizzaria</option>
+                                <option value="bebidas">Bebidas</option>
+                                <option value="hamburgueria">Hamburgueria</option>
+                                <option value="construcao">Construção</option>
+                                <option value="supermercado">Supermercado</option>
+                                <option value="informatica">Informática</option>
+                                <option value="nutricao">Nutrição</option>
+                                <option value="blogueira">Blogueira</option>
+                                <option value="celular">Conserto de Celular</option>
+                                <option value="beleza">Salão de Beleza</option>
+                                <option value="advocacia">Advocacia</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn-admin success" onclick="addProduct()">Adicionar Produto</button>
+                    </form>
+                </div>
             </div>
 
             <!-- Seção do Chat -->
             <div class="chat-section">
-                <h2>Chat da Comunidade</h2>
+                <h2>💬 Chat da Comunidade</h2>
                 <div class="chat-container">
                     <div class="chat-messages" id="chatMessages">
                         <!-- Mensagens serão carregadas aqui -->
@@ -589,30 +782,123 @@
         let users = JSON.parse(localStorage.getItem('users')) || [];
         let missions = JSON.parse(localStorage.getItem('missions')) || [];
         let messages = JSON.parse(localStorage.getItem('messages')) || [];
+        let products = JSON.parse(localStorage.getItem('products')) || [];
         let currentUser = null;
 
-        // Missões iniciais
+        // Lista inicial de produtos da Hotmart
+        const initialProducts = [
+            {
+                id: 1,
+                name: "Pack 127 Artes Editáveis no Canva Para academias",
+                description: "Artes profissionais para academia prontas para editar no Canva",
+                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/1423P88220620",
+                category: "academia"
+            },
+            {
+                id: 2,
+                name: "Pack 270 Artes Editáveis no Canva Para Pizzarias",
+                description: "Artes completas para pizzarias, totalmente editáveis",
+                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9654P87801939",
+                category: "pizzaria"
+            },
+            {
+                id: 3,
+                name: "100 Encartes de Bebidas Editáveis No Canva Para Depósitos",
+                description: "Encartes profissionais para depósitos de bebidas",
+                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9320187800799",
+                category: "bebidas"
+            },
+            {
+                id: 4,
+                name: "450 Artes Editáveis para Transformar a Identidade da sua Hamburgueria",
+                description: "Pacote completo para hamburguerias com 450 artes",
+                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9478487801329",
+                category: "hamburgueria"
+            },
+            {
+                id: 5,
+                name: "Pack 49 Artes Para Depósitos de Construções Editáveis no Canva",
+                description: "Artes para depósitos de materiais de construção",
+                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9392691056037",
+                category: "construcao"
+            },
+            {
+                id: 6,
+                name: "Pack 100 Artes Editáveis no Canva Para Supermercado",
+                description: "100 artes profissionais para supermercados",
+                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9186P91055046",
+                category: "supermercado"
+            },
+            {
+                id: 7,
+                name: "Pack 100 Artes Para Empresas de Informática Editáveis no Canva",
+                description: "Artes para empresas de informática e tecnologia",
+                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9826P91206603",
+                category: "informatica"
+            },
+            {
+                id: 8,
+                name: "Pack 105 Artes Para Nutrição Editáveis no Canva",
+                description: "Artes para nutricionistas e profissionais de saúde",
+                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/3404P88296914",
+                category: "nutricao"
+            },
+            {
+                id: 9,
+                name: "Pack 107 Artes Para Blogueira(o) Editaveis no Canva",
+                description: "Artes para blogueiros e influenciadores digitais",
+                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/5426P91144130",
+                category: "blogueira"
+            },
+            {
+                id: 10,
+                name: "Pack 127 Artes Para Conserto de Celular Editáveis no Canva",
+                description: "Artes para assistências técnicas de celular",
+                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9545P91056730",
+                category: "celular"
+            },
+            {
+                id: 11,
+                name: "Pack 120 Artes Para Salão de Beleza - Unhas, Sobrancelhas e cílios",
+                description: "Artes completas para salões de beleza e estética",
+                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9466P88374176",
+                category: "beleza"
+            },
+            {
+                id: 12,
+                name: "Pack 141 Artes Para Advogados Editáveis no Canva",
+                description: "Artes profissionais para escritórios de advocacia",
+                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/7358P88466774",
+                category: "advocacia"
+            }
+        ];
+
+        // Missões iniciais incluindo a missão de afiliado
         const initialMissions = [
             {
                 id: 1,
                 title: "Primeiros Passos",
                 description: "Complete seu perfil e apresente-se no chat da comunidade.",
                 reward: 10.00,
-                active: true
+                active: true,
+                type: "basic"
             },
             {
                 id: 2,
-                title: "Indique um Amigo",
-                description: "Convide um amigo para se juntar ao Clube da Fortuna.",
-                reward: 25.00,
-                active: true
+                title: "Missão de Afiliado - Renda Extra",
+                description: "Escolha um produto da Hotmart, copie seu link e divulgue para 100 pessoas. Cada divulgação conta pontos para sua comissão!",
+                reward: 50.00,
+                active: true,
+                type: "affiliate",
+                requiredDivulgacoes: 100
             },
             {
                 id: 3,
                 title: "Ajude um Membro",
                 description: "Responda dúvidas de outros membros no chat e seja útil.",
                 reward: 15.00,
-                active: true
+                active: true,
+                type: "basic"
             }
         ];
 
@@ -620,6 +906,12 @@
         if (missions.length === 0) {
             missions = initialMissions;
             localStorage.setItem('missions', JSON.stringify(missions));
+        }
+
+        // Inicializar produtos se não existirem
+        if (products.length === 0) {
+            products = initialProducts;
+            localStorage.setItem('products', JSON.stringify(products));
         }
 
         // Criar usuário admin padrão se não existir
@@ -631,7 +923,12 @@
                     password: 'Wsds1997',
                     isAdmin: true,
                     active: true,
-                    completedMissions: []
+                    completedMissions: [],
+                    affiliateMission: {
+                        selectedProduct: null,
+                        divulgacoes: 0,
+                        completed: false
+                    }
                 });
                 localStorage.setItem('users', JSON.stringify(users));
             }
@@ -659,7 +956,12 @@
                 password: password,
                 isAdmin: false,
                 active: true,
-                completedMissions: []
+                completedMissions: [],
+                affiliateMission: {
+                    selectedProduct: null,
+                    divulgacoes: 0,
+                    completed: false
+                }
             });
 
             localStorage.setItem('users', JSON.stringify(users));
@@ -691,7 +993,9 @@
                 }
 
                 loadMissions();
+                loadProducts();
                 loadMessages();
+                updateAffiliateProgress();
             } else {
                 showError("Usuário ou senha inválidos!");
             }
@@ -723,15 +1027,29 @@
                 const completed = currentUser.completedMissions.includes(mission.id);
                 const card = document.createElement('div');
                 card.className = 'mission-card';
+                
+                let buttonHtml = '';
+                if (mission.type === 'affiliate') {
+                    if (currentUser.affiliateMission && currentUser.affiliateMission.completed) {
+                        buttonHtml = `<button class="btn-mission completed" disabled>Missão Concluída</button>`;
+                    } else if (currentUser.affiliateMission && currentUser.affiliateMission.selectedProduct) {
+                        buttonHtml = `<button class="btn-mission secondary" onclick="showAffiliateProgress()">Ver Progresso (${currentUser.affiliateMission.divulgacoes}/100)</button>`;
+                    } else {
+                        buttonHtml = `<button class="btn-mission" onclick="startAffiliateMission(${mission.id})">Iniciar Missão de Afiliado</button>`;
+                    }
+                } else {
+                    buttonHtml = `<button class="btn-mission ${completed ? 'completed' : ''}" 
+                            onclick="completeMission(${mission.id})"
+                            ${completed ? 'disabled' : ''}>
+                        ${completed ? 'Concluída' : 'Concluir Missão'}
+                    </button>`;
+                }
+
                 card.innerHTML = `
                     <h3>${mission.title}</h3>
                     <p>${mission.description}</p>
                     <div class="mission-reward">R$ ${mission.reward.toFixed(2)}</div>
-                    <button class="btn-mission ${completed ? 'completed' : ''}" 
-                            onclick="completeMission(${mission.id})"
-                            ${completed ? 'disabled' : ''}>
-                        ${completed ? 'Concluída' : 'Concluir Missão'}
-                    </button>
+                    ${buttonHtml}
                 `;
                 missionsGrid.appendChild(card);
             });
@@ -751,6 +1069,141 @@
             }
         }
 
+        // Funções da Missão de Afiliado
+        function startAffiliateMission(missionId) {
+            if (!currentUser.affiliateMission.selectedProduct) {
+                alert("Primeiro, escolha um produto da lista abaixo para divulgar!");
+                document.getElementById('productsGrid').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function selectProduct(productId) {
+            if (!currentUser.affiliateMission) {
+                currentUser.affiliateMission = {
+                    selectedProduct: null,
+                    divulgacoes: 0,
+                    completed: false
+                };
+            }
+
+            if (currentUser.affiliateMission.selectedProduct === productId) {
+                alert("Você já está divulgando este produto!");
+                return;
+            }
+
+            if (currentUser.affiliateMission.selectedProduct && !currentUser.affiliateMission.completed) {
+                if (!confirm("Você já está divulgando outro produto. Deseja trocar?")) {
+                    return;
+                }
+            }
+
+            const product = products.find(p => p.id === productId);
+            currentUser.affiliateMission.selectedProduct = productId;
+            currentUser.affiliateMission.divulgacoes = 0;
+            currentUser.affiliateMission.completed = false;
+
+            // Atualizar usuário no banco de dados
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+            users[userIndex] = currentUser;
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert(`Produto "${product.name}" selecionado! Agora comece a divulgar para 100 pessoas.`);
+            
+            updateAffiliateProgress();
+            loadProducts();
+            loadMissions();
+        }
+
+        function incrementDivulgacao() {
+            if (!currentUser.affiliateMission || !currentUser.affiliateMission.selectedProduct) {
+                alert("Primeiro selecione um produto para divulgar!");
+                return;
+            }
+
+            if (currentUser.affiliateMission.completed) {
+                alert("Você já completou esta missão!");
+                return;
+            }
+
+            currentUser.affiliateMission.divulgacoes++;
+            
+            if (currentUser.affiliateMission.divulgacoes >= 100) {
+                currentUser.affiliateMission.completed = true;
+                
+                // Completar a missão automaticamente
+                const affiliateMission = missions.find(m => m.type === 'affiliate');
+                if (affiliateMission && !currentUser.completedMissions.includes(affiliateMission.id)) {
+                    currentUser.completedMissions.push(affiliateMission.id);
+                    alert(`🎉 PARABÉNS! Você completou a Missão de Afiliado e ganhou R$ ${affiliateMission.reward.toFixed(2)}!`);
+                }
+            }
+
+            // Atualizar usuário no banco de dados
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+            users[userIndex] = currentUser;
+            localStorage.setItem('users', JSON.stringify(users));
+
+            updateAffiliateProgress();
+            loadMissions();
+        }
+
+        function updateAffiliateProgress() {
+            const progressDiv = document.getElementById('missionProgress');
+            const progressCount = document.getElementById('progressCount');
+            const progressFill = document.getElementById('progressFill');
+
+            if (currentUser.affiliateMission && currentUser.affiliateMission.selectedProduct) {
+                progressDiv.style.display = 'block';
+                const divulgacoes = currentUser.affiliateMission.divulgacoes || 0;
+                const percent = Math.min((divulgacoes / 100) * 100, 100);
+                
+                progressCount.textContent = `${divulgacoes}/100`;
+                progressFill.style.width = percent + '%';
+            } else {
+                progressDiv.style.display = 'none';
+            }
+        }
+
+        function showAffiliateProgress() {
+            document.getElementById('missionProgress').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyLink(link) {
+            navigator.clipboard.writeText(link).then(() => {
+                alert("Link copiado para a área de transferência!");
+            }).catch(() => {
+                alert("Erro ao copiar link. Selecione e copie manualmente.");
+            });
+        }
+
+        // Funções de Produtos
+        function loadProducts() {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = '';
+
+            products.forEach(product => {
+                const isSelected = currentUser.affiliateMission && 
+                                  currentUser.affiliateMission.selectedProduct === product.id;
+                
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <h3>${product.name}</h3>
+                    <p style="color: #666; font-size: 14px; margin-bottom: 10px;">${product.description}</p>
+                    <a href="${product.link}" target="_blank" class="product-link">${product.link}</a>
+                    <div class="product-actions">
+                        <button class="btn-copy" onclick="copyLink('${product.link}')">📋 Copiar Link</button>
+                        <button class="btn-select ${isSelected ? 'selected' : ''}" 
+                                onclick="selectProduct(${product.id})"
+                                ${isSelected ? 'disabled' : ''}>
+                            ${isSelected ? '✓ Selecionado' : 'Selecionar Produto'}
+                        </button>
+                    </div>
+                `;
+                productsGrid.appendChild(card);
+            });
+        }
+
         // Funções do Admin
         function switchTab(tab) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -760,9 +1213,12 @@
                 document.querySelectorAll('.tab-btn')[0].classList.add('active');
                 document.getElementById('usersTab').classList.add('active');
                 loadUsersList();
-            } else {
+            } else if (tab === 'missions') {
                 document.querySelectorAll('.tab-btn')[1].classList.add('active');
                 document.getElementById('missionsTab').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[2].classList.add('active');
+                document.getElementById('productsTab').classList.add('active');
             }
         }
 
@@ -777,7 +1233,11 @@
                     userItem.innerHTML = `
                         <div class="user-details">
                             <div class="user-name">${user.username}</div>
-                            <div class="user-status">${user.active ? 'Ativo' : 'Inativo'} | Missões: ${user.completedMissions.length}</div>
+                            <div class="user-status">
+                                ${user.active ? 'Ativo' : 'Inativo'} | 
+                                Missões: ${user.completedMissions.length} | 
+                                Divulgações: ${user.affiliateMission ? user.affiliateMission.divulgacoes : 0}/100
+                            </div>
                         </div>
                         <div class="user-actions">
                             <button class="btn-admin warning" onclick="resetPassword('${user.username}')">Resetar Senha</button>
@@ -824,7 +1284,8 @@
                     title: title,
                     description: description,
                     reward: reward,
-                    active: true
+                    active: true,
+                    type: "basic"
                 };
 
                 missions.push(newMission);
@@ -837,6 +1298,36 @@
 
                 alert("Missão adicionada com sucesso!");
                 loadMissions();
+            } else {
+                alert("Preencha todos os campos!");
+            }
+        }
+
+        function addProduct() {
+            const name = document.getElementById('productName').value;
+            const description = document.getElementById('productDescription').value;
+            const link = document.getElementById('productLink').value;
+            const category = document.getElementById('productCategory').value;
+
+            if (name && description && link) {
+                const newProduct = {
+                    id: products.length + 1,
+                    name: name,
+                    description: description,
+                    link: link,
+                    category: category
+                };
+
+                products.push(newProduct);
+                localStorage.setItem('products', JSON.stringify(products));
+
+                // Limpar formulário
+                document.getElementById('productName').value = '';
+                document.getElementById('productDescription').value = '';
+                document.getElementById('productLink').value = '';
+
+                alert("Produto adicionado com sucesso!");
+                loadProducts();
             } else {
                 alert("Preencha todos os campos!");
             }
