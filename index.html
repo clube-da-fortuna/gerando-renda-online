@@ -69,108 +69,6 @@
             transform: scale(1.05);
         }
 
-        /* Anúncio Topo - CORRIGIDO */
-        .top-ad {
-            background: linear-gradient(135deg, #f1c40f20, #e67e2220);
-            padding: 1rem;
-            text-align: center;
-            border-bottom: 2px solid #f1c40f;
-            width: 100%;
-            min-height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .top-ad iframe,
-        .top-ad ins,
-        .top-ad div {
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
-        /* Anúncio Entre Artigos - CORRIGIDO */
-        .between-articles-ad {
-            background: linear-gradient(135deg, #f1c40f20, #e67e2220);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid #f1c40f;
-            width: 100%;
-            min-height: 280px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .ad-label {
-            font-size: 0.7rem;
-            color: #7f8c8d;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Rodapé com Anúncios - CORRIGIDO */
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            text-align: center;
-            padding: 2rem 1rem;
-            margin-top: 2rem;
-        }
-
-        .footer-ads {
-            max-width: 1200px;
-            margin: 0 auto 2rem auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .footer-ad-item {
-            background: linear-gradient(135deg, #f1c40f20, #e67e2220);
-            padding: 1rem;
-            border-radius: 10px;
-            width: 100%;
-            max-width: 728px;
-            text-align: center;
-            border: 1px solid #f1c40f;
-            min-height: 120px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .footer-ad-item iframe,
-        .footer-ad-item ins,
-        .footer-ad-item div {
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
-        /* Container para anúncios nos artigos - CORRIGIDO */
-        .article-ad {
-            background: linear-gradient(135deg, #f1c40f10, #e67e2210);
-            padding: 1rem;
-            margin: 2rem 0;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px dashed #f1c40f;
-            min-height: 280px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
         /* Modal de Login */
         .modal {
             display: none;
@@ -876,6 +774,71 @@
             margin-bottom: 0.5rem;
         }
 
+        /* Anúncios nos Artigos - Corrigido para Ads Terra */
+        .ad-container {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            text-align: center;
+            overflow: hidden;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ad-label {
+            font-size: 0.7rem;
+            color: #7f8c8d;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ad-code {
+            width: 100%;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ad-code iframe,
+        .ad-code ins,
+        .ad-code script,
+        .ad-code div {
+            max-width: 100%;
+        }
+
+        /* Estilo específico para anúncios do Ads Terra */
+        .ad-code [data-ad-width],
+        .ad-code [data-ad-height] {
+            margin: 0 auto;
+        }
+
+        .ad-placeholder {
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .ad-placeholder:hover {
+            transform: scale(1.02);
+        }
+
+        .ad-placeholder a {
+            color: white;
+            text-decoration: none;
+        }
+
         /* Interações */
         .article-interactions {
             margin-top: 2rem;
@@ -1181,6 +1144,15 @@
             background-color: #ecf0f1;
         }
 
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
         .image-error {
             background: linear-gradient(135deg, #f1c40f, #e67e22);
             width: 100%;
@@ -1207,21 +1179,9 @@
             70% { opacity: 1; }
             100% { opacity: 0; }
         }
-
-        /* Estilo para iframes de anúncios */
-        iframe {
-            max-width: 100%;
-            border: none;
-        }
     </style>
 </head>
 <body>
-    <!-- ANÚNCIO TOPO DO BLOG - CORRIGIDO -->
-    <div class="top-ad">
-        <div class="ad-label">Publicidade</div>
-        <div id="container-92835eff48beff49540afa1ad5e66a43"></div>
-    </div>
-
     <header>
         <div class="header-container">
             <div class="logo" onclick="showHome()">
@@ -1448,12 +1408,6 @@ Conteúdo do segundo artigo...
                 <!-- Artigos serão inseridos aqui via JavaScript -->
             </div>
 
-            <!-- ANÚNCIO ENTRE ARTIGOS (aparece após 2 artigos) -->
-            <div class="between-articles-ad" id="betweenArticlesAd" style="display: none;">
-                <div class="ad-label">Publicidade</div>
-                <div id="container-92835eff48beff49540afa1ad5e66a43-between"></div>
-            </div>
-
             <div id="fullArticleContainer" style="display: none;">
                 <button class="back-btn" onclick="showHome()">← Voltar para todos os artigos</button>
                 <div id="fullArticle" class="full-article"></div>
@@ -1499,49 +1453,11 @@ Conteúdo do segundo artigo...
         </div>
     </div>
 
-    <!-- RODAPÉ COM ANÚNCIOS - CORRIGIDO -->
     <footer>
-        <div class="footer-ads">
-            <h3 style="color: #f1c40f; margin-bottom: 1rem;">Parceiros</h3>
-            
-            <!-- Anúncio 1 - 300x250 -->
-            <div class="footer-ad-item">
-                <div class="ad-label">Publicidade</div>
-                <div id="ad-300x250-container"></div>
-            </div>
-
-            <!-- Anúncio 2 - 320x50 -->
-            <div class="footer-ad-item">
-                <div class="ad-label">Publicidade</div>
-                <div id="ad-320x50-container"></div>
-            </div>
-        </div>
         <p>&copy; 2024 Clube da Fortuna - Todos os direitos reservados</p>
     </footer>
 
-    <!-- SCRIPTS DOS ANÚNCIOS - CARREGAMENTO DIRETO -->
-    <script src="https://pl28720160.effectivegatecpm.com/2f/bc/89/2fbc8978874562fa60d8a2f117713657.js" async></script>
-    <script src="https://pl28720404.effectivegatecpm.com/98/bc/c3/98bcc3d2bc54e7c3a008df92f7ec41c4.js" async></script>
-    <script async="async" data-cfasync="false" src="https://pl28720434.effectivegatecpm.com/92835eff48beff49540afa1ad5e66a43/invoke.js"></script>
-
     <script>
-        // Configurações dos anúncios
-        atOptions = {
-            'key' : '41c607bd369bfa1f07790616eb0c0685',
-            'format' : 'iframe',
-            'height' : 250,
-            'width' : 300,
-            'params' : {}
-        };
-
-        atOptions2 = {
-            'key' : 'f04289bf56eb09ae07ea24f898187df3',
-            'format' : 'iframe',
-            'height' : 50,
-            'width' : 320,
-            'params' : {}
-        };
-
         // Usuário cadastrado
         const ADMIN_USER = {
             username: 'wilsonadm',
@@ -1553,19 +1469,6 @@ Conteúdo do segundo artigo...
         let ads = [];
         let currentCategory = 'todos';
         let currentArticleId = null;
-
-        // Função para carregar anúncios manualmente
-        function loadAds() {
-            // Anúncio 300x250
-            const script1 = document.createElement('script');
-            script1.src = "https://www.highperformanceformat.com/41c607bd369bfa1f07790616eb0c0685/invoke.js";
-            document.getElementById('ad-300x250-container').appendChild(script1);
-
-            // Anúncio 320x50
-            const script2 = document.createElement('script');
-            script2.src = "https://www.highperformanceformat.com/f04289bf56eb09ae07ea24f898187df3/invoke.js";
-            document.getElementById('ad-320x50-container').appendChild(script2);
-        }
 
         // Carregar dados do localStorage
         function loadData() {
@@ -1652,22 +1555,6 @@ Conteúdo do segundo artigo...
                 showAdminArea();
             }
             loadData();
-            loadAds(); // Carregar anúncios
-            
-            // Mostrar anúncio entre artigos se houver pelo menos 2 artigos
-            setTimeout(function() {
-                const grid = document.getElementById('articlesGrid');
-                if (grid.children.length >= 2) {
-                    document.getElementById('betweenArticlesAd').style.display = 'block';
-                    
-                    // Clonar o container do anúncio para aparecer entre artigos
-                    const originalAd = document.getElementById('container-92835eff48beff49540afa1ad5e66a43');
-                    const cloneAd = document.getElementById('container-92835eff48beff49540afa1ad5e66a43-between');
-                    if (originalAd && cloneAd) {
-                        cloneAd.innerHTML = originalAd.innerHTML;
-                    }
-                }
-            }, 1000);
         }
 
         // Logout
@@ -1953,7 +1840,7 @@ Conteúdo do segundo artigo...
             }
         }
 
-        // Funções para anúncios
+        // Funções para anúncios - CORRIGIDO PARA ADS TERRA
         function openAdModal() {
             document.getElementById('adModal').style.display = 'block';
         }
@@ -2039,6 +1926,73 @@ Conteúdo do segundo artigo...
             }
         }
 
+        // Função para executar scripts de anúncios corretamente
+        function executeAdScripts(container) {
+            const scripts = container.getElementsByTagName('script');
+            for (let i = 0; i < scripts.length; i++) {
+                const script = scripts[i];
+                if (script.src) {
+                    // Script externo
+                    const newScript = document.createElement('script');
+                    newScript.src = script.src;
+                    newScript.async = true;
+                    document.body.appendChild(newScript);
+                } else {
+                    // Script inline
+                    try {
+                        eval(script.innerHTML);
+                    } catch (e) {
+                        console.log('Erro ao executar script:', e);
+                    }
+                }
+            }
+        }
+
+        // Função para renderizar anúncios no conteúdo
+        function renderAdsInContent(content, position) {
+            const activeAds = ads.filter(ad => ad.status === 'active' && ad.position === position);
+            
+            if (activeAds.length === 0) return content;
+
+            // Substituir tags manuais
+            let processedContent = content;
+            
+            if (position === 'top') {
+                const adHtml = activeAds.map(ad => `
+                    <div class="ad-container" data-ad-id="${ad.id}">
+                        <div class="ad-label">Publicidade</div>
+                        <div class="ad-code">${ad.code}</div>
+                    </div>
+                `).join('');
+                
+                processedContent = processedContent.replace(/{{AD_TOP}}/g, adHtml);
+            }
+            
+            if (position === 'middle') {
+                const adHtml = activeAds.map(ad => `
+                    <div class="ad-container" data-ad-id="${ad.id}">
+                        <div class="ad-label">Publicidade</div>
+                        <div class="ad-code">${ad.code}</div>
+                    </div>
+                `).join('');
+                
+                processedContent = processedContent.replace(/{{AD_MIDDLE}}/g, adHtml);
+            }
+            
+            if (position === 'bottom') {
+                const adHtml = activeAds.map(ad => `
+                    <div class="ad-container" data-ad-id="${ad.id}">
+                        <div class="ad-label">Publicidade</div>
+                        <div class="ad-code">${ad.code}</div>
+                    </div>
+                `).join('');
+                
+                processedContent = processedContent.replace(/{{AD_BOTTOM}}/g, adHtml);
+            }
+
+            return processedContent;
+        }
+
         // Exibir artigos na página inicial
         function displayArticles() {
             const grid = document.getElementById('articlesGrid');
@@ -2088,16 +2042,9 @@ Conteúdo do segundo artigo...
                     </div>
                 </div>
             `}).join('');
-
-            // Mostrar anúncio entre artigos se houver pelo menos 2 artigos
-            if (filteredArticles.length >= 2) {
-                document.getElementById('betweenArticlesAd').style.display = 'block';
-            } else {
-                document.getElementById('betweenArticlesAd').style.display = 'none';
-            }
         }
 
-        // Mostrar artigo completo
+        // Mostrar artigo completo - CORRIGIDO PARA EXECUTAR ADS TERRA
         function showFullArticle(articleId) {
             const article = articles.find(a => a.id === articleId);
             if (article) {
@@ -2114,25 +2061,45 @@ Conteúdo do segundo artigo...
                 const comments = JSON.parse(localStorage.getItem('articleComments') || '{}');
                 const articleComments = comments[articleId] || [];
                 
+                // Processar conteúdo com anúncios
+                let contentWithAds = article.content;
+                
+                // Renderizar anúncios manuais
+                contentWithAds = renderAdsInContent(contentWithAds, 'top');
+                contentWithAds = renderAdsInContent(contentWithAds, 'middle');
+                contentWithAds = renderAdsInContent(contentWithAds, 'bottom');
+                
                 // Converter quebras de linha em parágrafos
                 let contentWithParagraphs = '';
-                const paragraphs = article.content.split('\n\n');
+                const paragraphs = contentWithAds.split('\n\n');
                 
                 paragraphs.forEach((paragraph, index) => {
                     if (paragraph.trim()) {
                         contentWithParagraphs += `<p>${paragraph.replace(/\n/g, '<br>')}</p>`;
-                        
-                        // Inserir anúncio a cada 3 parágrafos
-                        if ((index + 1) % 3 === 0 && index < paragraphs.length - 1) {
-                            contentWithParagraphs += `
-                                <div class="article-ad">
-                                    <div class="ad-label">Publicidade</div>
-                                    <div id="ad-in-article-${index}"></div>
-                                </div>
-                            `;
-                        }
                     }
                 });
+                
+                // Adicionar anúncios automáticos entre parágrafos
+                let finalContent = '';
+                const paragraphArray = contentWithParagraphs.split('</p>').filter(p => p.trim());
+                
+                const betweenAds = ads.filter(ad => ad.status === 'active' && ad.position === 'between');
+                
+                for (let i = 0; i < paragraphArray.length; i++) {
+                    finalContent += paragraphArray[i] + '</p>';
+                    
+                    // Inserir anúncio a cada 3 parágrafos
+                    if (betweenAds.length > 0 && (i + 1) % 3 === 0 && i < paragraphArray.length - 1) {
+                        betweenAds.forEach(ad => {
+                            finalContent += `
+                                <div class="ad-container" data-ad-id="${ad.id}">
+                                    <div class="ad-label">Publicidade</div>
+                                    <div class="ad-code">${ad.code}</div>
+                                </div>
+                            `;
+                        });
+                    }
+                }
                 
                 document.getElementById('fullArticle').innerHTML = `
                     <div class="full-article-header">
@@ -2148,7 +2115,7 @@ Conteúdo do segundo artigo...
                         : ''
                     }
                     <div class="full-article-content">
-                        ${contentWithParagraphs}
+                        ${finalContent}
                     </div>
                     
                     <div class="article-interactions">
@@ -2204,16 +2171,12 @@ Conteúdo do segundo artigo...
                     </div>
                 `;
                 
-                // Carregar anúncios nos artigos
+                // Executar scripts dos anúncios (CORREÇÃO PARA ADS TERRA)
                 setTimeout(() => {
-                    for (let i = 0; i < 10; i++) {
-                        const adDiv = document.getElementById(`ad-in-article-${i}`);
-                        if (adDiv) {
-                            const script = document.createElement('script');
-                            script.src = "https://www.highperformanceformat.com/41c607bd369bfa1f07790616eb0c0685/invoke.js";
-                            adDiv.appendChild(script);
-                        }
-                    }
+                    const adContainers = document.querySelectorAll('.ad-container');
+                    adContainers.forEach(container => {
+                        executeAdScripts(container);
+                    });
                 }, 100);
                 
                 updateTrendingArticles();
