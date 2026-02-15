@@ -650,6 +650,22 @@
             justify-content: center;
             font-size: 4rem;
         }
+
+        .success-message {
+            background-color: #27ae60;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            text-align: center;
+            animation: fadeOut 3s forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -839,7 +855,22 @@ Conteúdo do segundo artigo...
         };
 
         // Array para armazenar os artigos
-        let articles = JSON.parse(localStorage.getItem('articles')) || [];
+        let articles = [];
+
+        // Carregar artigos do localStorage ao iniciar
+        function loadArticles() {
+            const saved = localStorage.getItem('articles');
+            if (saved) {
+                articles = JSON.parse(saved);
+            } else {
+                articles = [];
+                localStorage.setItem('articles', JSON.stringify(articles));
+            }
+            updateCategoryCounts();
+            displayArticles();
+            updateTrendingArticles();
+        }
+
         let currentCategory = 'todos';
 
         // Funções do Modal
@@ -889,14 +920,7 @@ Conteúdo do segundo artigo...
             if (sessionStorage.getItem('loggedIn') === 'true') {
                 showAdminArea();
             }
-            // Iniciar sem artigos - apenas uma mensagem inicial
-            if (articles.length === 0) {
-                articles = [];
-                localStorage.setItem('articles', JSON.stringify(articles));
-            }
-            updateCategoryCounts();
-            displayArticles();
-            updateTrendingArticles();
+            loadArticles();
         }
 
         // Logout
@@ -923,46 +947,59 @@ Conteúdo do segundo artigo...
             }
         }
 
+        // Função para mostrar mensagem de sucesso
+        function showSuccessMessage(message) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'success-message';
+            msgDiv.textContent = message;
+            document.querySelector('.admin-container').insertBefore(msgDiv, document.querySelector('.admin-tabs'));
+            setTimeout(() => {
+                msgDiv.remove();
+            }, 3000);
+        }
+
         // Publicar artigo único
         function publishArticle() {
-            const title = document.getElementById('articleTitle').value;
-            const image = document.getElementById('articleImage').value;
+            const title = document.getElementById('articleTitle').value.trim();
+            const image = document.getElementById('articleImage').value.trim();
             const category = document.getElementById('articleCategory').value;
-            const content = document.getElementById('articleContent').value;
+            const content = document.getElementById('articleContent').value.trim();
 
-            if (title && category && content) {
-                // Processar conteúdo com quebras de linha
-                const formattedContent = content.replace(/\n/g, '<br>');
-                
-                const newArticle = {
-                    id: Date.now(),
-                    title: title,
-                    image: image || null,
-                    category: category,
-                    content: formattedContent,
-                    excerpt: content.substring(0, 200) + '...',
-                    date: new Date().toLocaleDateString('pt-BR'),
-                    views: 0,
-                    fullContent: formattedContent
-                };
-
-                articles.unshift(newArticle);
-                localStorage.setItem('articles', JSON.stringify(articles));
-                
-                // Limpar formulário
-                document.getElementById('articleTitle').value = '';
-                document.getElementById('articleImage').value = '';
-                document.getElementById('articleCategory').value = '';
-                document.getElementById('articleContent').value = '';
-                
-                updateCategoryCounts();
-                displayArticles();
-                updateTrendingArticles();
-                
-                alert('Artigo publicado com sucesso!');
-            } else {
-                alert('Preencha todos os campos obrigatórios!');
+            if (!title || !category || !content) {
+                alert('❌ Preencha todos os campos obrigatórios!');
+                return;
             }
+
+            // Criar novo artigo
+            const newArticle = {
+                id: Date.now(),
+                title: title,
+                image: image || null,
+                category: category,
+                content: content,
+                excerpt: content.substring(0, 200) + (content.length > 200 ? '...' : ''),
+                date: new Date().toLocaleDateString('pt-BR'),
+                views: 0
+            };
+
+            // Adicionar ao início do array
+            articles.unshift(newArticle);
+            
+            // Salvar no localStorage
+            localStorage.setItem('articles', JSON.stringify(articles));
+            
+            // Limpar formulário
+            document.getElementById('articleTitle').value = '';
+            document.getElementById('articleImage').value = '';
+            document.getElementById('articleCategory').value = '';
+            document.getElementById('articleContent').value = '';
+            
+            // Atualizar exibição
+            updateCategoryCounts();
+            displayArticles();
+            updateTrendingArticles();
+            
+            showSuccessMessage('✅ Artigo publicado com sucesso!');
         }
 
         // Publicar múltiplos artigos
@@ -970,7 +1007,7 @@ Conteúdo do segundo artigo...
             const bulkText = document.getElementById('bulkArticles').value.trim();
             
             if (!bulkText) {
-                alert('Cole os artigos no formato especificado!');
+                alert('❌ Cole os artigos no formato especificado!');
                 return;
             }
 
@@ -980,6 +1017,7 @@ Conteúdo do segundo artigo...
             let successCount = 0;
             let errorCount = 0;
             const errors = [];
+            const newArticles = [];
 
             articleBlocks.forEach((block, index) => {
                 try {
@@ -995,12 +1033,17 @@ Conteúdo do segundo artigo...
                     
                     // Encontrar título
                     while (i < lines.length) {
-                        if (lines[i].trim().startsWith('#')) {
-                            title = lines[i].trim().replace(/^#+\s*/, '');
+                        const line = lines[i].trim();
+                        if (line.startsWith('#')) {
+                            title = line.replace(/^#+\s*/, '').trim();
                             i++;
                             break;
                         }
                         i++;
+                    }
+                    
+                    if (!title) {
+                        throw new Error('Título não encontrado (use # antes do título)');
                     }
                     
                     // Extrair categoria e imagem
@@ -1017,30 +1060,29 @@ Conteúdo do segundo artigo...
                         i++;
                     }
                     
+                    if (!category) {
+                        throw new Error('Categoria não encontrada (use "Categoria: Nome")');
+                    }
+                    
                     // Resto é conteúdo
                     content = lines.slice(i).join('\n').trim();
                     
-                    // Validar campos obrigatórios
-                    if (!title || !category || !content) {
-                        throw new Error(`Artigo ${index + 1}: Título, categoria e conteúdo são obrigatórios`);
+                    if (!content) {
+                        throw new Error('Conteúdo não encontrado');
                     }
                     
-                    // Processar conteúdo com quebras de linha
-                    const formattedContent = content.replace(/\n/g, '<br>');
-                    
                     const newArticle = {
-                        id: Date.now() + index,
+                        id: Date.now() + index + Math.random(),
                         title: title,
                         image: image || null,
                         category: category,
-                        content: formattedContent,
-                        excerpt: content.substring(0, 200) + '...',
+                        content: content,
+                        excerpt: content.substring(0, 200) + (content.length > 200 ? '...' : ''),
                         date: new Date().toLocaleDateString('pt-BR'),
-                        views: 0,
-                        fullContent: formattedContent
+                        views: 0
                     };
                     
-                    articles.unshift(newArticle);
+                    newArticles.push(newArticle);
                     successCount++;
                     
                 } catch (error) {
@@ -1050,21 +1092,24 @@ Conteúdo do segundo artigo...
             });
             
             if (successCount > 0) {
+                // Adicionar todos os novos artigos ao início do array
+                articles = [...newArticles, ...articles];
                 localStorage.setItem('articles', JSON.stringify(articles));
+                
                 updateCategoryCounts();
                 displayArticles();
                 updateTrendingArticles();
                 
-                let message = `${successCount} artigo(s) publicado(s) com sucesso!`;
+                let message = `✅ ${successCount} artigo(s) publicado(s) com sucesso!`;
                 if (errorCount > 0) {
-                    message += `\n${errorCount} artigo(s) com erros:`;
+                    message += `\n⚠️ ${errorCount} artigo(s) com erros:`;
                     errors.forEach(err => message += `\n- ${err}`);
                 }
                 
                 alert(message);
                 document.getElementById('bulkArticles').value = '';
             } else {
-                alert('Nenhum artigo foi publicado. Verifique o formato:\n' + errors.join('\n'));
+                alert('❌ Nenhum artigo foi publicado. Verifique o formato:\n' + errors.join('\n'));
             }
         }
 
@@ -1081,13 +1126,11 @@ Conteúdo do segundo artigo...
         // Exibir artigos
         function displayArticles() {
             const grid = document.getElementById('articlesGrid');
-            const filteredArticles = currentCategory === 'todos' 
-                ? articles 
-                : articles.filter(a => a.category === currentCategory);
             
-            if (filteredArticles.length === 0) {
+            // Verificar se há artigos
+            if (!articles || articles.length === 0) {
                 grid.innerHTML = `
-                    <div style="text-align: center; padding: 3rem; color: #7f8c8d; grid-column: 1/-1;">
+                    <div style="text-align: center; padding: 3rem; color: #7f8c8d; grid-column: 1/-1; background: white; border-radius: 10px;">
                         <h3>📝 Nenhum artigo publicado ainda.</h3>
                         <p>Faça login na área administrativa para começar a escrever!</p>
                     </div>
@@ -1095,7 +1138,23 @@ Conteúdo do segundo artigo...
                 return;
             }
 
+            // Filtrar por categoria
+            const filteredArticles = currentCategory === 'todos' 
+                ? articles 
+                : articles.filter(a => a.category === currentCategory);
+            
+            if (filteredArticles.length === 0) {
+                grid.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #7f8c8d; grid-column: 1/-1; background: white; border-radius: 10px;">
+                        <h3>📭 Nenhum artigo encontrado nesta categoria.</h3>
+                    </div>
+                `;
+                return;
+            }
+
+            // Gerar HTML dos artigos
             grid.innerHTML = filteredArticles.map(article => {
+                // Processar imagem
                 const imageHtml = article.image 
                     ? `<img src="${article.image}" alt="${article.title}" onerror="this.onerror=null; this.parentNode.innerHTML='<div class=\\'fallback-icon\\'>📰</div>';">` 
                     : `<div class="fallback-icon">📰</div>`;
@@ -1126,9 +1185,15 @@ Conteúdo do segundo artigo...
                 article.views = (article.views || 0) + 1;
                 localStorage.setItem('articles', JSON.stringify(articles));
                 
+                // Esconder grid e mostrar artigo completo
                 document.querySelector('.articles-grid').style.display = 'none';
                 document.querySelector('.category-filter').style.display = 'none';
                 document.getElementById('fullArticleContainer').style.display = 'block';
+                
+                // Processar conteúdo com quebras de linha
+                const contentWithParagraphs = article.content.split('\n\n').map(paragraph => 
+                    `<p>${paragraph.replace(/\n/g, '<br>')}</p>`
+                ).join('');
                 
                 document.getElementById('fullArticle').innerHTML = `
                     <div class="full-article-header">
@@ -1144,7 +1209,7 @@ Conteúdo do segundo artigo...
                         : ''
                     }
                     <div class="full-article-content">
-                        ${article.fullContent || article.content}
+                        ${contentWithParagraphs}
                     </div>
                 `;
                 
@@ -1177,17 +1242,22 @@ Conteúdo do segundo artigo...
 
         // Atualizar contagem de categorias
         function updateCategoryCounts() {
-            document.getElementById('catInvestimentos').textContent = articles.filter(a => a.category === 'Investimentos').length;
-            document.getElementById('catRendaExtra').textContent = articles.filter(a => a.category === 'Renda Extra').length;
-            document.getElementById('catEconomia').textContent = articles.filter(a => a.category === 'Economia').length;
-            document.getElementById('catAcoes').textContent = articles.filter(a => a.category === 'Ações').length;
-            document.getElementById('catFIIs').textContent = articles.filter(a => a.category === 'Fundos Imobiliários').length;
-            document.getElementById('catTesouro').textContent = articles.filter(a => a.category === 'Tesouro Direto').length;
-            document.getElementById('catFinancas').textContent = articles.filter(a => a.category === 'Finanças Pessoais').length;
+            document.getElementById('catInvestimentos').textContent = articles ? articles.filter(a => a.category === 'Investimentos').length : 0;
+            document.getElementById('catRendaExtra').textContent = articles ? articles.filter(a => a.category === 'Renda Extra').length : 0;
+            document.getElementById('catEconomia').textContent = articles ? articles.filter(a => a.category === 'Economia').length : 0;
+            document.getElementById('catAcoes').textContent = articles ? articles.filter(a => a.category === 'Ações').length : 0;
+            document.getElementById('catFIIs').textContent = articles ? articles.filter(a => a.category === 'Fundos Imobiliários').length : 0;
+            document.getElementById('catTesouro').textContent = articles ? articles.filter(a => a.category === 'Tesouro Direto').length : 0;
+            document.getElementById('catFinancas').textContent = articles ? articles.filter(a => a.category === 'Finanças Pessoais').length : 0;
         }
 
         // Atualizar artigos mais acessados
         function updateTrendingArticles() {
+            if (!articles || articles.length === 0) {
+                document.getElementById('trendingArticles').innerHTML = '<p style="text-align: center; color: #7f8c8d;">Nenhum artigo acessado ainda.</p>';
+                return;
+            }
+            
             const trending = [...articles]
                 .sort((a, b) => (b.views || 0) - (a.views || 0))
                 .slice(0, 5);
@@ -1205,7 +1275,7 @@ Conteúdo do segundo artigo...
                 </div>
             `).join('');
             
-            document.getElementById('trendingArticles').innerHTML = trendingHtml || '<p style="text-align: center; color: #7f8c8d;">Nenhum artigo acessado ainda.</p>';
+            document.getElementById('trendingArticles').innerHTML = trendingHtml;
         }
     </script>
 </body>
