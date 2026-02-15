@@ -281,6 +281,8 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
         }
 
         .article-card:hover {
@@ -290,13 +292,14 @@
 
         .article-image {
             height: 250px;
-            background-color: #f1c40f;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 3rem;
             overflow: hidden;
+            position: relative;
         }
 
         .article-image img {
@@ -304,6 +307,13 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s;
+            display: block;
+        }
+
+        .article-image .fallback-icon {
+            font-size: 4rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .article-card:hover .article-image img {
@@ -312,6 +322,7 @@
 
         .article-content {
             padding: 1.5rem;
+            flex: 1;
         }
 
         .article-content h3 {
@@ -326,10 +337,11 @@
             color: #7f8c8d;
             font-size: 0.9rem;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
 
         .article-category {
-            background-color: #f1c40f;
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
             color: #1a2a3a;
             padding: 0.2rem 0.5rem;
             border-radius: 3px;
@@ -387,6 +399,7 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            flex-shrink: 0;
         }
 
         .trending-info h4 {
@@ -441,22 +454,37 @@
         }
 
         .full-article-content p {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .full-article-content h3 {
+            color: #2c3e50;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .full-article-content ul, 
+        .full-article-content ol {
+            margin: 1rem 0 1.5rem 2rem;
+        }
+
+        .full-article-content li {
+            margin-bottom: 0.5rem;
         }
 
         .back-btn {
-            background-color: #3498db;
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.8rem 1.5rem;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             margin-bottom: 1rem;
-            transition: background-color 0.3s;
+            font-weight: bold;
+            transition: transform 0.3s;
         }
 
         .back-btn:hover {
-            background-color: #2980b9;
+            transform: scale(1.02);
         }
 
         /* Categorias */
@@ -474,6 +502,7 @@
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s;
+            font-weight: 500;
         }
 
         .category-btn:hover,
@@ -488,6 +517,17 @@
             text-align: center;
             padding: 2rem;
             margin-top: 2rem;
+        }
+
+        /* Loading e erros */
+        .image-error {
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
         }
     </style>
 </head>
@@ -533,7 +573,7 @@
             <div class="article-form">
                 <h3>Escrever Novo Artigo</h3>
                 <input type="text" id="articleTitle" placeholder="Título do Artigo" required>
-                <input type="url" id="articleImage" placeholder="URL da Imagem (opcional - deixe vazio para usar ícone)">
+                <input type="url" id="articleImage" placeholder="URL da Imagem (opcional)">
                 <select id="articleCategory" required>
                     <option value="">Selecione uma categoria</option>
                     <option value="Investimentos">Investimentos</option>
@@ -542,6 +582,8 @@
                     <option value="Ações">Ações</option>
                     <option value="Fundos Imobiliários">Fundos Imobiliários</option>
                     <option value="Tesouro Direto">Tesouro Direto</option>
+                    <option value="Finanças Pessoais">Finanças Pessoais</option>
+                    <option value="Aposentadoria">Aposentadoria</option>
                 </select>
                 <textarea id="articleContent" placeholder="Escreva seu artigo aqui..." required></textarea>
                 <button class="publish-btn" onclick="publishArticle()">Publicar Artigo</button>
@@ -556,12 +598,14 @@
             <h2>Últimos Artigos</h2>
             
             <div class="category-filter">
-                <button class="category-btn active" onclick="filterByCategory('todos')">Todos</button>
-                <button class="category-btn" onclick="filterByCategory('Investimentos')">Investimentos</button>
-                <button class="category-btn" onclick="filterByCategory('Renda Extra')">Renda Extra</button>
-                <button class="category-btn" onclick="filterByCategory('Economia')">Economia</button>
-                <button class="category-btn" onclick="filterByCategory('Ações')">Ações</button>
-                <button class="category-btn" onclick="filterByCategory('Fundos Imobiliários')">FIIs</button>
+                <button class="category-btn active" onclick="filterByCategory('todos', this)">Todos</button>
+                <button class="category-btn" onclick="filterByCategory('Investimentos', this)">Investimentos</button>
+                <button class="category-btn" onclick="filterByCategory('Renda Extra', this)">Renda Extra</button>
+                <button class="category-btn" onclick="filterByCategory('Economia', this)">Economia</button>
+                <button class="category-btn" onclick="filterByCategory('Ações', this)">Ações</button>
+                <button class="category-btn" onclick="filterByCategory('Fundos Imobiliários', this)">FIIs</button>
+                <button class="category-btn" onclick="filterByCategory('Tesouro Direto', this)">Tesouro</button>
+                <button class="category-btn" onclick="filterByCategory('Finanças Pessoais', this)">Finanças</button>
             </div>
 
             <div id="articlesGrid" class="articles-grid">
@@ -583,25 +627,33 @@
 
             <h3 style="margin-top: 2rem;">📚 Categorias</h3>
             <div style="margin-top: 1rem;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer;" onclick="filterByCategory('Investimentos')">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer; padding: 0.3rem; border-radius: 3px;" onclick="filterByCategory('Investimentos', null)" class="category-stats">
                     <span>Investimentos</span>
                     <span id="catInvestimentos">0</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer;" onclick="filterByCategory('Renda Extra')">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer; padding: 0.3rem; border-radius: 3px;" onclick="filterByCategory('Renda Extra', null)" class="category-stats">
                     <span>Renda Extra</span>
                     <span id="catRendaExtra">0</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer;" onclick="filterByCategory('Economia')">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer; padding: 0.3rem; border-radius: 3px;" onclick="filterByCategory('Economia', null)" class="category-stats">
                     <span>Economia</span>
                     <span id="catEconomia">0</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer;" onclick="filterByCategory('Ações')">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer; padding: 0.3rem; border-radius: 3px;" onclick="filterByCategory('Ações', null)" class="category-stats">
                     <span>Ações</span>
                     <span id="catAcoes">0</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer;" onclick="filterByCategory('Fundos Imobiliários')">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer; padding: 0.3rem; border-radius: 3px;" onclick="filterByCategory('Fundos Imobiliários', null)" class="category-stats">
                     <span>Fundos Imobiliários</span>
                     <span id="catFIIs">0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer; padding: 0.3rem; border-radius: 3px;" onclick="filterByCategory('Tesouro Direto', null)" class="category-stats">
+                    <span>Tesouro Direto</span>
+                    <span id="catTesouro">0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer; padding: 0.3rem; border-radius: 3px;" onclick="filterByCategory('Finanças Pessoais', null)" class="category-stats">
+                    <span>Finanças Pessoais</span>
+                    <span id="catFinancas">0</span>
                 </div>
             </div>
         </div>
@@ -669,7 +721,7 @@
             if (sessionStorage.getItem('loggedIn') === 'true') {
                 showAdminArea();
             }
-            addSampleArticles();
+            initializeArticles();
             updateCategoryCounts();
             displayArticles();
             updateTrendingArticles();
@@ -720,6 +772,16 @@
             }
         }
 
+        // Função para tratar erro de imagem
+        function handleImageError(img) {
+            img.style.display = 'none';
+            const parent = img.parentNode;
+            const fallback = document.createElement('div');
+            fallback.className = 'fallback-icon';
+            fallback.innerHTML = '📰';
+            parent.appendChild(fallback);
+        }
+
         // Exibir artigos
         function displayArticles() {
             const grid = document.getElementById('articlesGrid');
@@ -736,25 +798,27 @@
                 return;
             }
 
-            grid.innerHTML = filteredArticles.map(article => `
+            grid.innerHTML = filteredArticles.map(article => {
+                const imageHtml = article.image 
+                    ? `<img src="${article.image}" alt="${article.title}" onerror="this.onerror=null; this.parentNode.innerHTML='<div class=\'fallback-icon\'>📰</div>';">` 
+                    : `<div class="fallback-icon">📰</div>`;
+                
+                return `
                 <div class="article-card" onclick="showFullArticle(${article.id})">
                     <div class="article-image">
-                        ${article.image ? 
-                            `<img src="${article.image}" alt="${article.title}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23f1c40f%22/><text x=%2250%22 y=%2250%22 font-size=%2250%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22>📰</text></svg>'">` 
-                            : '📰'
-                        }
+                        ${imageHtml}
                     </div>
                     <div class="article-content">
                         <h3>${article.title}</h3>
                         <div class="article-meta">
                             <span class="article-category">${article.category}</span>
                             <span>${article.date}</span>
-                            <span>👁️ ${article.views || 0} visualizações</span>
+                            <span>👁️ ${article.views || 0}</span>
                         </div>
                         <p class="article-excerpt">${article.excerpt}</p>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         // Mostrar artigo completo
@@ -768,6 +832,9 @@
                 document.querySelector('.articles-grid').style.display = 'none';
                 document.querySelector('.category-filter').style.display = 'none';
                 document.getElementById('fullArticleContainer').style.display = 'block';
+                
+                // Processar o conteúdo para exibir com parágrafos
+                const contentParagraphs = article.fullContent || article.content;
                 
                 document.getElementById('fullArticle').innerHTML = `
                     <div class="full-article-header">
@@ -783,7 +850,7 @@
                         : ''
                     }
                     <div class="full-article-content">
-                        ${article.fullContent || article.content}
+                        ${contentParagraphs}
                     </div>
                 `;
                 
@@ -799,14 +866,17 @@
         }
 
         // Filtrar por categoria
-        function filterByCategory(category) {
+        function filterByCategory(category, element) {
             currentCategory = category;
             
             // Atualizar botões ativos
             document.querySelectorAll('.category-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
+            
+            if (element) {
+                element.classList.add('active');
+            }
             
             displayArticles();
         }
@@ -818,6 +888,8 @@
             document.getElementById('catEconomia').textContent = articles.filter(a => a.category === 'Economia').length;
             document.getElementById('catAcoes').textContent = articles.filter(a => a.category === 'Ações').length;
             document.getElementById('catFIIs').textContent = articles.filter(a => a.category === 'Fundos Imobiliários').length;
+            document.getElementById('catTesouro').textContent = articles.filter(a => a.category === 'Tesouro Direto').length;
+            document.getElementById('catFinancas').textContent = articles.filter(a => a.category === 'Finanças Pessoais').length;
         }
 
         // Atualizar artigos mais acessados
@@ -839,52 +911,921 @@
                 </div>
             `).join('');
             
-            document.getElementById('trendingArticles').innerHTML = trendingHtml || '<p>Nenhum artigo acessado ainda.</p>';
+            document.getElementById('trendingArticles').innerHTML = trendingHtml || '<p style="text-align: center; color: #7f8c8d;">Nenhum artigo acessado ainda.</p>';
         }
 
-        // Adicionar artigos de exemplo com imagens reais
-        function addSampleArticles() {
+        // Inicializar artigos (20 artigos completos)
+        function initializeArticles() {
             if (articles.length === 0) {
                 const sampleArticles = [
                     {
                         id: 1,
-                        title: "Comece a Investir com Pouco Dinheiro",
-                        image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=500&auto=format",
-                        category: "Investimentos",
-                        content: "Muitas pessoas acreditam que é preciso muito dinheiro para começar a investir, mas isso não é verdade. Com disciplina e conhecimento, é possível começar com valores baixos e construir um patrimônio sólido ao longo do tempo. Neste artigo, vamos explorar as melhores opções para quem está começando com pouco capital...",
-                        fullContent: "<p>Muitas pessoas acreditam que é preciso muito dinheiro para começar a investir, mas isso não é verdade. Com disciplina e conhecimento, é possível começar com valores baixos e construir um patrimônio sólido ao longo do tempo.</p><p><strong>1. Tesouro Direto</strong><br>O Tesouro Direto é uma das opções mais seguras para iniciantes. Com apenas R$30, você pode começar a investir em títulos públicos federais.</p><p><strong>2. CDBs</strong><br>Os Certificados de Depósito Bancário (CDBs) são emitidos por bancos e muitas vezes aceitam investimentos iniciais baixos.</p><p><strong>3. Fundos de Investimento</strong><br>Fundos permitem que você comece com pouco dinheiro e tenha uma carteira diversificada profissionalmente.</p>",
-                        excerpt: "Muitas pessoas acreditam que é preciso muito dinheiro para começar a investir...",
+                        title: "Guia Completo para Iniciantes na Bolsa de Valores",
+                        image: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Ações",
                         date: "15/02/2024",
-                        views: 150
+                        views: 245,
+                        excerpt: "Aprenda os conceitos básicos para começar a investir na bolsa de valores com segurança...",
+                        fullContent: `
+                            <h3>Introdução ao Mercado de Ações</h3>
+                            <p>Investir na bolsa de valores pode parecer assustador para iniciantes, mas com o conhecimento certo, pode ser uma excelente forma de construir patrimônio a longo prazo. Neste guia completo, vamos abordar desde os conceitos básicos até estratégias mais avançadas.</p>
+                            
+                            <h3>O que são Ações?</h3>
+                            <p>Ações são pequenas partes de uma empresa. Quando você compra uma ação, se torna sócio daquela empresa, com direito a participar dos lucros (através de dividendos) e da valorização do negócio.</p>
+                            
+                            <h3>Primeiros Passos</h3>
+                            <p>Antes de começar a investir, é fundamental:</p>
+                            <ul>
+                                <li>Escolher uma corretora confiável e com boas taxas</li>
+                                <li>Definir seu perfil de investidor (conservador, moderado ou agressivo)</li>
+                                <li>Estudar as empresas antes de investir</li>
+                                <li>Começar com valores baixos para ganhar experiência</li>
+                            </ul>
+                            
+                            <h3>Análise Fundamentalista vs Análise Técnica</h3>
+                            <p>A análise fundamentalista estuda os fundamentos da empresa, como lucros, dívidas e perspectivas de crescimento. Já a análise técnica foca nos gráficos e padrões de preço. O ideal é combinar ambas as abordagens.</p>
+                            
+                            <h3>Erros Comuns de Iniciantes</h3>
+                            <p>Evite esses erros frequentes:</p>
+                            <ul>
+                                <li>Investir sem estudar primeiro</li>
+                                <li>Colocar todo dinheiro em uma única ação</li>
+                                <li>Tentar "acertar o tempo do mercado"</li>
+                                <li>Vender na primeira queda</li>
+                            </ul>
+                            
+                            <h3>Conclusão</h3>
+                            <p>Investir em ações requer paciência, disciplina e estudo constante. Comece aos poucos, diversifique seus investimentos e mantenha uma perspectiva de longo prazo.</p>
+                        `
                     },
                     {
                         id: 2,
-                        title: "Os Melhores Investimentos para Iniciantes",
-                        image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=500&auto=format",
-                        category: "Investimentos",
-                        content: "Para quem está começando no mundo dos investimentos, é importante escolher opções mais seguras e de fácil entendimento. Tesouro Direto, CDBs e Fundos Imobiliários são ótimas opções para dar os primeiros passos...",
-                        fullContent: "<p>Para quem está começando no mundo dos investimentos, é importante escolher opções mais seguras e de fácil entendimento.</p><p><strong>Tesouro Direto</strong><br>Ideal para reserva de emergência e objetivos de curto prazo.</p><p><strong>CDBs</strong><br>Ótima opção para quem busca rentabilidade superior à poupança.</p><p><strong>Fundos Imobiliários</strong><br>Permite investir em imóveis com pouco dinheiro.</p>",
-                        excerpt: "Para quem está começando no mundo dos investimentos...",
-                        date: "10/02/2024",
-                        views: 120
+                        title: "Tesouro Direto: O Guia Definitivo para Iniciantes",
+                        image: "https://images.pexels.com/photos/3943716/pexels-photo-3943716.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Tesouro Direto",
+                        date: "14/02/2024",
+                        views: 189,
+                        excerpt: "Entenda como funciona o Tesouro Direto e comece a investir em títulos públicos com segurança...",
+                        fullContent: `
+                            <h3>O que é Tesouro Direto?</h3>
+                            <p>O Tesouro Direto é um programa do governo federal que permite a compra de títulos públicos por pessoas físicas, de forma simples e acessível. É considerado um dos investimentos mais seguros do país.</p>
+                            
+                            <h3>Tipos de Títulos</h3>
+                            <p>Existem três principais tipos de títulos:</p>
+                            <ul>
+                                <li><strong>Tesouro Selic:</strong> Acompanha a taxa básica de juros, ideal para reserva de emergência</li>
+                                <li><strong>Tesouro IPCA+:</strong> Protege contra a inflação, ótimo para longo prazo</li>
+                                <li><strong>Tesouro Prefixado:</strong> Taxa fixa definida no momento da compra</li>
+                            </ul>
+                            
+                            <h3>Vantagens do Tesouro Direto</h3>
+                            <ul>
+                                <li>Segurança garantida pelo governo federal</li>
+                                <li>Investimento inicial baixo (a partir de R$30)</li>
+                                <li>Liquidez diária (pode vender quando quiser)</li>
+                                <li>Diversas opções de prazos e rentabilidades</li>
+                            </ul>
+                            
+                            <h3>Como Investir no Tesouro Direto</h3>
+                            <p>Passo a passo:</p>
+                            <ol>
+                                <li>Abra conta em uma corretora ou banco habilitado</li>
+                                <li>Transfira o dinheiro para a conta de investimentos</li>
+                                <li>Acesse o sistema do Tesouro Direto</li>
+                                <li>Escolha o título que melhor se adequa aos seus objetivos</li>
+                                <li>Defina o valor do investimento</li>
+                            </ol>
+                            
+                            <h3>Cuidados Importantes</h3>
+                            <p>Fique atento às taxas de custódia e administração, e lembre-se de que títulos prefixados podem sofrer marcação a mercado se vendidos antes do vencimento.</p>
+                        `
                     },
                     {
                         id: 3,
-                        title: "5 Maneiras de Fazer Renda Extra",
-                        image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500&auto=format",
+                        title: "10 Ideias de Renda Extra para Complementar sua Renda",
+                        image: "https://images.pexels.com/photos/3768916/pexels-photo-3768916.jpeg?auto=compress&cs=tinysrgb&w=600",
                         category: "Renda Extra",
-                        content: "Descubra formas práticas de aumentar sua renda mensal com trabalhos online, investimentos em dividendos e muito mais...",
-                        fullContent: "<p>Existem diversas maneiras de aumentar sua renda mensal. Confira as melhores opções:</p><p><strong>1. Trabalho Freelancer</strong><br>Plataformas como Workana e 99Freelas oferecem oportunidades.</p><p><strong>2. Investimento em Dividendos</strong><br>Ações que pagam bons dividendos podem gerar renda passiva.</p>",
-                        excerpt: "Descubra formas práticas de aumentar sua renda mensal...",
+                        date: "13/02/2024",
+                        views: 312,
+                        excerpt: "Descubra formas práticas de ganhar dinheiro extra e acelerar seus objetivos financeiros...",
+                        fullContent: `
+                            <h3>Por que Buscar uma Renda Extra?</h3>
+                            <p>Ter múltiplas fontes de renda não só aumenta sua segurança financeira, mas também acelera a conquista de objetivos como quitar dívidas, fazer investimentos ou realizar sonhos.</p>
+                            
+                            <h3>1. Freelancer Online</h3>
+                            <p>Plataformas como Workana, 99Freelas e Upwork conectam profissionais a clientes que precisam de serviços de redação, design, programação, marketing e muito mais.</p>
+                            
+                            <h3>2. Venda de Produtos Digitais</h3>
+                            <p>Crie e-books, cursos online, planilhas ou templates para vender na internet. O custo de produção é baixo e o potencial de escala é enorme.</p>
+                            
+                            <h3>3. Marketing de Afiliados</h3>
+                            <p>Promova produtos de outras empresas e ganhe comissões. Você pode fazer isso através de um blog, canal no YouTube ou redes sociais.</p>
+                            
+                            <h3>4. Aulas Particulares</h3>
+                            <p>Se você tem conhecimento em alguma área, pode dar aulas online ou presenciais. Idiomas, música, matemática e programação estão entre os mais procurados.</p>
+                            
+                            <h3>5. Venda de Artesanato</h3>
+                            <p>Plataformas como Elo7 permitem vender produtos artesanais para todo o Brasil. Bolsas, roupas, decoração e itens personalizados têm boa demanda.</p>
+                            
+                            <h3>6. Aluguel de Espaços</h3>
+                            <p>Se você tem um quarto vago, pode alugar no Airbnb. Também é possível alugar vagas de garagem, equipamentos ou roupas.</p>
+                            
+                            <h3>7. Motorista de Aplicativo</h3>
+                            <p>Uber, 99 e outras plataformas permitem ganhar dinheiro usando seu carro nos horários livres.</p>
+                            
+                            <h3>8. Revenda de Produtos</h3>
+                            <p>Compre produtos no atacado e revenda no varejo. Roupas, cosméticos e eletrônicos são boas opções para começar.</p>
+                            
+                            <h3>9. Criação de Conteúdo</h3>
+                            <p>Monetize seu conhecimento ou hobbies através de um canal no YouTube, podcast ou blog. Com consistência, é possível gerar renda com anúncios e parcerias.</p>
+                            
+                            <h3>10. Pequenos Reparos</h3>
+                            <p>Serviços de encanamento, elétrica, pintura ou jardinagem sempre têm demanda. Divulgue seu trabalho no bairro e nas redes sociais.</p>
+                        `
+                    },
+                    {
+                        id: 4,
+                        title: "Fundos Imobiliários: Guia Completo para Iniciantes",
+                        image: "https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Fundos Imobiliários",
+                        date: "12/02/2024",
+                        views: 167,
+                        excerpt: "Aprenda tudo sobre Fundos Imobiliários e comece a receber aluguéis sem precisar comprar um imóvel...",
+                        fullContent: `
+                            <h3>O que são Fundos Imobiliários?</h3>
+                            <p>Fundos de Investimento Imobiliário (FIIs) são condomínios de investidores que aplicam recursos em empreendimentos imobiliários. Ao comprar cotas de um FII, você se torna coproprietário dos imóveis do fundo.</p>
+                            
+                            <h3>Tipos de Fundos Imobiliários</h3>
+                            <ul>
+                                <li><strong>Fundos de Tijolo:</strong> Investem diretamente em imóveis físicos</li>
+                                <li><strong>Fundos de Papel:</strong> Investem em títulos do mercado imobiliário (CRI, LCI)</li>
+                                <li><strong>Fundos Híbridos:</strong> Combinam imóveis físicos e títulos</li>
+                                <li><strong>Fundos de Desenvolvimento:</strong> Investem em construção de imóveis</li>
+                            </ul>
+                            
+                            <h3>Vantagens dos FIIs</h3>
+                            <ul>
+                                <li>Investimento inicial baixo (algumas cotas custam menos de R$100)</li>
+                                <li>Diversificação imobiliária com pouco dinheiro</li>
+                                <li>Renda mensal através de dividendos (isentos de IR para pessoa física)</li>
+                                <li>Liquidez maior que imóveis físicos</li>
+                                <li>Não precisa se preocupar com inquilinos ou manutenção</li>
+                            </ul>
+                            
+                            <h3>Como Funciona a Renda dos FIIs</h3>
+                            <p>Os fundos distribuem mensalmente 95% dos lucros obtidos com aluguéis ou rendimentos. Esses rendimentos são creditados automaticamente na conta do investidor.</p>
+                            
+                            <h3>Riscos a Considerar</h3>
+                            <ul>
+                                <li>Vacância dos imóveis pode reduzir rendimentos</li>
+                                <li>Flutuação do preço das cotas no mercado</li>
+                                <li>Má gestão do fundo</li>
+                                <li>Mudanças na taxa de juros afetam o setor</li>
+                            </ul>
+                            
+                            <h3>Como Escolher um FII</h3>
+                            <p>Analise o histórico de rendimentos, a qualidade dos imóveis, a taxa de vacância, a gestão do fundo e o P/VP (preço sobre valor patrimonial). Diversifique entre diferentes tipos de fundos e gestoras.</p>
+                        `
+                    },
+                    {
+                        id: 5,
+                        title: "Economia Doméstica: Como Reduzir Gastos sem Sofrimento",
+                        image: "https://images.pexels.com/photos/4482900/pexels-photo-4482900.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Economia",
+                        date: "11/02/2024",
+                        views: 278,
+                        excerpt: "Estratégias práticas para economizar dinheiro no dia a dia sem abrir mão do que realmente importa...",
+                        fullContent: `
+                            <h3>A Importância da Economia Doméstica</h3>
+                            <p>Economizar não significa viver com privações, mas sim otimizar recursos para alcançar objetivos maiores. Com pequenas mudanças de hábito, é possível reduzir gastos significativamente ao longo do mês.</p>
+                            
+                            <h3>1. Alimentação</h3>
+                            <p>Faça uma lista de compras antes de ir ao supermercado e evite ir com fome. Compare preços entre marcas e estabelecimentos. Cozinhar em casa e levar marmita para o trabalho reduz drasticamente os gastos com alimentação.</p>
+                            
+                            <h3>2. Contas de Consumo</h3>
+                            <p>Economize energia trocando lâmpadas por LED, aproveitando a luz natural e desligando aparelhos em stand-by. Para água, conserte vazamentos e reduza o tempo no banho. Revise planos de internet e TV por assinatura.</p>
+                            
+                            <h3>3. Transporte</h3>
+                            <p>Considere usar transporte público, carona ou bicicleta. Se possível, trabalhe de casa alguns dias. Mantenha a manutenção do carro em dia para evitar consumo excessivo de combustível.</p>
+                            
+                            <h3>4. Compras</h3>
+                            <p>Evite compras por impulso. Espere 24 horas antes de comprar itens não essenciais. Pesquise preços online antes de comprar em lojas físicas. Use aplicativos de cashback e cupons de desconto.</p>
+                            
+                            <h3>5. Moradia</h3>
+                            <p>Considere morar em bairros mais baratos ou dividir apartamento. Negocie o aluguel anualmente e evite desperdício de água e luz. Faça manutenções preventivas para evitar gastos maiores depois.</p>
+                            
+                            <h3>6. Lazer</h3>
+                            <p>Explore opções gratuitas como parques, museus em dias de entrada franca e eventos culturais. Organize encontros em casa em vez de sair. Use serviços de streaming em vez de ir ao cinema sempre.</p>
+                            
+                            <h3>Ferramentas Úteis</h3>
+                            <p>Use aplicativos de controle financeiro como Organizze, Mobills ou Guiabolso. Eles ajudam a visualizar para onde está indo seu dinheiro e identificar oportunidades de economia.</p>
+                        `
+                    },
+                    {
+                        id: 6,
+                        title: "Planejamento Financeiro para Casais: Como Organizar as Contas a Dois",
+                        image: "https://images.pexels.com/photos/3768780/pexels-photo-3768780.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Finanças Pessoais",
+                        date: "10/02/2024",
+                        views: 156,
+                        excerpt: "Dicas para casais organizarem as finanças em conjunto, evitando conflitos e construindo objetivos comuns...",
+                        fullContent: `
+                            <h3>A Importância do Diálogo Financeiro</h3>
+                            <p>Dinheiro é uma das principais causas de conflitos em relacionamentos. Por isso, é fundamental que casais conversem abertamente sobre finanças desde o início e estabeleçam um planejamento conjunto.</p>
+                            
+                            <h3>Modelos de Organização Financeira</h3>
+                            <p>Existem diferentes formas de organizar as finanças a dois:</p>
+                            <ul>
+                                <li><strong>Contas totalmente separadas:</strong> Cada um mantém sua independência financeira e divide as despesas comuns</li>
+                                <li><strong>Conta conjunta para despesas:</strong> Cada um contribui com um valor proporcional à renda para uma conta usada apenas para gastos compartilhados</li>
+                                <li><strong>Contas totalmente unificadas:</strong> Toda renda é depositada em contas conjuntas e as decisões são tomadas em conjunto</li>
+                            </ul>
+                            
+                            <h3>Como Definir a Melhor Estratégia</h3>
+                            <p>Considere a diferença de renda, os hábitos de consumo de cada um, os objetivos em comum e a confiança existente. Não existe modelo certo ou errado, apenas o que funciona melhor para o casal.</p>
+                            
+                            <h3>Objetivos Financeiros Conjuntos</h3>
+                            <p>Estabeleçam metas em comum, como:</p>
+                            <ul>
+                                <li>Comprar a casa própria</li>
+                                <li>Fazer uma viagem dos sonhos</li>
+                                <li>Constituir uma reserva de emergência</li>
+                                <li>Planejar a aposentadoria</li>
+                                <li>Investir na educação dos filhos</li>
+                            </ul>
+                            
+                            <h3>Dicas Práticas</h3>
+                            <ul>
+                                <li>Façam reuniões financeiras mensais para avaliar o orçamento</li>
+                                <li>Mantenham certa independência financeira (cada um ter seu próprio dinheiro)</li>
+                                <li>Respeitem os hábitos de consumo um do outro</li>
+                                <li>Construam uma reserva de emergência conjunta</li>
+                                <li>Invistam juntos para objetivos de longo prazo</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 7,
+                        title: "Aposentadoria: Como se Preparar Financeiramente",
+                        image: "https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Aposentadoria",
+                        date: "09/02/2024",
+                        views: 203,
+                        excerpt: "Estratégias para construir uma aposentadoria tranquila, independentemente da idade que você tem hoje...",
+                        fullContent: `
+                            <h3>Por que Planejar a Aposentadoria?</h3>
+                            <p>Com o aumento da expectativa de vida e as mudanças na previdência social, planejar a aposentadoria se tornou essencial. Quanto mais cedo você começar, menos esforço será necessário no futuro.</p>
+                            
+                            <h3>Calculando Quanto Você Precisa</h3>
+                            <p>Uma regra prática é que você precisará de cerca de 70-80% da sua renda atual para manter o padrão de vida na aposentadoria. Considere também a inflação ao longo dos anos e o tempo que você pretende ficar aposentado.</p>
+                            
+                            <h3>Estratégias de Acumulação</h3>
+                            <p>Para construir um patrimônio para aposentadoria, considere:</p>
+                            <ul>
+                                <li><strong>Previdência Privada:</strong> PGBL (para quem declara IR completo) ou VGBL (para quem faz declaração simplificada)</li>
+                                <li><strong>Investimentos de Longo Prazo:</strong> Ações, Fundos Imobiliários, Tesouro IPCA+</li>
+                                <li><strong>Imóveis para Renda:</strong> Aluguéis podem complementar a renda na aposentadoria</li>
+                                <li><strong>Negócio Próprio:</strong> Um negócio que gere renda passiva ou que possa ser vendido no futuro</li>
+                            </ul>
+                            
+                            <h3>Planejamento por Idade</h3>
+                            <p><strong>Aos 20-30 anos:</strong> Foco em acumular patrimônio, assumir riscos calculados e aproveitar o poder dos juros compostos.</p>
+                            <p><strong>Aos 30-40 anos:</strong> Aumentar a diversificação, começar a pensar em previdência privada e proteger o patrimônio.</p>
+                            <p><strong>Aos 40-50 anos:</strong> Acelerar a acumulação, reduzir riscos e fazer projeções mais realistas.</p>
+                            <p><strong>Aos 50-60 anos:</strong> Foco em preservação de capital, renda e planejamento sucessório.</p>
+                            
+                            <h3>Erros Comuns</h3>
+                            <ul>
+                                <li>Confiar apenas na previdência social</li>
+                                <li>Começar a planejar tarde demais</li>
+                                <li>Não considerar a inflação</li>
+                                <li>Investir de forma muito conservadora quando jovem</li>
+                                <li>Não diversificar as fontes de renda na aposentadoria</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 8,
+                        title: "Análise de Ações: Indicadores Fundamentais que Você Precisa Conhecer",
+                        image: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Ações",
+                        date: "08/02/2024",
+                        views: 142,
+                        excerpt: "Conheça os principais indicadores usados na análise fundamentalista para avaliar ações...",
+                        fullContent: `
+                            <h3>Introdução à Análise Fundamentalista</h3>
+                            <p>A análise fundamentalista busca determinar o valor justo de uma ação estudando os fundamentos da empresa emissora. Isso inclui demonstrações financeiras, setor de atuação, gestão e perspectivas futuras.</p>
+                            
+                            <h3>Indicadores de Valuation</h3>
+                            <p><strong>P/L (Preço sobre Lucro):</strong> Indica quantos anos seriam necessários para recuperar o investimento com os lucros atuais. Quanto menor, mais barata a ação em relação aos lucros.</p>
+                            <p><strong>P/VP (Preço sobre Valor Patrimonial):</strong> Compara o preço da ação com o patrimônio líquido da empresa. Abaixo de 1 pode indicar subvalorização.</p>
+                            <p><strong>EV/EBITDA:</strong> Relação entre o valor da empresa e sua geração de caixa operacional. Útil para comparar empresas do mesmo setor.</p>
+                            
+                            <h3>Indicadores de Rentabilidade</h3>
+                            <p><strong>ROE (Return on Equity):</strong> Mede a rentabilidade sobre o patrimônio líquido. Quanto maior, mais eficiente a empresa em gerar lucro com o capital dos acionistas.</p>
+                            <p><strong>ROIC (Return on Invested Capital):</strong> Avalia a rentabilidade sobre o capital investido. Indica se a empresa cria valor para os acionistas.</p>
+                            <p><strong>Margem Líquida:</strong> Percentual da receita que vira lucro. Empresas com margens altas geralmente têm vantagens competitivas.</p>
+                            
+                            <h3>Indicadores de Endividamento</h3>
+                            <p><strong>Dívida Líquida/EBITDA:</strong> Mede a capacidade de pagar dívidas com o caixa gerado. Idealmente abaixo de 3.</p>
+                            <p><strong>Liquidez Corrente:</strong> Capacidade de pagar dívidas de curto prazo com ativos de curto prazo. Acima de 1 é saudável.</p>
+                            
+                            <h3>Indicadores de Mercado</h3>
+                            <p><strong>Dividend Yield:</strong> Retorno em dividendos em relação ao preço da ação. Importante para quem busca renda.</p>
+                            <p><strong>Payout:</strong> Percentual do lucro distribuído como dividendos.</p>
+                            
+                            <h3>Como Usar os Indicadores</h3>
+                            <p>Nunca analise um indicador isoladamente. Compare com empresas do mesmo setor, com a média histórica da própria empresa e com as taxas de juros. Lembre-se que indicadores são ferramentas, não verdades absolutas.</p>
+                        `
+                    },
+                    {
+                        id: 9,
+                        title: "Reserva de Emergência: Como Construir e Onde Deixar",
+                        image: "https://images.pexels.com/photos/3943716/pexels-photo-3943716.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Finanças Pessoais",
+                        date: "07/02/2024",
+                        views: 334,
+                        excerpt: "Aprenda a importância da reserva de emergência e as melhores opções para deixar seu dinheiro seguro e acessível...",
+                        fullContent: `
+                            <h3>O que é Reserva de Emergência?</h3>
+                            <p>A reserva de emergência é um colchão financeiro para imprevistos como desemprego, problemas de saúde ou reparos urgentes. Ela deve ser suficiente para manter seu padrão de vida por um período sem precisar se endividar.</p>
+                            
+                            <h3>Quanto Guardar?</h3>
+                            <p>O valor ideal varia conforme sua situação:</p>
+                            <ul>
+                                <li><strong>Funcionário CLT:</strong> 3 a 6 meses de despesas mensais</li>
+                                <li><strong>Autônomo ou Empresário:</strong> 6 a 12 meses de despesas</li>
+                                <li><strong>Aposentado:</strong> 12 a 24 meses de despesas</li>
+                            </ul>
+                            
+                            <h3>Características da Reserva de Emergência</h3>
+                            <ul>
+                                <li><strong>Liquidez Imediata:</strong> Deve estar disponível para saque a qualquer momento</li>
+                                <li><strong>Segurança:</strong> Baixíssimo risco de perda</li>
+                                <li><strong>Facilidade de Acesso:</strong> Pode ser resgatada rapidamente</li>
+                            </ul>
+                            
+                            <h3>Onde Deixar a Reserva de Emergência</h3>
+                            <p><strong>1. Tesouro Selic:</strong> Título público com liquidez diária e rendimento próximo à taxa Selic. Ideal por ser seguro e render mais que poupança.</p>
+                            <p><strong>2. CDB com Liquidez Diária:</strong> Oferecido por bancos, rende tipicamente 100% do CDI. Verifique se tem liquidez imediata.</p>
+                            <p><strong>3. Fundos DI:</strong> Fundos que investem em títulos públicos e privados de curto prazo. Escolha fundos com taxa de administração baixa.</p>
+                            <p><strong>4. Poupança:</strong> Apesar de render pouco, é uma opção para quem precisa de extrema simplicidade e não tem acesso a outras opções.</p>
+                            
+                            <h3>Erros Comuns</h3>
+                            <ul>
+                                <li>Investir a reserva em produtos de longo prazo ou voláteis</li>
+                                <li>Não reajustar o valor conforme a inflação</li>
+                                <li>Usar a reserva para gastos não emergenciais</li>
+                                <li>Manter tudo em conta corrente sem render nada</li>
+                            </ul>
+                            
+                            <h3>Como Construir Sua Reserva</h3>
+                            <p>Defina um valor mensal para poupar, automaticamente assim que receber o salário. Comece com o que é possível e vá aumentando gradualmente. Celebre cada milestone alcançado para manter a motivação.</p>
+                        `
+                    },
+                    {
+                        id: 10,
+                        title: "CDB, LCI, LCA: Entendendo os Investimentos de Renda Fixa",
+                        image: "https://images.pexels.com/photos/4386366/pexels-photo-4386366.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Investimentos",
+                        date: "06/02/2024",
+                        views: 187,
+                        excerpt: "Guia completo sobre os principais investimentos de renda fixa e como escolher o melhor para cada objetivo...",
+                        fullContent: `
+                            <h3>O que é Renda Fixa?</h3>
+                            <p>Renda fixa são investimentos onde as regras de rentabilidade são definidas no momento da aplicação. São considerados mais seguros que renda variável e formam a base da carteira da maioria dos investidores.</p>
+                            
+                            <h3>CDB (Certificado de Depósito Bancário)</h3>
+                            <p>É um título emitido por bancos para captar recursos. O investidor empresta dinheiro ao banco em troca de uma remuneração. Conta com a garantia do FGC (Fundo Garantidor de Créditos) até R$250 mil por CPF e instituição.</p>
+                            <p><strong>Tipos de rentabilidade:</strong></p>
+                            <ul>
+                                <li>Percentual do CDI (ex: 100% do CDI, 120% do CDI)</li>
+                                <li>Taxa prefixada (ex: 12% ao ano)</li>
+                                <li>IPCA + taxa (ex: IPCA + 5% ao ano)</li>
+                            </ul>
+                            
+                            <h3>LCI e LCA (Letras de Crédito)</h3>
+                            <p>São títulos emitidos por bancos para financiar os setores imobiliário (LCI) e do agronegócio (LCA). A principal vantagem é a isenção de Imposto de Renda para pessoas físicas.</p>
+                            <p><strong>Vantagens:</strong></p>
+                            <ul>
+                                <li>Isenção de IR</li>
+                                <li>Garantia do FGC</li>
+                                <li>Rentabilidade geralmente boa</li>
+                            </ul>
+                            <p><strong>Desvantagens:</strong></p>
+                            <ul>
+                                <li>Prazo mínimo de 90 dias para LCI/LCA (não pode resgatar antes)</li>
+                                <li>Menor liquidez que CDBs</li>
+                            </ul>
+                            
+                            <h3>Debêntures</h3>
+                            <p>São títulos emitidos por empresas não-financeiras para captar recursos. Oferecem rentabilidade maior que CDBs, mas têm risco maior (não contam com garantia do FGC).</p>
+                            
+                            <h3>Como Escolher</h3>
+                            <p>Considere:</p>
+                            <ul>
+                                <li><strong>Liquidez:</strong> Quando você vai precisar do dinheiro?</li>
+                                <li><strong>Rentabilidade líquida:</strong> Compare após descontar impostos e taxas</li>
+                                <li><strong>Risco:</strong> Avalie a saúde da instituição emissora</li>
+                                <li><strong>Objetivo:</strong> Curto, médio ou longo prazo?</li>
+                            </ul>
+                            
+                            <h3>Estratégias de Alocação</h3>
+                            <p>Para reserva de emergência: CDB com liquidez diária ou Tesouro Selic. Para objetivos de curto prazo: CDBs com prazos menores. Para médio/longo prazo: misturar CDBs, LCIs e debêntures para diversificar.</p>
+                        `
+                    },
+                    {
+                        id: 11,
+                        title: "Investimentos para Iniciantes: Por Onde Começar?",
+                        image: "https://images.pexels.com/photos/3768916/pexels-photo-3768916.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Investimentos",
                         date: "05/02/2024",
-                        views: 90
+                        views: 423,
+                        excerpt: "Um roteiro passo a passo para quem quer começar a investir mas não sabe por onde começar...",
+                        fullContent: `
+                            <h3>Primeiros Passos no Mundo dos Investimentos</h3>
+                            <p>Começar a investir pode parecer intimidador, mas com uma abordagem estruturada, você pode construir uma base sólida para seu futuro financeiro. Este guia vai te ajudar a dar os primeiros passos com segurança.</p>
+                            
+                            <h3>Passo 1: Organize suas Finanças Pessoais</h3>
+                            <p>Antes de começar a investir, é fundamental ter suas finanças pessoais em ordem:</p>
+                            <ul>
+                                <li>Anote todos os seus gastos por um mês para entender para onde vai seu dinheiro</li>
+                                <li>Quite dívidas com juros altos (cartão de crédito, cheque especial)</li>
+                                <li>Crie um orçamento mensal que permita poupar regularmente</li>
+                                <li>Estabeleça metas financeiras claras (curto, médio e longo prazo)</li>
+                            </ul>
+                            
+                            <h3>Passo 2: Construa sua Reserva de Emergência</h3>
+                            <p>Antes de qualquer investimento mais arriscado, tenha de 3 a 6 meses de despesas guardadas em aplicações de liquidez imediata e baixo risco, como Tesouro Selic ou CDB com liquidez diária.</p>
+                            
+                            <h3>Passo 3: Conheça seu Perfil de Investidor</h3>
+                            <p>Seu perfil determina quais investimentos são mais adequados para você:</p>
+                            <ul>
+                                <li><strong>Conservador:</strong> Prioriza segurança, aceita baixa rentabilidade</li>
+                                <li><strong>Moderado:</strong> Busca equilíbrio entre segurança e rentabilidade</li>
+                                <li><strong>Agressivo:</strong> Aceita riscos maiores em busca de retornos superiores</li>
+                            </ul>
+                            
+                            <h3>Passo 4: Entenda os Tipos de Investimento</h3>
+                            <p><strong>Renda Fixa:</strong> Tesouro Direto, CDB, LCI, LCA - mais seguros e previsíveis</p>
+                            <p><strong>Renda Variável:</strong> Ações, Fundos Imobiliários - maior potencial de retorno, mas com volatilidade</p>
+                            <p><strong>Fundos de Investimento:</strong> Cestas de investimentos geridas por profissionais</p>
+                            
+                            <h3>Passo 5: Comece com o Básico</h3>
+                            <p>Inicie com investimentos simples e de baixo risco:</p>
+                            <ol>
+                                <li>Abra conta em uma corretora confiável</li>
+                                <li>Comece com Tesouro Direto ou CDBs para entender como funcionam os investimentos</li>
+                                <li>Estude sobre Fundos Imobiliários e ações enquanto acumula experiência</li>
+                                <li>Diversifique aos poucos, conforme ganha conhecimento</li>
+                            </ol>
+                            
+                            <h3>Passo 6: Invista Regularmente</h3>
+                            <p>A chave do sucesso nos investimentos é a consistência. Defina um valor fixo para investir todo mês, independentemente das condições do mercado. Com o tempo, o poder dos juros compostos fará a diferença.</p>
+                            
+                            <h3>Passo 7: Continue Estudando</h3>
+                            <p>O mundo dos investimentos está em constante evolução. Continue estudando através de livros, cursos, canais especializados e acompanhando o mercado. Quanto mais você souber, melhores serão suas decisões.</p>
+                        `
+                    },
+                    {
+                        id: 12,
+                        title: "Dividendos: Como Viver de Renda com Ações",
+                        image: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Ações",
+                        date: "04/02/2024",
+                        views: 267,
+                        excerpt: "Estratégias para construir uma carteira de ações focada em dividendos e gerar renda passiva...",
+                        fullContent: `
+                            <h3>O que são Dividendos?</h3>
+                            <p>Dividendos são parcelas do lucro das empresas distribuídas aos acionistas. Quando você possui ações de uma empresa, tem direito a receber esses proventos periodicamente, geralmente de forma trimestral ou semestral.</p>
+                            
+                            <h3>Vantagens de Investir em Dividendos</h3>
+                            <ul>
+                                <li>Geração de renda passiva regular</li>
+                                <li>Empresas que pagam bons dividendos costumam ser sólidas e maduras</li>
+                                <li>Dividendos são isentos de Imposto de Renda para pessoa física</li>
+                                <li>Possibilidade de reinvestir os dividendos para acelerar o crescimento do patrimônio</li>
+                            </ul>
+                            
+                            <h3>Como Escolher Ações para Dividendos</h3>
+                            <p><strong>Dividend Yield:</strong> É o retorno em dividendos dividido pelo preço da ação. Busque ações com DY consistente acima da média do mercado (geralmente acima de 6% ao ano).</p>
+                            <p><strong>Histórico de Pagamentos:</strong> Empresas com histórico longo de pagamentos regulares e crescentes são mais confiáveis.</p>
+                            <p><strong>Payout Ratio:</strong> Percentual do lucro distribuído como dividendos. Muito alto pode ser insustentável; muito baixo indica que a empresa prefere reinvestir.</p>
+                            <p><strong>Saúde Financeira:</strong> Analise endividamento, lucratividade e perspectivas do setor.</p>
+                            
+                            <h3>Setores com Boas Pagadoras de Dividendos</h3>
+                            <ul>
+                                <li><strong>Elétricas:</strong> Geração e distribuição de energia (ex: Taesa, Copel)</li>
+                                <li><strong>Bancos:</strong> Setor financeiro tradicionalmente distribui bons dividendos</li>
+                                <li><strong>Saneamento:</strong> Empresas de água e esgoto (ex: Sabesp, Copasa)</li>
+                                <li><strong>Telecomunicações:</strong> Operadoras de telefonia e infraestrutura</li>
+                                <li><strong>Fundos Imobiliários:</strong> Distribuem 95% dos lucros mensalmente</li>
+                            </ul>
+                            
+                            <h3>Estratégia para Viver de Dividendos</h3>
+                            <p>Para viver de dividendos, você precisa acumular um patrimônio suficiente para que os proventos cubram suas despesas mensais. Calcule quanto você gasta por mês e multiplique por 12 para saber o quanto precisa receber em dividendos por ano. Depois, divida pelo dividend yield médio da sua carteira para estimar o patrimônio necessário.</p>
+                            <p>Exemplo: Se você gasta R$5.000/mês (R$60.000/ano) e sua carteira tem DY médio de 6%, precisaria de R$1.000.000 investidos.</p>
+                            
+                            <h3>Cuidados Importantes</h3>
+                            <ul>
+                                <li>Não olhe apenas o DY atual - empresas com DY muito alto podem estar com problemas</li>
+                                <li>Diversifique entre setores e empresas</li>
+                                <li>Reavalie periodicamente sua carteira</li>
+                                <li>Lembre-se que dividendos não são garantidos - podem ser reduzidos ou suspensos</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 13,
+                        title: "Imposto de Renda para Investidores: Guia Prático",
+                        image: "https://images.pexels.com/photos/4386366/pexels-photo-4386366.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Finanças Pessoais",
+                        date: "03/02/2024",
+                        views: 198,
+                        excerpt: "Tudo o que você precisa saber sobre declaração de impostos para seus investimentos...",
+                        fullContent: `
+                            <h3>Introdução ao IR para Investidores</h3>
+                            <p>Entender as regras do Imposto de Renda para investimentos é fundamental para evitar problemas com o Leão e otimizar seus retornos. Cada tipo de investimento tem regras específicas de tributação.</p>
+                            
+                            <h3>Renda Fixa</h3>
+                            <p><strong>Regra geral:</strong> Imposto de Renda regressivo de 22,5% a 15% sobre os rendimentos, dependendo do prazo:</p>
+                            <ul>
+                                <li>Até 180 dias: 22,5%</li>
+                                <li>181 a 360 dias: 20%</li>
+                                <li>361 a 720 dias: 17,5%</li>
+                                <li>Acima de 720 dias: 15%</li>
+                            </ul>
+                            <p><strong>Exceções:</strong> LCI e LCA são isentas para pessoas físicas.</p>
+                            
+                            <h3>Ações</h3>
+                            <p><strong>Dividendos:</strong> São isentos de IR para pessoa física.</p>
+                            <p><strong>Venda de ações:</strong></p>
+                            <ul>
+                                <li>Vendas até R$20.000 no mês: isentas</li>
+                                <li>Acima de R$20.000: 15% sobre o lucro</li>
+                                <li>Day trade: 20% sobre o lucro</li>
+                            </ul>
+                            
+                            <h3>Fundos Imobiliários</h3>
+                            <p><strong>Rendimentos:</strong> Isentos para pessoa física, desde que o fundo tenha mais de 50 cotistas e as cotas sejam negociadas em bolsa.</p>
+                            <p><strong>Venda de cotas:</strong> 20% sobre o lucro (sem limite de isenção).</p>
+                            
+                            <h3>Como Declarar</h3>
+                            <p><strong>Passo 1:</strong> Reúna todos os informes de rendimento fornecidos por corretoras e bancos.</p>
+                            <p><strong>Passo 2:</strong> No programa da Receita, declare seus bens e direitos (ações, cotas, títulos) na ficha de "Bens e Direitos".</p>
+                            <p><strong>Passo 3:</strong> Declare os rendimentos (juros, dividendos, aluguéis de FIIs) na ficha de "Rendimentos Isentos e Não Tributáveis" ou "Rendimentos Sujeitos à Tributação Exclusiva".</p>
+                            <p><strong>Passo 4:</strong> Declare operações de venda com lucro na ficha de "Renda Variável".</p>
+                            
+                            <h3>Dicas Importantes</h3>
+                            <ul>
+                                <li>Guarde todos os comprovantes de compra e venda por pelo menos 5 anos</li>
+                                <li>Para ações, use o preço médio de compra para calcular o lucro</li>
+                                <li>Prejuízos em ações podem ser compensados com lucros futuros</li>
+                                <li>Considere contratar um contador especializado se tiver muitas operações</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 14,
+                        title: "Como Criar um Orçamento Familiar Eficiente",
+                        image: "https://images.pexels.com/photos/3768780/pexels-photo-3768780.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Finanças Pessoais",
+                        date: "02/02/2024",
+                        views: 176,
+                        excerpt: "Métodos práticos para criar e manter um orçamento familiar que funcione para sua realidade...",
+                        fullContent: `
+                            <h3>A Importância do Orçamento Familiar</h3>
+                            <p>Um orçamento familiar bem estruturado é a base para a saúde financeira. Ele permite que você controle gastos, evite dívidas e direcione recursos para seus objetivos de curto, médio e longo prazo.</p>
+                            
+                            <h3>Passo 1: Registre Todas as Receitas</h3>
+                            <p>Comece listando todas as fontes de renda da família: salários, aluguéis, rendimentos de investimentos, trabalhos extras, etc. Use o valor líquido (após descontos) para ter uma visão realista.</p>
+                            
+                            <h3>Passo 2: Mapeie Todos os Gastos</h3>
+                            <p>Por um período de 1 a 3 meses, anote absolutamente tudo o que a família gasta. Categorize os gastos em:</p>
+                            <ul>
+                                <li><strong>Gastos Fixos:</strong> Aluguel, financiamento, condomínio, escola, planos de saúde</li>
+                                <li><strong>Gastos Variáveis:</strong> Supermercado, contas de consumo (luz, água, internet), transporte</li>
+                                <li><strong>Gastos Discricionários:</strong> Lazer, restaurantes, viagens, compras não essenciais</li>
+                                <li><strong>Gastos Anuais/Eventuais:</strong> IPVA, IPTU, material escolar, manutenções</li>
+                            </ul>
+                            
+                            <h3>Passo 3: Analise e Estabeleça Metas</h3>
+                            <p>Com os dados em mãos, analise para onde está indo seu dinheiro. Identifique gastos desnecessários ou excessivos. Estabeleça metas realistas de redução e defina quanto quer poupar por mês.</p>
+                            
+                            <h3>Métodos de Orçamento</h3>
+                            <p><strong>Método 50-30-20:</strong></p>
+                            <ul>
+                                <li>50% da renda para gastos essenciais (moradia, alimentação, transporte)</li>
+                                <li>30% para gastos pessoais (lazer, hobbies, compras)</li>
+                                <li>20% para poupança e investimentos</li>
+                            </ul>
+                            
+                            <p><strong>Orçamento Base Zero:</strong> Cada real da renda tem uma destinação definida no início do mês, seja para gastos ou para investimentos.</p>
+                            
+                            <h3>Ferramentas Úteis</h3>
+                            <ul>
+                                <li><strong>Planilhas:</strong> Excel ou Google Sheets com modelos prontos</li>
+                                <li><strong>Aplicativos:</strong> Organizze, Mobills, Guiabolso, Minhas Economias</li>
+                                <li><strong>Método dos Envelopes:</strong> Dinheiro físico separado em envelopes por categoria</li>
+                            </ul>
+                            
+                            <h3>Dicas para Manter o Orçamento</h3>
+                            <ul>
+                                <li>Inclua todos os membros da família no processo</li>
+                                <li>Revise o orçamento mensalmente e faça ajustes</li>
+                                <li>Tenha uma reserva para imprevistos</li>
+                                <li>Celebre as conquistas (quitar uma dívida, atingir meta de poupança)</li>
+                                <li>Não seja extremamente rígido - permita alguns gastos com lazer</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 15,
+                        title: "Criptomoedas: Vale a Pena Investir?",
+                        image: "https://images.pexels.com/photos/8370752/pexels-photo-8370752.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Investimentos",
+                        date: "01/02/2024",
+                        views: 289,
+                        excerpt: "Análise completa sobre o mercado de criptomoedas, riscos e oportunidades para investidores...",
+                        fullContent: `
+                            <h3>O que são Criptomoedas?</h3>
+                            <p>Criptomoedas são ativos digitais que utilizam criptografia para segurança e operam em redes descentralizadas baseadas em blockchain. A mais conhecida é o Bitcoin, criado em 2009, mas existem milhares de outras (altcoins).</p>
+                            
+                            <h3>Principais Criptomoedas</h3>
+                            <p><strong>Bitcoin (BTC):</strong> A primeira e mais valiosa, vista como reserva de valor digital.</p>
+                            <p><strong>Ethereum (ETH):</strong> Plataforma para contratos inteligentes e aplicações descentralizadas.</p>
+                            <p><strong>Binance Coin (BNB):</strong> Token da maior corretora do mundo, usado para pagar taxas.</p>
+                            <p><strong>Solana (SOL):</strong> Blockchain de alta velocidade e baixo custo.</p>
+                            
+                            <h3>Vantagens de Investir em Criptomoedas</h3>
+                            <ul>
+                                <li>Potencial de valorização elevado (embora volátil)</li>
+                                <li>Mercado global, negociado 24/7</li>
+                                <li>Proteção contra inflação em alguns casos (Bitcoin tem oferta limitada)</li>
+                                <li>Tecnologia inovadora com potencial de transformar setores</li>
+                            </ul>
+                            
+                            <h3>Riscos e Desvantagens</h3>
+                            <ul>
+                                <li><strong>Volatilidade extrema:</strong> Quedas de 50% ou mais são comuns</li>
+                                <li><strong>Incerteza regulatória:</strong> Governos podem restringir ou tributar</li>
+                                <li><strong>Risco de segurança:</strong> Hacks, golpes, perda de acesso às carteiras</li>
+                                <li><strong>Falta de garantias:</strong> Não há FGC ou equivalente</li>
+                            </ul>
+                            
+                            <h3>Como Investir com Segurança</h3>
+                            <p><strong>1. Estude bastante antes:</strong> Entenda a tecnologia, o projeto e o time por trás da criptomoeda.</p>
+                            <p><strong>2. Use corretoras confiáveis:</strong> Prefira corretoras estabelecidas e regulamentadas.</p>
+                            <p><strong>3. Comece com valores pequenos:</strong> Invista apenas o que você pode perder.</p>
+                            <p><strong>4. Diversifique:</strong> Não concentre tudo em uma única criptomoeda.</p>
+                            <p><strong>5. Considere a autocustódia:</strong> Para valores maiores, use wallets próprias (hardware wallets).</p>
+                            
+                            <h3>Estratégias de Investimento</h3>
+                            <p><strong>Buy and Hold:</strong> Comprar e manter por longo prazo, ignorando volatilidade.</p>
+                            <p><strong>DCA (Dollar Cost Average):</strong> Comprar pequenos valores regularmente para diluir o preço médio.</p>
+                            <p><strong>Staking:</strong> Algumas criptos permitem "travar" os tokens para receber recompensas (similar a juros).</p>
+                            
+                            <h3>Veredito</h3>
+                            <p>Criptomoedas podem fazer parte de uma carteira diversificada, mas devem representar uma parcela pequena (5-10% do total) devido ao alto risco. São mais adequadas para investidores com perfil arrojado e horizonte de longo prazo.</p>
+                        `
+                    },
+                    {
+                        id: 16,
+                        title: "Planejamento Financeiro para Pequenos Negócios",
+                        image: "https://images.pexels.com/photos/3768916/pexels-photo-3768916.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Finanças Pessoais",
+                        date: "31/01/2024",
+                        views: 145,
+                        excerpt: "Como organizar as finanças do seu negócio para garantir crescimento sustentável...",
+                        fullContent: `
+                            <h3>A Importância da Gestão Financeira</h3>
+                            <p>Muitos pequenos negócios fecham por falta de planejamento financeiro, não por falta de clientes ou produto ruim. Uma gestão financeira adequada é essencial para a sobrevivência e crescimento do seu negócio.</p>
+                            
+                            <h3>Separe Pessoa Física de Pessoa Jurídica</h3>
+                            <p>O erro mais comum é misturar as contas pessoais com as do negócio. Abra uma conta bancária exclusiva para a empresa e estabeleça um pró-labore (seu salário) definido. Isso permite entender se o negócio é realmente lucrativo.</p>
+                            
+                            <h3>Controle de Fluxo de Caixa</h3>
+                            <p>Mantenha um registro detalhado de todas as entradas e saídas. Projete o fluxo de caixa para os próximos meses para antecipar períodos de aperto. Inclua:</p>
+                            <ul>
+                                <li>Vendas à vista e a prazo</li>
+                                <li>Compras de insumos e mercadorias</li>
+                                <li>Despesas fixas (aluguel, salários, contas)</li>
+                                <li>Impostos e taxas</li>
+                                <li>Investimentos em equipamentos e marketing</li>
+                            </ul>
+                            
+                            <h3>Precificação Correta</h3>
+                            <p>Muitos empreendedores precificam apenas com base na concorrência, esquecendo de calcular todos os custos. Use a fórmula:</p>
+                            <p><strong>Preço = (Custos Variáveis + Custos Fixos + Margem de Lucro) / (1 - Impostos)</strong></p>
+                            <p>Considere também o valor percebido pelo cliente e seu posicionamento no mercado.</p>
+                            
+                            <h3>Reserva Financeira para o Negócio</h3>
+                            <p>Assim como nas finanças pessoais, o negócio precisa de uma reserva para emergências. Guarde o equivalente a 3-6 meses de despesas operacionais em aplicações de liquidez.</p>
+                            
+                            <h3>Controle de Estoque</h3>
+                            <p>Estoque parado é dinheiro parado. Mantenha um sistema de controle para evitar excessos ou faltas. Calcule o giro de estoque e identifique produtos que não vendem bem.</p>
+                            
+                            <h3>Análise de Indicadores</h3>
+                            <p><strong>Margem de Contribuição:</strong> Quanto cada venda contribui para pagar os custos fixos e gerar lucro.</p>
+                            <p><strong>Ponto de Equilíbrio:</strong> Quanto precisa vender para cobrir todas as despesas.</p>
+                            <p><strong>ROI (Retorno sobre Investimento):</strong> Mede a eficiência de cada investimento realizado.</p>
+                            
+                            <h3>Planejamento Tributário</h3>
+                            <p>Entenda o regime tributário do seu negócio (Simples Nacional, MEI, Lucro Presumido). Consulte um contador para otimizar os impostos pagos legalmente.</p>
+                            
+                            <h3>Reinvestimento vs Distribuição de Lucros</h3>
+                            <p>Defina uma política clara: parte dos lucros deve ser reinvestida no negócio para crescimento, parte pode ser distribuída aos sócios. A proporção depende dos planos de expansão.</p>
+                        `
+                    },
+                    {
+                        id: 17,
+                        title: "Fundos de Investimento: Vale a Pena?",
+                        image: "https://images.pexels.com/photos/4386366/pexels-photo-4386366.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Investimentos",
+                        date: "30/01/2024",
+                        views: 167,
+                        excerpt: "Análise completa sobre fundos de investimento, tipos, custos e quando faz sentido contratar...",
+                        fullContent: `
+                            <h3>O que são Fundos de Investimento?</h3>
+                            <p>Fundos são condomínios de investidores que reúnem recursos para aplicar em uma carteira diversificada de ativos, gerida por um profissional (gestor). Cada investidor possui cotas proporcionais ao valor investido.</p>
+                            
+                            <h3>Tipos de Fundos</h3>
+                            <p><strong>Fundos de Renda Fixa:</strong> Investem principalmente em títulos públicos e privados de renda fixa. Baixo risco.</p>
+                            <p><strong>Fundos Multimercado:</strong> Podem investir em diversas classes de ativos (renda fixa, ações, câmbio, derivativos). Estratégias mais flexíveis.</p>
+                            <p><strong>Fundos de Ações:</strong> Devem manter pelo menos 67% do patrimônio em ações. Maior potencial de retorno e risco.</p>
+                            <p><strong>Fundos Cambiais:</strong> Investem em moedas estrangeiras, principalmente dólar.</p>
+                            <p><strong>Fundos Imobiliários:</strong> Investem em imóveis ou títulos do setor imobiliário. Distribuem 95% dos lucros.</p>
+                            
+                            <h3>Vantagens dos Fundos</h3>
+                            <ul>
+                                <li><strong>Gestão profissional:</strong> Especialistas tomam as decisões de investimento</li>
+                                <li><strong>Diversificação:</strong> Com pouco dinheiro, você acessa uma carteira diversificada</li>
+                                <li><strong>Praticidade:</strong> Não precisa se preocupar com escolha de ativos, IR (alguns fundos) e custódia</li>
+                                <li><strong>Acesso a ativos exclusivos:</strong> Alguns fundos investem em ativos não disponíveis para pessoa física</li>
+                            </ul>
+                            
+                            <h3>Desvantagens</h3>
+                            <ul>
+                                <li><strong>Taxas:</strong> Taxa de administração e, em alguns casos, taxa de performance reduzem o retorno</li>
+                                <li><strong>Menor controle:</strong> Você não escolhe os ativos individualmente</li>
+                                <li><strong>Imposto:</strong> Alguns fundos têm "come-cotas" (IR semestral)</li>
+                                <li><strong>Risco do gestor:</strong> Uma má gestão pode prejudicar o desempenho</li>
+                            </ul>
+                            
+                            <h3>Taxas dos Fundos</h3>
+                            <p><strong>Taxa de Administração:</strong> Percentual anual cobrado sobre o patrimônio. Para fundos de renda fixa, idealmente abaixo de 1%. Para fundos de ações, abaixo de 2%.</p>
+                            <p><strong>Taxa de Performance:</strong> Percentual do retorno que excede um benchmark (ex: 20% do que exceder o CDI). Deve ser analisada com cuidado.</p>
+                            
+                            <h3>Quando Vale a Pena?</h3>
+                            <ul>
+                                <li>Para quem não tem tempo ou conhecimento para gerir a própria carteira</li>
+                                <li>Para acessar estratégias complexas (multimercados, alguns setores específicos)</li>
+                                <li>Como complemento a uma carteira de investimentos diretos</li>
+                                <li>Para investidores com pouco capital inicial</li>
+                            </ul>
+                            
+                            <h3>Como Escolher um Fundo</h3>
+                            <p>Analise o histórico de rentabilidade (mínimo 3 anos), compare com o benchmark e com outros fundos da mesma categoria, avalie a consistência do gestor, entenda a estratégia e verifique as taxas. Prefira fundos de gestoras reconhecidas.</p>
+                        `
+                    },
+                    {
+                        id: 18,
+                        title: "Educação Financeira para Crianças e Adolescentes",
+                        image: "https://images.pexels.com/photos/3768780/pexels-photo-3768780.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Finanças Pessoais",
+                        date: "29/01/2024",
+                        views: 134,
+                        excerpt: "Como ensinar conceitos financeiros para os filhos desde cedo e formar adultos financeiramente saudáveis...",
+                        fullContent: `
+                            <h3>A Importância da Educação Financeira na Infância</h3>
+                            <p>Hábitos financeiros são formados na infância. Crianças que aprendem sobre dinheiro desde cedo têm mais chances de se tornarem adultos financeiramente responsáveis. A educação financeira vai além de poupar - ensina planejamento, priorização e valor do trabalho.</p>
+                            
+                            <h3>Ensinando por Idade</h3>
+                            <p><strong>3-5 anos:</strong> Introduza o conceito de que dinheiro é usado para comprar coisas. Use cofrinhos para ensinar a guardar. Dê mesada em moedas para que possam contar e separar.</p>
+                            <p><strong>6-10 anos:</strong> Comece com mesada regular e ensine a dividir em três categorias: gastar, poupar e doar. Explique a diferença entre desejo e necessidade. Leve ao supermercado e mostre comparação de preços.</p>
+                            <p><strong>11-14 anos:</strong> Aumente a mesada e inclua mais responsabilidades (comprar lanche na escola, presentes para amigos). Ensine sobre orçamento simples. Abra uma conta poupança e mostre os rendimentos.</p>
+                            <p><strong>15-18 anos:</strong> Introduza conceitos como juros, investimentos e cartão de crédito. Incentive trabalhos de meio período para entender o valor do dinheiro. Discuta sobre financiamento estudantil e primeiras compras grandes.</p>
+                            
+                            <h3>Métodos Práticos</h3>
+                            <p><strong>Mesada:</strong> Defina um valor adequado à idade e não relacione a tarefas domésticas (que devem ser feitas por cooperação, não por dinheiro). A mesada é uma ferramenta de aprendizado, não remuneração.</p>
+                            <p><strong>Cofrinhos temáticos:</strong> Use potes separados para objetivos diferentes: "gastar agora", "poupar para algo maior", "doar".</p>
+                            <p><strong>Jogos:</strong> Banco Imobiliário, Jogo da Vida e jogos online ensinam conceitos financeiros de forma lúdica.</p>
+                            
+                            <h3>Conversas sobre Dinheiro</h3>
+                            <p>Inclua as crianças em conversas apropriadas sobre finanças familiares. Explique decisões como "estamos economizando para viajar" ou "vamos comparar preços antes de comprar". Isso mostra que dinheiro envolve escolhas.</p>
+                            
+                            <h3>Erros Comuns dos Pais</h3>
+                            <ul>
+                                <li>Dar tudo o que a criança pede, sem ensinar sobre escolhas</li>
+                                <li>Não dar mesada por achar que criança não entende de dinheiro</li>
+                                <li>Usar dinheiro como recompensa ou punição</li>
+                                <li>Não dar exemplo - crianças aprendem mais pelo exemplo que por palavras</li>
+                            </ul>
+                            
+                            <h3>Ferramentas e Recursos</h3>
+                            <p>Livros infantis sobre finanças, aplicativos de mesada controlada, jogos educativos, vídeos do YouTube apropriados para idade. O importante é tornar o aprendizado divertido e prático.</p>
+                        `
+                    },
+                    {
+                        id: 19,
+                        title: "Investimentos Internacionais: Como e Por Que Diversificar",
+                        image: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Investimentos",
+                        date: "28/01/2024",
+                        views: 211,
+                        excerpt: "Guia para investir fora do Brasil, protegendo seu patrimônio e acessando oportunidades globais...",
+                        fullContent: `
+                            <h3>Por que Investir no Exterior?</h3>
+                            <p>Diversificar internacionalmente é uma estratégia inteligente para proteger seu patrimônio contra riscos locais (crise econômica, instabilidade política, desvalorização cambial) e acessar empresas e setores não disponíveis no Brasil.</p>
+                            
+                            <h3>Vantagens da Diversificação Internacional</h3>
+                            <ul>
+                                <li><strong>Proteção cambial:</strong> Parte do patrimônio em dólar ou euro protege contra desvalorização do real</li>
+                                <li><strong>Acesso a gigantes globais:</strong> Invista em Apple, Google, Amazon, Microsoft, etc.</li>
+                                <li><strong>Setores não disponíveis no Brasil:</strong> Tecnologia de ponta, biotecnologia, defesa</li>
+                                <li><strong>Menor correlação:</strong> Mercados internacionais nem sempre seguem o Brasil</li>
+                            </ul>
+                            
+                            <h3>Formas de Investir no Exterior</h3>
+                            <p><strong>1. BDRs (Brazilian Depositary Receipts):</strong> Certificados representativos de ações de empresas estrangeiras negociados na B3. Prático, mas tem custos e pode ter menos liquidez.</p>
+                            <p><strong>2. ETFs Internacionais negociados na B3:</strong> Fundos que replicam índices globais (ex: IVVB11 - S&P500). Diversificação com praticidade.</p>
+                            <p><strong>3. Abrir conta em corretora internacional:</strong> Interactive Brokers, Avenue, TD Ameritrade permitem comprar ações e ETFs diretamente no exterior. Mais opções, mas requer transferência internacional.</p>
+                            <p><strong>4. Fundos de investimento no exterior:</strong> Alguns gestores brasileiros oferecem fundos que investem lá fora.</p>
+                            
+                            <h3>Onde Começar</h3>
+                            <p>Para iniciantes, começar com BDRs ou ETFs negociados no Brasil é mais simples. Depois, com valores maiores, considere abrir conta em corretora internacional para mais opções e custos potencialmente menores.</p>
+                            
+                            <h3>ETFs Internacionais Populares</p>
+                            <ul>
+                                <li><strong>IVV / IVVB11:</strong> S&P500 (500 maiores empresas dos EUA)</li>
+                                <li><strong>QQQ / NASD:</strong> Nasdaq (tecnologia)</li>
+                                <li><strong>VT / WRLD11:</strong> Mercado global (ações do mundo todo)</li>
+                                <li><strong>BND:</strong> Títulos do tesouro americano de longo prazo</li>
+                            </ul>
+                            
+                            <h3>Aspectos Fiscais</h3>
+                            <p>Investimentos no exterior precisam ser declarados no Imposto de Renda. Os rendimentos (dividendos, juros) são tributados. Vendas com lucro também. Consulte um contador especializado para fazer corretamente.</p>
+                            
+                            <h3>Estratégia de Alocação</h3>
+                            <p>Não existe porcentagem "certa", mas muitos especialistas sugerem entre 20% e 50% do patrimônio em ativos internacionais, dependendo do perfil. Comece com uma parcela pequena e aumente gradualmente conforme se sente confortável.</p>
+                            
+                            <h3>Cuidados</h3>
+                            <ul>
+                                <li>Fique atento às taxas de câmbio e custos de transferência</li>
+                                <li>Entenda as regras de sucessão em caso de falecimento</li>
+                                <li>Não invista em produtos que não entende</li>
+                                <li>Mantenha a diversificação também nos ativos internacionais</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 20,
+                        title: "Mindset do Investidor: Psicologia dos Investimentos",
+                        image: "https://images.pexels.com/photos/3943716/pexels-photo-3943716.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        category: "Finanças Pessoais",
+                        date: "27/01/2024",
+                        views: 256,
+                        excerpt: "Como controlar as emoções e tomar decisões racionais nos investimentos, mesmo em momentos de estresse...",
+                        fullContent: `
+                            <h3>A Importância da Psicologia nos Investimentos</h3>
+                            <p>O maior inimigo do investidor muitas vezes é ele mesmo. Medo, ganância, ansiedade e excesso de confiança podem levar a decisões irracionais que prejudicam os resultados. Entender esses vieses é essencial para investir melhor.</p>
+                            
+                            <h3>Principais Vieses Comportamentais</h3>
+                            <p><strong>1. Viés de Confirmação:</strong> Buscamos informações que confirmam nossas crenças e ignoramos as que as contradizem. Se você comprou uma ação, tende a ler notícias positivas sobre ela e desconsiderar as negativas.</p>
+                            <p><strong>2. Aversão à Perda:</strong> Sentimos a dor da perda cerca de duas vezes mais intensamente que o prazer do ganho. Isso leva a vender na baixa (com medo de perder mais) e segurar demais na alta.</p>
+                            <p><strong>3. Excesso de Confiança:</strong> Superestimamos nossa capacidade de prever o mercado. Achamos que sabemos mais do que realmente sabemos, levando a operações arriscadas.</p>
+                            <p><strong>4. Comportamento de Manada:</strong> Tendemos a seguir a multidão. Comprar na euforia (tops) e vender no pânico (fundos) é um erro clássico.</p>
+                            <p><strong>5. Ancoragem:</strong> Nos apegamos a um preço de referência (ex: comprei a R$10, então só vendo acima disso), ignorando os fundamentos atuais.</p>
+                            
+                            <h3>Estratégias para Controlar as Emoções</h3>
+                            <p><strong>Tenha um Plano de Investimento:</strong> Defina objetivos, prazos, alocação e regras claras. Quando as emoções surgirem, siga o plano, não o impulso.</p>
+                            <p><strong>Invista com Regularidade:</strong> O DCA (investir sempre o mesmo valor) tira a emoção de "acertar o tempo" do mercado.</p>
+                            <p><strong>Diversifique:</strong> Uma carteira diversificada reduz a ansiedade causada pela volatilidade de um ativo específico.</p>
+                            <p><strong>Pense no Longo Prazo:</strong> Lembre-se de que você é dono de empresas, não está apenas especulando. Oscilações fazem parte.</p>
+                            
+                            <h3>Como Lidar com Quedas do Mercado</h3>
+                            <p>Quedas são normais e fazem parte do ciclo. Se você tem bons ativos e horizonte longo, pode até ver como oportunidade de comprar mais barato. Desligue notícias se estiver ansioso. Evite olhar o saldo todo dia.</p>
+                            
+                            <h3>Como Lidar com Altas Excessivas</h3>
+                            <p>Euforia também é perigosa. É quando muitos investidores iniciantes entram no mercado, comprando no topo. Mantenha a calma, não persiga retornos passados e rebalanceie a carteira se necessário (vender um pouco do que subiu muito).</p>
+                            
+                            <h3>Hábitos do Investidor de Sucesso</h3>
+                            <ul>
+                                <li>Estuda constantemente, mas não age por impulso</li>
+                                <li>Mantém a calma em momentos de turbulência</li>
+                                <li>Aprende com os erros, mas não fica preso a eles</li>
+                                <li>Tem paciência para esperar os resultados</li>
+                                <li>Não se compara com os outros</li>
+                            </ul>
+                            
+                            <h3>Exercícios Práticos</h3>
+                            <p>Mantenha um diário de investimentos, anotando cada decisão e a emoção no momento. Revise periodicamente para identificar padrões comportamentais. Estude finanças comportamentais para conhecer mais vieses.</p>
+                        `
                     }
                 ];
                 
                 articles = sampleArticles;
                 localStorage.setItem('articles', JSON.stringify(articles));
-                updateCategoryCounts();
-                updateTrendingArticles();
             }
         }
     </script>
