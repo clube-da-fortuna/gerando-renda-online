@@ -132,6 +132,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .logo {
@@ -194,144 +196,168 @@
             line-height: 1.6;
         }
 
-        /* Anúncios */
-        .ad-container {
-            background: white;
+        /* Sistema de Anúncios */
+        .ad-space {
+            width: 100%;
+            min-height: 100px;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 30px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 2px dashed #764ba2;
+            margin: 20px 0;
+            transition: all 0.3s;
         }
 
-        .ad-container iframe {
+        .ad-space iframe {
             max-width: 100%;
-            margin: 0 auto;
+            border-radius: 10px;
         }
 
         .ad-label {
             font-size: 12px;
-            color: #999;
-            margin-bottom: 10px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 5px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .ad-horizontal {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .ad-sidebar {
-            position: sticky;
-            top: 20px;
-        }
-
-        /* Layout de duas colunas */
-        .two-column-layout {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .main-column {
-            min-width: 0;
-        }
-
-        .sidebar-column {
-            min-width: 0;
-        }
-
-        /* Missão Única */
-        .single-mission {
+        /* Layout Builder */
+        .layout-builder {
             background: white;
             border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 40px;
+            padding: 25px;
+            margin-bottom: 30px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            border: 3px solid #ffd700;
         }
 
-        .mission-header {
+        .layout-builder h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .layout-controls {
             display: flex;
-            align-items: center;
             gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .btn-layout {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-layout:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .btn-layout.danger {
+            background: #dc3545;
+        }
+
+        .btn-layout.danger:hover {
+            background: #c82333;
+        }
+
+        .btn-layout.success {
+            background: #28a745;
+        }
+
+        .btn-layout.success:hover {
+            background: #218838;
+        }
+
+        /* Layout Grid */
+        .site-layout {
+            min-height: 400px;
+            position: relative;
+        }
+
+        .layout-row {
+            display: flex;
+            gap: 20px;
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
-        .mission-icon {
-            font-size: 48px;
-        }
-
-        .mission-title {
+        .layout-column {
             flex: 1;
-            min-width: 200px;
+            min-width: 250px;
         }
 
-        .mission-title h2 {
+        .layout-sidebar {
+            width: 300px;
+            background: rgba(118, 75, 162, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .layout-main {
+            flex: 1;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .layout-section {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px dashed #764ba2;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: 600;
             color: #333;
-            font-size: 28px;
-            margin-bottom: 5px;
         }
 
-        .mission-title p {
-            color: #666;
-            font-size: 16px;
+        .section-actions {
+            display: flex;
+            gap: 5px;
         }
 
-        .mission-reward-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .btn-section {
+            padding: 5px 10px;
+            font-size: 12px;
+            background: #6c757d;
             color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            text-align: center;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
         }
 
-        .mission-reward-box .reward-value {
-            font-size: 32px;
-            font-weight: bold;
+        .btn-section:hover {
+            background: #5a6268;
         }
 
-        .mission-reward-box .reward-label {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        /* Progresso da Missão */
-        .mission-progress {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .progress-counter {
-            font-size: 48px;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .progress-bar {
+        .ad-code-input {
             width: 100%;
-            height: 20px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 15px;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: monospace;
+            margin-bottom: 10px;
         }
 
-        .progress-fill {
-            height: 100%;
-            background: #ffd700;
-            transition: width 0.3s;
+        .ad-preview {
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            color: #666;
+            border: 1px dashed #ccc;
         }
 
         /* Produtos de Afiliados */
@@ -364,11 +390,14 @@
             padding: 20px;
             transition: all 0.3s;
             background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
         }
 
         .product-card:hover {
             border-color: #764ba2;
             box-shadow: 0 5px 15px rgba(118, 75, 162, 0.2);
+            transform: translateY(-2px);
         }
 
         .product-card h3 {
@@ -382,105 +411,38 @@
             font-size: 14px;
             margin-bottom: 15px;
             line-height: 1.5;
+            flex: 1;
         }
 
-        .product-card .product-link {
-            color: #007bff;
-            text-decoration: none;
-            word-break: break-all;
-            font-size: 12px;
-            display: block;
-            margin: 10px 0;
-            padding: 8px;
+        .product-category {
+            display: inline-block;
+            padding: 4px 10px;
             background: #e9ecef;
-            border-radius: 5px;
+            border-radius: 15px;
+            font-size: 12px;
+            color: #495057;
+            margin-bottom: 15px;
+            align-self: flex-start;
         }
 
-        .product-card .product-link:hover {
-            text-decoration: underline;
-            background: #dee2e6;
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .btn-copy {
-            flex: 1;
-            padding: 10px;
-            background: #6c757d;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-
-        .btn-copy:hover {
-            background: #5a6268;
-        }
-
-        .btn-select {
-            flex: 1;
-            padding: 10px;
-            background: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn-select:hover:not(:disabled) {
-            background: #218838;
-            transform: translateY(-2px);
-        }
-
-        .btn-select.selected {
-            background: #6c757d;
-            cursor: not-allowed;
-        }
-
-        .btn-select:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        /* Botão de divulgação */
-        .btn-divulgar {
+        .product-link-btn {
+            display: inline-block;
             width: 100%;
-            padding: 15px;
-            background: #28a745;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border: none;
+            text-decoration: none;
             border-radius: 5px;
-            cursor: pointer;
-            font-size: 18px;
             font-weight: 600;
-            margin-top: 20px;
+            text-align: center;
             transition: all 0.3s;
+            border: none;
+            cursor: pointer;
         }
 
-        .btn-divulgar:hover:not(:disabled) {
-            background: #218838;
+        .product-link-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
-        }
-
-        .btn-divulgar:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-        }
-
-        .btn-divulgar.completed {
-            background: #ffc107;
-            color: #333;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
         /* Chat */
@@ -571,29 +533,17 @@
 
         /* Painel Admin */
         .admin-panel {
-            display: none;
             margin-top: 30px;
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .admin-panel.active {
-            display: block;
-        }
-
-        .admin-panel h2 {
-            color: #333;
-            margin-bottom: 20px;
         }
 
         .admin-tabs {
             display: flex;
             gap: 10px;
             margin-bottom: 25px;
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .tab-btn {
@@ -603,28 +553,38 @@
             cursor: pointer;
             font-weight: 600;
             color: #666;
-            border-radius: 5px 5px 0 0;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            background: #f0f0f0;
         }
 
         .tab-btn.active {
-            color: #764ba2;
-            border-bottom: 3px solid #764ba2;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
         }
 
         .tab-content {
             display: none;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         .tab-content.active {
             display: block;
         }
 
-        .users-list {
-            max-height: 400px;
+        /* Listas Admin */
+        .users-list, .products-list, .ads-list {
+            max-height: 500px;
             overflow-y: auto;
         }
 
-        .user-item {
+        .list-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -632,41 +592,52 @@
             border-bottom: 1px solid #e0e0e0;
         }
 
-        .user-item:last-child {
+        .list-item:last-child {
             border-bottom: none;
         }
 
-        .user-item .user-details {
+        .item-details {
             flex-grow: 1;
         }
 
-        .user-item .user-name {
+        .item-title {
             font-weight: 600;
             color: #333;
+            margin-bottom: 5px;
         }
 
-        .user-item .user-status {
+        .item-subtitle {
             font-size: 12px;
             color: #666;
         }
 
-        .user-actions {
+        .item-actions {
             display: flex;
             gap: 10px;
         }
 
         .btn-admin {
             padding: 8px 15px;
-            background: #007bff;
-            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
         }
 
-        .btn-admin.danger {
-            background: #dc3545;
+        .btn-admin:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-admin.primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-admin.success {
+            background: #28a745;
+            color: white;
         }
 
         .btn-admin.warning {
@@ -674,8 +645,9 @@
             color: #333;
         }
 
-        .btn-admin.success {
-            background: #28a745;
+        .btn-admin.danger {
+            background: #dc3545;
+            color: white;
         }
 
         .form-group {
@@ -704,29 +676,19 @@
             min-height: 100px;
         }
 
-        .product-category {
-            display: inline-block;
-            padding: 4px 10px;
-            background: #e9ecef;
-            border-radius: 15px;
-            font-size: 12px;
-            color: #495057;
-            margin-bottom: 10px;
-        }
-
         /* Responsividade */
         @media (max-width: 768px) {
-            .two-column-layout {
-                grid-template-columns: 1fr;
+            .layout-row {
+                flex-direction: column;
             }
             
-            .mission-header {
+            .layout-sidebar {
+                width: 100%;
+            }
+            
+            .navbar {
                 flex-direction: column;
                 text-align: center;
-            }
-            
-            .product-actions {
-                flex-direction: column;
             }
         }
     </style>
@@ -765,91 +727,46 @@
         <div class="main-content">
             <div class="welcome-message">
                 <h1 id="welcomeMessage">Bem-vindo ao Clube da Fortuna!</h1>
-                <p>Sua missão é simples: escolha um produto da Hotmart, divulgue para 100 pessoas e ganhe R$ 50,00!</p>
+                <p>Escolha um produto abaixo, clique no link e comece a divulgar. Ganhe comissões reais por cada venda realizada!</p>
             </div>
 
-            <!-- Anúncio Topo -->
-            <div class="ad-container">
-                <div class="ad-label">Publicidade</div>
-                <div id="ad-top"></div>
-            </div>
-
-            <!-- Layout de duas colunas -->
-            <div class="two-column-layout">
-                <!-- Coluna Principal -->
-                <div class="main-column">
-                    <!-- Missão Única de Afiliado -->
-                    <div class="single-mission">
-                        <div class="mission-header">
-                            <div class="mission-icon">🎯</div>
-                            <div class="mission-title">
-                                <h2>Missão de Afiliado - Renda Extra</h2>
-                                <p>Escolha um produto abaixo, copie seu link de afiliado e comece a divulgar!</p>
-                            </div>
-                            <div class="mission-reward-box">
-                                <div class="reward-value">R$ 50,00</div>
-                                <div class="reward-label">Recompensa</div>
-                            </div>
-                        </div>
-
-                        <!-- Progresso da Missão -->
-                        <div class="mission-progress" id="missionProgress" style="display: none;">
-                            <h3>Seu Progresso</h3>
-                            <div class="progress-counter" id="progressCount">0/100</div>
-                            <p>Pessoas que você já divulgou</p>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-                            </div>
-                            <button class="btn-divulgar" id="btnDivulgar" onclick="incrementDivulgacao()">
-                                +1 Divulgação Realizada
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Seção de Produtos para Afiliados -->
-                    <div class="products-section">
-                        <h2>📦 Produtos Disponíveis para Divulgação</h2>
-                        <p>Clique em "Selecionar Produto" para escolher qual você vai divulgar. Você só pode divulgar um produto por vez.</p>
-                        
-                        <div class="products-grid" id="productsGrid">
-                            <!-- Produtos serão carregados aqui -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Barra Lateral com Anúncios -->
-                <div class="sidebar-column">
-                    <div class="ad-container ad-sidebar">
-                        <div class="ad-label">Publicidade</div>
-                        <div id="ad-sidebar"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Anúncio Entre Conteúdos -->
-            <div class="ad-container">
-                <div class="ad-label">Publicidade</div>
-                <div id="ad-middle"></div>
-            </div>
-
-            <!-- Painel Admin (visível apenas para admin) -->
+            <!-- Layout Builder (visível apenas para admin) -->
             <div class="admin-panel" id="adminPanel">
-                <h2>Painel de Administração</h2>
                 <div class="admin-tabs">
-                    <button class="tab-btn active" onclick="switchTab('users')">Usuários</button>
+                    <button class="tab-btn active" onclick="switchTab('layout')">Layout de Anúncios</button>
                     <button class="tab-btn" onclick="switchTab('products')">Produtos</button>
+                    <button class="tab-btn" onclick="switchTab('users')">Usuários</button>
                 </div>
 
-                <!-- Aba de Usuários -->
-                <div class="tab-content active" id="usersTab">
-                    <div class="users-list" id="usersList">
-                        <!-- Lista de usuários será carregada aqui -->
+                <!-- Aba de Layout -->
+                <div class="tab-content active" id="layoutTab">
+                    <h2>Construtor de Layout de Anúncios</h2>
+                    <p style="color: #666; margin-bottom: 20px;">Adicione quantos anúncios quiser em qualquer posição da página.</p>
+                    
+                    <div class="layout-controls">
+                        <button class="btn-layout success" onclick="addSection('top')">+ Adicionar Anúncio no Topo</button>
+                        <button class="btn-layout success" onclick="addSection('sidebar-left')">+ Adicionar Anúncio na Sidebar Esquerda</button>
+                        <button class="btn-layout success" onclick="addSection('sidebar-right')">+ Adicionar Anúncio na Sidebar Direita</button>
+                        <button class="btn-layout success" onclick="addSection('between-products')">+ Adicionar Anúncio Entre Produtos</button>
+                        <button class="btn-layout success" onclick="addSection('before-chat')">+ Adicionar Anúncio Antes do Chat</button>
+                        <button class="btn-layout success" onclick="addSection('after-chat')">+ Adicionar Anúncio Após o Chat</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adCode">Código do Anúncio (cole o código completo)</label>
+                        <textarea id="adCode" class="ad-code-input" rows="5" placeholder='Ex: <script> atOptions = {...}; </script><script src="..."></script>'></textarea>
+                    </div>
+
+                    <div id="adsList" class="ads-list">
+                        <!-- Lista de anúncios será carregada aqui -->
                     </div>
                 </div>
 
                 <!-- Aba de Produtos -->
                 <div class="tab-content" id="productsTab">
-                    <h3>Adicionar Novo Produto de Afiliado</h3>
+                    <h2>Gerenciar Produtos</h2>
+                    
+                    <h3>Adicionar Novo Produto</h3>
                     <form id="productForm">
                         <div class="form-group">
                             <label for="productName">Nome do Produto</label>
@@ -875,29 +792,44 @@
                                 <option value="informatica">Informática</option>
                                 <option value="nutricao">Nutrição</option>
                                 <option value="blogueira">Blogueira</option>
-                                <option value="celular">Conserto de Celular</option>
-                                <option value="beleza">Salão de Beleza</option>
+                                <option value="celular">Celular</option>
+                                <option value="beleza">Beleza</option>
                                 <option value="advocacia">Advocacia</option>
                             </select>
                         </div>
                         <button type="button" class="btn-admin success" onclick="addProduct()">Adicionar Produto</button>
                     </form>
                     
-                    <h3 style="margin-top: 30px;">Produtos Atuais</h3>
-                    <div id="productsList" style="margin-top: 15px;">
+                    <h3 style="margin-top: 30px;">Produtos Cadastrados</h3>
+                    <div id="productsList" class="products-list" style="margin-top: 15px;">
                         <!-- Lista de produtos será carregada aqui -->
+                    </div>
+                </div>
+
+                <!-- Aba de Usuários -->
+                <div class="tab-content" id="usersTab">
+                    <h2>Gerenciar Usuários</h2>
+                    <div id="usersList" class="users-list">
+                        <!-- Lista de usuários será carregada aqui -->
                     </div>
                 </div>
             </div>
 
-            <!-- Anúncio Antes do Chat -->
-            <div class="ad-container">
-                <div class="ad-label">Publicidade</div>
-                <div id="ad-before-chat"></div>
+            <!-- Espaços para Anúncios (gerados dinamicamente) -->
+            <div id="adSpaces"></div>
+
+            <!-- Seção de Produtos para Afiliados -->
+            <div class="products-section">
+                <h2>📦 Produtos para Divulgar</h2>
+                <p>Clique no botão abaixo para acessar o link de afiliado e começar a divulgar. Ganhe comissão por cada venda!</p>
+                
+                <div class="products-grid" id="productsGrid">
+                    <!-- Produtos serão carregados aqui -->
+                </div>
             </div>
 
             <!-- Seção do Chat -->
-            <div class="chat-section">
+            <div class="chat-section" id="chatSection">
                 <h2>💬 Chat da Comunidade</h2>
                 <p style="color: #666; margin-bottom: 15px;">Compartilhe dicas de divulgação e tire dúvidas com outros membros!</p>
                 <div class="chat-container">
@@ -913,51 +845,12 @@
         </div>
     </div>
 
-    <!-- Script do Anúncio -->
-    <script>
-        // Configuração do anúncio
-        const adConfig = {
-            'key': '41c607bd369bfa1f07790616eb0c0685',
-            'format': 'iframe',
-            'height': 250,
-            'width': 300,
-            'params': {}
-        };
-
-        // Função para carregar anúncio em um elemento
-        function loadAd(containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-
-            // Criar script de configuração
-            const configScript = document.createElement('script');
-            configScript.innerHTML = `atOptions = ${JSON.stringify(adConfig)};`;
-            
-            // Criar script de invocação
-            const invokeScript = document.createElement('script');
-            invokeScript.src = 'https://www.highperformanceformat.com/41c607bd369bfa1f07790616eb0c0685/invoke.js';
-            
-            container.appendChild(configScript);
-            container.appendChild(invokeScript);
-        }
-
-        // Carregar anúncios quando a página estiver pronta
-        document.addEventListener('DOMContentLoaded', function() {
-            // Aguardar um pouco para garantir que os contêineres existam
-            setTimeout(() => {
-                loadAd('ad-top');
-                loadAd('ad-sidebar');
-                loadAd('ad-middle');
-                loadAd('ad-before-chat');
-            }, 1000);
-        });
-    </script>
-
     <script>
         // Banco de dados simulado
         let users = JSON.parse(localStorage.getItem('users')) || [];
         let messages = JSON.parse(localStorage.getItem('messages')) || [];
         let products = JSON.parse(localStorage.getItem('products')) || [];
+        let adSpaces = JSON.parse(localStorage.getItem('adSpaces')) || [];
         let currentUser = null;
 
         // Lista inicial de produtos da Hotmart
@@ -1003,48 +896,6 @@
                 description: "100 artes profissionais para supermercados",
                 link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9186P91055046",
                 category: "supermercado"
-            },
-            {
-                id: 7,
-                name: "Pack 100 Artes Para Empresas de Informática Editáveis no Canva",
-                description: "Artes para empresas de informática e tecnologia",
-                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9826P91206603",
-                category: "informatica"
-            },
-            {
-                id: 8,
-                name: "Pack 105 Artes Para Nutrição Editáveis no Canva",
-                description: "Artes para nutricionistas e profissionais de saúde",
-                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/3404P88296914",
-                category: "nutricao"
-            },
-            {
-                id: 9,
-                name: "Pack 107 Artes Para Blogueira(o) Editaveis no Canva",
-                description: "Artes para blogueiros e influenciadores digitais",
-                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/5426P91144130",
-                category: "blogueira"
-            },
-            {
-                id: 10,
-                name: "Pack 127 Artes Para Conserto de Celular Editáveis no Canva",
-                description: "Artes para assistências técnicas de celular",
-                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9545P91056730",
-                category: "celular"
-            },
-            {
-                id: 11,
-                name: "Pack 120 Artes Para Salão de Beleza - Unhas, Sobrancelhas e cílios",
-                description: "Artes completas para salões de beleza e estética",
-                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/9466P88374176",
-                category: "beleza"
-            },
-            {
-                id: 12,
-                name: "Pack 141 Artes Para Advogados Editáveis no Canva",
-                description: "Artes profissionais para escritórios de advocacia",
-                link: "https://affiliate.hotmart.com/affiliate-recruiting/view/7358P88466774",
-                category: "advocacia"
             }
         ];
 
@@ -1062,12 +913,7 @@
                     username: 'wilsonadm',
                     password: 'Wsds1997',
                     isAdmin: true,
-                    active: true,
-                    affiliateMission: {
-                        selectedProduct: null,
-                        divulgacoes: 0,
-                        completed: false
-                    }
+                    active: true
                 });
                 localStorage.setItem('users', JSON.stringify(users));
             }
@@ -1094,12 +940,7 @@
                 username: username,
                 password: password,
                 isAdmin: false,
-                active: true,
-                affiliateMission: {
-                    selectedProduct: null,
-                    divulgacoes: 0,
-                    completed: false
-                }
+                active: true
             });
 
             localStorage.setItem('users', JSON.stringify(users));
@@ -1126,14 +967,15 @@
 
                 // Mostrar painel admin se for admin
                 if (user.isAdmin) {
-                    document.getElementById('adminPanel').classList.add('active');
+                    document.getElementById('adminPanel').style.display = 'block';
                     loadUsersList();
                     loadProductsList();
+                    loadAdsList();
                 }
 
                 loadProducts();
                 loadMessages();
-                updateAffiliateProgress();
+                renderAdSpaces();
             } else {
                 showError("Usuário ou senha inválidos!");
             }
@@ -1156,138 +998,239 @@
             document.getElementById('password').value = '';
         }
 
-        // Funções da Missão de Afiliado
-        function selectProduct(productId) {
-            if (!currentUser.affiliateMission) {
-                currentUser.affiliateMission = {
-                    selectedProduct: null,
-                    divulgacoes: 0,
-                    completed: false
-                };
-            }
+        // Funções do Admin - Layout de Anúncios
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
 
-            if (currentUser.affiliateMission.completed) {
-                alert("Você já completou esta missão! Parabéns! 🎉");
-                return;
-            }
-
-            if (currentUser.affiliateMission.selectedProduct === productId) {
-                alert("Você já está divulgando este produto!");
-                return;
-            }
-
-            if (currentUser.affiliateMission.selectedProduct) {
-                if (!confirm("Você já está divulgando outro produto. Deseja trocar? Seu progresso atual será resetado.")) {
-                    return;
-                }
-            }
-
-            const product = products.find(p => p.id === productId);
-            currentUser.affiliateMission.selectedProduct = productId;
-            currentUser.affiliateMission.divulgacoes = 0;
-            currentUser.affiliateMission.completed = false;
-
-            // Atualizar usuário no banco de dados
-            const userIndex = users.findIndex(u => u.username === currentUser.username);
-            users[userIndex] = currentUser;
-            localStorage.setItem('users', JSON.stringify(users));
-
-            alert(`✅ Produto "${product.name}" selecionado! Agora comece a divulgar para 100 pessoas.`);
-            
-            updateAffiliateProgress();
-            loadProducts();
-        }
-
-        function incrementDivulgacao() {
-            if (!currentUser.affiliateMission || !currentUser.affiliateMission.selectedProduct) {
-                alert("⚠️ Primeiro selecione um produto para divulgar!");
-                return;
-            }
-
-            if (currentUser.affiliateMission.completed) {
-                alert("🎉 Você já completou esta missão! Parabéns!");
-                return;
-            }
-
-            currentUser.affiliateMission.divulgacoes++;
-            
-            if (currentUser.affiliateMission.divulgacoes >= 100) {
-                currentUser.affiliateMission.completed = true;
-                alert(`🎉 PARABÉNS! Você completou a Missão de Afiliado e ganhou R$ 50,00!`);
-            }
-
-            // Atualizar usuário no banco de dados
-            const userIndex = users.findIndex(u => u.username === currentUser.username);
-            users[userIndex] = currentUser;
-            localStorage.setItem('users', JSON.stringify(users));
-
-            updateAffiliateProgress();
-        }
-
-        function updateAffiliateProgress() {
-            const progressDiv = document.getElementById('missionProgress');
-            const progressCount = document.getElementById('progressCount');
-            const progressFill = document.getElementById('progressFill');
-            const btnDivulgar = document.getElementById('btnDivulgar');
-
-            if (currentUser.affiliateMission && currentUser.affiliateMission.selectedProduct) {
-                progressDiv.style.display = 'block';
-                const divulgacoes = currentUser.affiliateMission.divulgacoes || 0;
-                const percent = Math.min((divulgacoes / 100) * 100, 100);
-                
-                progressCount.textContent = `${divulgacoes}/100`;
-                progressFill.style.width = percent + '%';
-
-                if (currentUser.affiliateMission.completed) {
-                    btnDivulgar.textContent = '✅ Missão Concluída!';
-                    btnDivulgar.classList.add('completed');
-                    btnDivulgar.disabled = true;
-                } else {
-                    btnDivulgar.textContent = '+1 Divulgação Realizada';
-                    btnDivulgar.classList.remove('completed');
-                    btnDivulgar.disabled = false;
-                }
+            if (tab === 'layout') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('layoutTab').classList.add('active');
+                loadAdsList();
+            } else if (tab === 'products') {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('productsTab').classList.add('active');
+                loadProductsList();
             } else {
-                progressDiv.style.display = 'none';
+                document.querySelectorAll('.tab-btn')[2].classList.add('active');
+                document.getElementById('usersTab').classList.add('active');
+                loadUsersList();
             }
         }
 
-        function copyLink(link) {
-            navigator.clipboard.writeText(link).then(() => {
-                alert("📋 Link copiado para a área de transferência!");
-            }).catch(() => {
-                alert("❌ Erro ao copiar link. Selecione e copie manualmente.");
+        function addSection(position) {
+            const adCode = document.getElementById('adCode').value.trim();
+            
+            if (!adCode) {
+                alert("Cole o código do anúncio primeiro!");
+                return;
+            }
+
+            const newAd = {
+                id: Date.now(),
+                position: position,
+                code: adCode,
+                active: true
+            };
+
+            adSpaces.push(newAd);
+            localStorage.setItem('adSpaces', JSON.stringify(adSpaces));
+            
+            document.getElementById('adCode').value = '';
+            loadAdsList();
+            renderAdSpaces();
+            
+            alert("Anúncio adicionado com sucesso!");
+        }
+
+        function deleteAd(adId) {
+            if (confirm("Tem certeza que deseja remover este anúncio?")) {
+                adSpaces = adSpaces.filter(ad => ad.id !== adId);
+                localStorage.setItem('adSpaces', JSON.stringify(adSpaces));
+                loadAdsList();
+                renderAdSpaces();
+            }
+        }
+
+        function toggleAd(adId) {
+            const adIndex = adSpaces.findIndex(ad => ad.id === adId);
+            if (adIndex !== -1) {
+                adSpaces[adIndex].active = !adSpaces[adIndex].active;
+                localStorage.setItem('adSpaces', JSON.stringify(adSpaces));
+                loadAdsList();
+                renderAdSpaces();
+            }
+        }
+
+        function loadAdsList() {
+            const adsList = document.getElementById('adsList');
+            if (!adsList) return;
+
+            adsList.innerHTML = '<h3>Anúncios Cadastrados</h3>';
+
+            if (adSpaces.length === 0) {
+                adsList.innerHTML += '<p style="color: #666; padding: 20px;">Nenhum anúncio cadastrado ainda.</p>';
+                return;
+            }
+
+            adSpaces.forEach(ad => {
+                const positionNames = {
+                    'top': 'Topo da Página',
+                    'sidebar-left': 'Sidebar Esquerda',
+                    'sidebar-right': 'Sidebar Direita',
+                    'between-products': 'Entre Produtos',
+                    'before-chat': 'Antes do Chat',
+                    'after-chat': 'Após o Chat'
+                };
+
+                const adItem = document.createElement('div');
+                adItem.className = 'list-item';
+                adItem.innerHTML = `
+                    <div class="item-details">
+                        <div class="item-title">${positionNames[ad.position] || ad.position}</div>
+                        <div class="item-subtitle">Status: ${ad.active ? 'Ativo' : 'Inativo'}</div>
+                        <div class="item-subtitle" style="font-family: monospace; background: #f0f0f0; padding: 5px; margin-top: 5px;">
+                            Código: ${ad.code.substring(0, 50)}...
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-admin ${ad.active ? 'warning' : 'success'}" onclick="toggleAd(${ad.id})">
+                            ${ad.active ? 'Desativar' : 'Ativar'}
+                        </button>
+                        <button class="btn-admin danger" onclick="deleteAd(${ad.id})">Remover</button>
+                    </div>
+                `;
+                adsList.appendChild(adItem);
+            });
+        }
+
+        function renderAdSpaces() {
+            const adSpacesContainer = document.getElementById('adSpaces');
+            if (!adSpacesContainer) return;
+
+            adSpacesContainer.innerHTML = '';
+
+            // Agrupar anúncios por posição
+            const activeAds = adSpaces.filter(ad => ad.active);
+            
+            // Renderizar anúncios do topo
+            activeAds.filter(ad => ad.position === 'top').forEach(ad => {
+                const adDiv = document.createElement('div');
+                adDiv.className = 'ad-space';
+                adDiv.innerHTML = `<div class="ad-label">Publicidade</div><div class="ad-content" data-ad="${ad.id}"></div>`;
+                adSpacesContainer.appendChild(adDiv);
+                
+                setTimeout(() => {
+                    const contentDiv = adDiv.querySelector('.ad-content');
+                    if (contentDiv) {
+                        const script = document.createElement('script');
+                        script.innerHTML = ad.code.replace(/<script>/g, '').replace(/<\/script>/g, '');
+                        contentDiv.appendChild(script);
+                    }
+                }, 100);
+            });
+
+            // Anúncios da sidebar esquerda
+            activeAds.filter(ad => ad.position === 'sidebar-left').forEach(ad => {
+                const adDiv = document.createElement('div');
+                adDiv.className = 'ad-space';
+                adDiv.innerHTML = `<div class="ad-label">Publicidade</div><div class="ad-content" data-ad="${ad.id}"></div>`;
+                // Inserir antes dos produtos
+                const productsSection = document.querySelector('.products-section');
+                if (productsSection) {
+                    productsSection.parentNode.insertBefore(adDiv, productsSection);
+                }
+                
+                setTimeout(() => {
+                    const contentDiv = adDiv.querySelector('.ad-content');
+                    if (contentDiv) {
+                        const script = document.createElement('script');
+                        script.innerHTML = ad.code.replace(/<script>/g, '').replace(/<\/script>/g, '');
+                        contentDiv.appendChild(script);
+                    }
+                }, 100);
+            });
+
+            // Anúncios entre produtos
+            activeAds.filter(ad => ad.position === 'between-products').forEach((ad, index) => {
+                const productsGrid = document.getElementById('productsGrid');
+                if (productsGrid && productsGrid.children.length > index * 3) {
+                    const adDiv = document.createElement('div');
+                    adDiv.className = 'ad-space';
+                    adDiv.style.gridColumn = '1 / -1';
+                    adDiv.innerHTML = `<div class="ad-label">Publicidade</div><div class="ad-content" data-ad="${ad.id}"></div>`;
+                    
+                    productsGrid.insertBefore(adDiv, productsGrid.children[index * 3]);
+                    
+                    setTimeout(() => {
+                        const contentDiv = adDiv.querySelector('.ad-content');
+                        if (contentDiv) {
+                            const script = document.createElement('script');
+                            script.innerHTML = ad.code.replace(/<script>/g, '').replace(/<\/script>/g, '');
+                            contentDiv.appendChild(script);
+                        }
+                    }, 100);
+                }
+            });
+
+            // Anúncios antes do chat
+            activeAds.filter(ad => ad.position === 'before-chat').forEach(ad => {
+                const adDiv = document.createElement('div');
+                adDiv.className = 'ad-space';
+                adDiv.innerHTML = `<div class="ad-label">Publicidade</div><div class="ad-content" data-ad="${ad.id}"></div>`;
+                
+                const chatSection = document.getElementById('chatSection');
+                if (chatSection) {
+                    chatSection.parentNode.insertBefore(adDiv, chatSection);
+                    
+                    setTimeout(() => {
+                        const contentDiv = adDiv.querySelector('.ad-content');
+                        if (contentDiv) {
+                            const script = document.createElement('script');
+                            script.innerHTML = ad.code.replace(/<script>/g, '').replace(/<\/script>/g, '');
+                            contentDiv.appendChild(script);
+                        }
+                    }, 100);
+                }
+            });
+
+            // Anúncios após o chat
+            activeAds.filter(ad => ad.position === 'after-chat').forEach(ad => {
+                const adDiv = document.createElement('div');
+                adDiv.className = 'ad-space';
+                adDiv.innerHTML = `<div class="ad-label">Publicidade</div><div class="ad-content" data-ad="${ad.id}"></div>`;
+                
+                const chatSection = document.getElementById('chatSection');
+                if (chatSection) {
+                    chatSection.parentNode.insertBefore(adDiv, chatSection.nextSibling);
+                    
+                    setTimeout(() => {
+                        const contentDiv = adDiv.querySelector('.ad-content');
+                        if (contentDiv) {
+                            const script = document.createElement('script');
+                            script.innerHTML = ad.code.replace(/<script>/g, '').replace(/<\/script>/g, '');
+                            contentDiv.appendChild(script);
+                        }
+                    }, 100);
+                }
             });
         }
 
         // Funções de Produtos
         function loadProducts() {
             const productsGrid = document.getElementById('productsGrid');
+            if (!productsGrid) return;
+
             productsGrid.innerHTML = '';
 
             products.forEach(product => {
-                const isSelected = currentUser.affiliateMission && 
-                                  currentUser.affiliateMission.selectedProduct === product.id &&
-                                  !currentUser.affiliateMission.completed;
-                
-                const isCompleted = currentUser.affiliateMission && 
-                                   currentUser.affiliateMission.completed;
-
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
                     <span class="product-category">${getCategoryName(product.category)}</span>
                     <h3>${product.name}</h3>
                     <div class="product-description">${product.description}</div>
-                    <a href="${product.link}" target="_blank" class="product-link">${product.link}</a>
-                    <div class="product-actions">
-                        <button class="btn-copy" onclick="copyLink('${product.link}')">📋 Copiar Link</button>
-                        <button class="btn-select ${isSelected ? 'selected' : ''}" 
-                                onclick="selectProduct(${product.id})"
-                                ${isSelected || isCompleted ? 'disabled' : ''}>
-                            ${isSelected ? '✓ Divulgando' : 'Selecionar Produto'}
-                        </button>
-                    </div>
+                    <a href="${product.link}" target="_blank" class="product-link-btn">🔗 Acessar Link de Afiliado</a>
                 `;
                 productsGrid.appendChild(card);
             });
@@ -1311,96 +1254,27 @@
             return categories[category] || category;
         }
 
-        // Funções do Admin
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
-            if (tab === 'users') {
-                document.querySelectorAll('.tab-btn')[0].classList.add('active');
-                document.getElementById('usersTab').classList.add('active');
-                loadUsersList();
-            } else {
-                document.querySelectorAll('.tab-btn')[1].classList.add('active');
-                document.getElementById('productsTab').classList.add('active');
-                loadProductsList();
-            }
-        }
-
-        function loadUsersList() {
-            const usersList = document.getElementById('usersList');
-            usersList.innerHTML = '';
-
-            users.forEach(user => {
-                if (user.username !== 'wilsonadm') {
-                    const progress = user.affiliateMission ? 
-                        `${user.affiliateMission.divulgacoes}/100 - ${user.affiliateMission.completed ? 'Concluído' : 'Em andamento'}` : 
-                        'Não iniciado';
-                    
-                    const userItem = document.createElement('div');
-                    userItem.className = 'user-item';
-                    userItem.innerHTML = `
-                        <div class="user-details">
-                            <div class="user-name">${user.username}</div>
-                            <div class="user-status">
-                                ${user.active ? '🟢 Ativo' : '🔴 Inativo'} | 
-                                Progresso: ${progress}
-                            </div>
-                        </div>
-                        <div class="user-actions">
-                            <button class="btn-admin warning" onclick="resetPassword('${user.username}')">Resetar Senha</button>
-                            <button class="btn-admin ${user.active ? 'danger' : 'success'}" 
-                                    onclick="toggleUserStatus('${user.username}')">
-                                ${user.active ? 'Desativar' : 'Ativar'}
-                            </button>
-                        </div>
-                    `;
-                    usersList.appendChild(userItem);
-                }
-            });
-        }
-
+        // Funções do Admin - Produtos
         function loadProductsList() {
             const productsList = document.getElementById('productsList');
+            if (!productsList) return;
+
             productsList.innerHTML = '';
 
             products.forEach(product => {
                 const productItem = document.createElement('div');
-                productItem.className = 'user-item';
+                productItem.className = 'list-item';
                 productItem.innerHTML = `
-                    <div class="user-details">
-                        <div class="user-name">${product.name}</div>
-                        <div class="user-status">
-                            Categoria: ${getCategoryName(product.category)}
-                        </div>
+                    <div class="item-details">
+                        <div class="item-title">${product.name}</div>
+                        <div class="item-subtitle">Categoria: ${getCategoryName(product.category)}</div>
                     </div>
-                    <div class="user-actions">
+                    <div class="item-actions">
                         <button class="btn-admin danger" onclick="deleteProduct(${product.id})">Remover</button>
                     </div>
                 `;
                 productsList.appendChild(productItem);
             });
-        }
-
-        function resetPassword(username) {
-            const userIndex = users.findIndex(u => u.username === username);
-            if (userIndex !== -1) {
-                const newPassword = prompt("Digite a nova senha para o usuário " + username + ":");
-                if (newPassword) {
-                    users[userIndex].password = newPassword;
-                    localStorage.setItem('users', JSON.stringify(users));
-                    alert("Senha alterada com sucesso!");
-                }
-            }
-        }
-
-        function toggleUserStatus(username) {
-            const userIndex = users.findIndex(u => u.username === username);
-            if (userIndex !== -1) {
-                users[userIndex].active = !users[userIndex].active;
-                localStorage.setItem('users', JSON.stringify(users));
-                loadUsersList();
-            }
         }
 
         function addProduct() {
@@ -1440,13 +1314,63 @@
                 localStorage.setItem('products', JSON.stringify(products));
                 loadProducts();
                 loadProductsList();
-                alert("Produto removido com sucesso!");
+            }
+        }
+
+        // Funções do Admin - Usuários
+        function loadUsersList() {
+            const usersList = document.getElementById('usersList');
+            if (!usersList) return;
+
+            usersList.innerHTML = '';
+
+            users.forEach(user => {
+                if (user.username !== 'wilsonadm') {
+                    const userItem = document.createElement('div');
+                    userItem.className = 'list-item';
+                    userItem.innerHTML = `
+                        <div class="item-details">
+                            <div class="item-title">${user.username}</div>
+                            <div class="item-subtitle">Status: ${user.active ? 'Ativo' : 'Inativo'}</div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn-admin warning" onclick="resetPassword('${user.username}')">Resetar Senha</button>
+                            <button class="btn-admin ${user.active ? 'danger' : 'success'}" onclick="toggleUserStatus('${user.username}')">
+                                ${user.active ? 'Desativar' : 'Ativar'}
+                            </button>
+                        </div>
+                    `;
+                    usersList.appendChild(userItem);
+                }
+            });
+        }
+
+        function resetPassword(username) {
+            const userIndex = users.findIndex(u => u.username === username);
+            if (userIndex !== -1) {
+                const newPassword = prompt("Digite a nova senha para o usuário " + username + ":");
+                if (newPassword) {
+                    users[userIndex].password = newPassword;
+                    localStorage.setItem('users', JSON.stringify(users));
+                    alert("Senha alterada com sucesso!");
+                }
+            }
+        }
+
+        function toggleUserStatus(username) {
+            const userIndex = users.findIndex(u => u.username === username);
+            if (userIndex !== -1) {
+                users[userIndex].active = !users[userIndex].active;
+                localStorage.setItem('users', JSON.stringify(users));
+                loadUsersList();
             }
         }
 
         // Funções do Chat
         function loadMessages() {
             const chatMessages = document.getElementById('chatMessages');
+            if (!chatMessages) return;
+
             chatMessages.innerHTML = '';
 
             messages.slice(-50).forEach(msg => {
@@ -1460,7 +1384,6 @@
                 chatMessages.appendChild(messageDiv);
             });
 
-            // Scroll para o final
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
