@@ -194,6 +194,59 @@
             line-height: 1.6;
         }
 
+        /* Anúncios */
+        .ad-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 2px dashed #764ba2;
+        }
+
+        .ad-container iframe {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .ad-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ad-horizontal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .ad-sidebar {
+            position: sticky;
+            top: 20px;
+        }
+
+        /* Layout de duas colunas */
+        .two-column-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .main-column {
+            min-width: 0;
+        }
+
+        .sidebar-column {
+            min-width: 0;
+        }
+
         /* Missão Única */
         .single-mission {
             background: white;
@@ -209,6 +262,7 @@
             align-items: center;
             gap: 15px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
         .mission-icon {
@@ -217,6 +271,7 @@
 
         .mission-title {
             flex: 1;
+            min-width: 200px;
         }
 
         .mission-title h2 {
@@ -299,7 +354,7 @@
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
 
@@ -658,6 +713,22 @@
             color: #495057;
             margin-bottom: 10px;
         }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .two-column-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .mission-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .product-actions {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
@@ -697,42 +768,68 @@
                 <p>Sua missão é simples: escolha um produto da Hotmart, divulgue para 100 pessoas e ganhe R$ 50,00!</p>
             </div>
 
-            <!-- Missão Única de Afiliado -->
-            <div class="single-mission">
-                <div class="mission-header">
-                    <div class="mission-icon">🎯</div>
-                    <div class="mission-title">
-                        <h2>Missão de Afiliado - Renda Extra</h2>
-                        <p>Escolha um produto abaixo, copie seu link de afiliado e comece a divulgar!</p>
+            <!-- Anúncio Topo -->
+            <div class="ad-container">
+                <div class="ad-label">Publicidade</div>
+                <div id="ad-top"></div>
+            </div>
+
+            <!-- Layout de duas colunas -->
+            <div class="two-column-layout">
+                <!-- Coluna Principal -->
+                <div class="main-column">
+                    <!-- Missão Única de Afiliado -->
+                    <div class="single-mission">
+                        <div class="mission-header">
+                            <div class="mission-icon">🎯</div>
+                            <div class="mission-title">
+                                <h2>Missão de Afiliado - Renda Extra</h2>
+                                <p>Escolha um produto abaixo, copie seu link de afiliado e comece a divulgar!</p>
+                            </div>
+                            <div class="mission-reward-box">
+                                <div class="reward-value">R$ 50,00</div>
+                                <div class="reward-label">Recompensa</div>
+                            </div>
+                        </div>
+
+                        <!-- Progresso da Missão -->
+                        <div class="mission-progress" id="missionProgress" style="display: none;">
+                            <h3>Seu Progresso</h3>
+                            <div class="progress-counter" id="progressCount">0/100</div>
+                            <p>Pessoas que você já divulgou</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                            </div>
+                            <button class="btn-divulgar" id="btnDivulgar" onclick="incrementDivulgacao()">
+                                +1 Divulgação Realizada
+                            </button>
+                        </div>
                     </div>
-                    <div class="mission-reward-box">
-                        <div class="reward-value">R$ 50,00</div>
-                        <div class="reward-label">Recompensa</div>
+
+                    <!-- Seção de Produtos para Afiliados -->
+                    <div class="products-section">
+                        <h2>📦 Produtos Disponíveis para Divulgação</h2>
+                        <p>Clique em "Selecionar Produto" para escolher qual você vai divulgar. Você só pode divulgar um produto por vez.</p>
+                        
+                        <div class="products-grid" id="productsGrid">
+                            <!-- Produtos serão carregados aqui -->
+                        </div>
                     </div>
                 </div>
 
-                <!-- Progresso da Missão -->
-                <div class="mission-progress" id="missionProgress" style="display: none;">
-                    <h3>Seu Progresso</h3>
-                    <div class="progress-counter" id="progressCount">0/100</div>
-                    <p>Pessoas que você já divulgou</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                <!-- Barra Lateral com Anúncios -->
+                <div class="sidebar-column">
+                    <div class="ad-container ad-sidebar">
+                        <div class="ad-label">Publicidade</div>
+                        <div id="ad-sidebar"></div>
                     </div>
-                    <button class="btn-divulgar" id="btnDivulgar" onclick="incrementDivulgacao()">
-                        +1 Divulgação Realizada
-                    </button>
                 </div>
             </div>
 
-            <!-- Seção de Produtos para Afiliados -->
-            <div class="products-section">
-                <h2>📦 Produtos Disponíveis para Divulgação</h2>
-                <p>Clique em "Selecionar Produto" para escolher qual você vai divulgar. Você só pode divulgar um produto por vez.</p>
-                
-                <div class="products-grid" id="productsGrid">
-                    <!-- Produtos serão carregados aqui -->
-                </div>
+            <!-- Anúncio Entre Conteúdos -->
+            <div class="ad-container">
+                <div class="ad-label">Publicidade</div>
+                <div id="ad-middle"></div>
             </div>
 
             <!-- Painel Admin (visível apenas para admin) -->
@@ -793,6 +890,12 @@
                 </div>
             </div>
 
+            <!-- Anúncio Antes do Chat -->
+            <div class="ad-container">
+                <div class="ad-label">Publicidade</div>
+                <div id="ad-before-chat"></div>
+            </div>
+
             <!-- Seção do Chat -->
             <div class="chat-section">
                 <h2>💬 Chat da Comunidade</h2>
@@ -809,6 +912,46 @@
             </div>
         </div>
     </div>
+
+    <!-- Script do Anúncio -->
+    <script>
+        // Configuração do anúncio
+        const adConfig = {
+            'key': '41c607bd369bfa1f07790616eb0c0685',
+            'format': 'iframe',
+            'height': 250,
+            'width': 300,
+            'params': {}
+        };
+
+        // Função para carregar anúncio em um elemento
+        function loadAd(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            // Criar script de configuração
+            const configScript = document.createElement('script');
+            configScript.innerHTML = `atOptions = ${JSON.stringify(adConfig)};`;
+            
+            // Criar script de invocação
+            const invokeScript = document.createElement('script');
+            invokeScript.src = 'https://www.highperformanceformat.com/41c607bd369bfa1f07790616eb0c0685/invoke.js';
+            
+            container.appendChild(configScript);
+            container.appendChild(invokeScript);
+        }
+
+        // Carregar anúncios quando a página estiver pronta
+        document.addEventListener('DOMContentLoaded', function() {
+            // Aguardar um pouco para garantir que os contêineres existam
+            setTimeout(() => {
+                loadAd('ad-top');
+                loadAd('ad-sidebar');
+                loadAd('ad-middle');
+                loadAd('ad-before-chat');
+            }, 1000);
+        });
+    </script>
 
     <script>
         // Banco de dados simulado
