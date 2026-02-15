@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Clube da Fortuna - Blog de Finanças e Investimentos</title>
     <style>
         * {
@@ -16,11 +16,11 @@
             background-color: #f5f5f5;
         }
 
-        /* Header */
+        /* Header Responsivo */
         header {
             background: linear-gradient(135deg, #1a2a3a, #2c3e50);
             color: white;
-            padding: 1rem 2rem;
+            padding: 0.8rem 1rem;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
@@ -33,10 +33,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .logo h1 {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             background: linear-gradient(135deg, #f1c40f, #e67e22);
             -webkit-background-clip: text;
@@ -46,19 +48,21 @@
         }
 
         .logo p {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #bdc3c7;
         }
 
         .login-btn {
             background: linear-gradient(135deg, #f1c40f, #e67e22);
             color: #1a2a3a;
-            padding: 0.8rem 1.5rem;
+            padding: 0.6rem 1rem;
             border: none;
             border-radius: 5px;
             font-weight: bold;
             cursor: pointer;
             transition: transform 0.3s;
+            font-size: 0.9rem;
+            white-space: nowrap;
         }
 
         .login-btn:hover {
@@ -75,19 +79,26 @@
             height: 100%;
             background-color: rgba(0,0,0,0.5);
             z-index: 1000;
+            overflow-y: auto;
         }
 
         .modal-content {
             background-color: white;
-            margin: 5% auto;
-            padding: 2rem;
+            margin: 10% auto;
+            padding: 1.5rem;
             width: 90%;
-            max-width: 600px;
+            max-width: 500px;
             border-radius: 10px;
             box-shadow: 0 5px 30px rgba(0,0,0,0.3);
             animation: slideDown 0.3s ease;
-            max-height: 90vh;
-            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 5% auto;
+                width: 95%;
+                padding: 1rem;
+            }
         }
 
         @keyframes slideDown {
@@ -105,6 +116,7 @@
             color: #2c3e50;
             margin-bottom: 1.5rem;
             text-align: center;
+            font-size: 1.5rem;
         }
 
         .form-group {
@@ -115,6 +127,7 @@
             display: block;
             margin-bottom: 0.5rem;
             color: #34495e;
+            font-size: 0.95rem;
         }
 
         .form-group input,
@@ -175,11 +188,11 @@
             display: none;
         }
 
-        /* Área Administrativa */
+        /* Área Administrativa Responsiva */
         .admin-area {
             display: none;
             background-color: #ecf0f1;
-            padding: 2rem;
+            padding: 1rem;
             min-height: calc(100vh - 200px);
         }
 
@@ -190,15 +203,24 @@
 
         .admin-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
             padding-bottom: 1rem;
             border-bottom: 2px solid #bdc3c7;
         }
 
+        @media (min-width: 768px) {
+            .admin-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
         .admin-header h2 {
             color: #2c3e50;
+            font-size: 1.3rem;
         }
 
         .logout-btn {
@@ -209,6 +231,7 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background 0.3s;
+            font-size: 0.9rem;
         }
 
         .logout-btn:hover {
@@ -217,15 +240,15 @@
 
         .admin-tabs {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
             border-bottom: 2px solid #bdc3c7;
             padding-bottom: 0.5rem;
             flex-wrap: wrap;
         }
 
         .tab-btn {
-            padding: 0.8rem 1.5rem;
+            padding: 0.6rem 1rem;
             background: none;
             border: none;
             border-radius: 5px 5px 0 0;
@@ -233,6 +256,16 @@
             font-weight: bold;
             color: #7f8c8d;
             transition: all 0.3s;
+            font-size: 0.9rem;
+            flex: 1 1 auto;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .tab-btn {
+                font-size: 0.8rem;
+                padding: 0.5rem 0.8rem;
+            }
         }
 
         .tab-btn:hover {
@@ -256,15 +289,16 @@
         /* Formulário de Artigo Único */
         .article-form {
             background-color: white;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .article-form h3 {
             color: #2c3e50;
             margin-bottom: 1rem;
+            font-size: 1.2rem;
         }
 
         .article-form input,
@@ -275,6 +309,7 @@
             margin-bottom: 1rem;
             border: 1px solid #ddd;
             border-radius: 5px;
+            font-size: 0.95rem;
         }
 
         .article-form textarea {
@@ -296,16 +331,98 @@
             font-weight: bold;
             cursor: pointer;
             transition: transform 0.3s;
+            width: 100%;
+            font-size: 1rem;
         }
 
         .publish-btn:hover {
             transform: scale(1.02);
         }
 
+        /* Formulário de Múltiplos Artigos (Lote) */
+        .bulk-form {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .bulk-form h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .bulk-form textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            height: 300px;
+            resize: vertical;
+        }
+
+        .bulk-info {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #f1c40f;
+            font-size: 0.9rem;
+        }
+
+        .bulk-info p {
+            color: #34495e;
+            margin-bottom: 0.5rem;
+        }
+
+        .bulk-info code {
+            background-color: #2c3e50;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+
+        .bulk-example {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            margin: 1rem 0;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+        .publish-bulk-btn {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .publish-bulk-btn:hover {
+            transform: scale(1.02);
+        }
+
         /* Lista de Artigos para Gerenciar */
         .articles-list {
             background-color: white;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
@@ -313,15 +430,24 @@
         .articles-list h3 {
             color: #2c3e50;
             margin-bottom: 1rem;
+            font-size: 1.2rem;
         }
 
         .article-item {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 1rem;
             padding: 1rem;
             border-bottom: 1px solid #ecf0f1;
             transition: background-color 0.3s;
+        }
+
+        @media (min-width: 768px) {
+            .article-item {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
         }
 
         .article-item:hover {
@@ -335,16 +461,18 @@
         .article-info h4 {
             color: #2c3e50;
             margin-bottom: 0.3rem;
+            font-size: 1rem;
         }
 
         .article-info p {
             color: #7f8c8d;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .article-actions {
             display: flex;
             gap: 0.5rem;
+            flex-wrap: wrap;
         }
 
         .edit-btn {
@@ -355,6 +483,7 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background 0.3s;
+            font-size: 0.85rem;
         }
 
         .edit-btn:hover {
@@ -369,28 +498,26 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background 0.3s;
+            font-size: 0.85rem;
         }
 
         .delete-btn:hover {
             background-color: #c0392b;
         }
 
-        /* Anúncios */
+        /* Seção de Anúncios */
         .ads-section {
             background-color: white;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-top: 2rem;
+            margin-top: 1rem;
         }
 
         .ads-section h3 {
             color: #2c3e50;
             margin-bottom: 1rem;
-        }
-
-        .ads-list {
-            margin-top: 1rem;
+            font-size: 1.2rem;
         }
 
         .ad-item {
@@ -399,16 +526,71 @@
             border-radius: 5px;
             margin-bottom: 1rem;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
-        .ad-preview {
-            background: linear-gradient(135deg, #f1c40f, #e67e22);
+        @media (min-width: 768px) {
+            .ad-item {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .ad-info {
+            flex: 1;
+        }
+
+        .ad-info strong {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .ad-info p {
+            color: #7f8c8d;
+            font-size: 0.85rem;
+        }
+
+        .ad-code-preview {
+            background-color: #2c3e50;
+            color: #f1c40f;
+            padding: 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            max-width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .ad-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .toggle-ad-btn {
+            background-color: #f39c12;
             color: white;
             padding: 0.5rem 1rem;
+            border: none;
             border-radius: 5px;
-            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .toggle-ad-btn:hover {
+            background-color: #e67e22;
+        }
+
+        .toggle-ad-btn.active {
+            background-color: #27ae60;
+        }
+
+        .toggle-ad-btn.inactive {
+            background-color: #7f8c8d;
         }
 
         .add-ad-btn {
@@ -420,28 +602,39 @@
             cursor: pointer;
             font-weight: bold;
             margin-bottom: 1rem;
+            width: 100%;
+            font-size: 1rem;
         }
 
-        /* Artigos */
+        /* Artigos na Página Inicial */
         .main-content {
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
+            margin: 1rem auto;
+            padding: 0 1rem;
             display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .main-content {
+                grid-template-columns: 2fr 1fr;
+                gap: 2rem;
+                margin: 2rem auto;
+                padding: 0 2rem;
+            }
         }
 
         .articles-section h2 {
             color: #2c3e50;
-            margin-bottom: 2rem;
-            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
         }
 
         .articles-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .article-card {
@@ -461,7 +654,7 @@
         }
 
         .article-image {
-            height: 250px;
+            height: 200px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
@@ -491,22 +684,21 @@
         }
 
         .article-content {
-            padding: 1.5rem;
-            flex: 1;
+            padding: 1.2rem;
         }
 
         .article-content h3 {
             color: #2c3e50;
             margin-bottom: 0.5rem;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
         }
 
         .article-meta {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             color: #7f8c8d;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
             flex-wrap: wrap;
         }
 
@@ -520,112 +712,154 @@
 
         .article-excerpt {
             color: #34495e;
-            line-height: 1.6;
+            line-height: 1.5;
+            font-size: 0.9rem;
         }
 
         /* Artigo Completo */
         .full-article {
             background-color: white;
             border-radius: 10px;
-            padding: 2rem;
-            margin-top: 2rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
+        @media (min-width: 768px) {
+            .full-article {
+                padding: 2rem;
+            }
+        }
+
         .full-article-header {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .full-article-header h2 {
             color: #2c3e50;
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
         }
 
         .full-article-image {
             width: 100%;
-            max-height: 400px;
+            max-height: 300px;
             object-fit: cover;
             border-radius: 10px;
             margin: 1rem 0;
         }
 
         .full-article-content {
-            line-height: 1.8;
+            line-height: 1.7;
             color: #34495e;
+            font-size: 0.95rem;
         }
 
         .full-article-content p {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .full-article-content h3 {
             color: #2c3e50;
-            margin: 2rem 0 1rem 0;
+            margin: 1.5rem 0 0.8rem 0;
+            font-size: 1.2rem;
         }
 
         .full-article-content ul, 
         .full-article-content ol {
-            margin: 1rem 0 1.5rem 2rem;
+            margin: 1rem 0 1.2rem 1.5rem;
         }
 
         .full-article-content li {
             margin-bottom: 0.5rem;
         }
 
-        .ad-placeholder {
-            background: linear-gradient(135deg, #f1c40f20, #e67e2220);
-            border: 2px dashed #f1c40f;
-            padding: 2rem;
-            text-align: center;
+        /* Anúncios nos Artigos */
+        .ad-container {
             margin: 2rem 0;
+            padding: 1rem;
+            background: linear-gradient(135deg, #f1c40f10, #e67e2210);
+            border: 1px solid #f1c40f;
             border-radius: 10px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .ad-label {
+            font-size: 0.7rem;
+            color: #7f8c8d;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .ad-code {
+            width: 100%;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ad-code iframe,
+        .ad-code ins,
+        .ad-code script {
+            max-width: 100%;
+        }
+
+        .ad-placeholder {
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: transform 0.3s;
         }
 
         .ad-placeholder:hover {
-            background: linear-gradient(135deg, #f1c40f40, #e67e2240);
             transform: scale(1.02);
         }
 
         .ad-placeholder a {
-            color: #e67e22;
+            color: white;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .ad-placeholder a:hover {
-            text-decoration: underline;
         }
 
         /* Interações */
         .article-interactions {
-            margin-top: 3rem;
-            padding-top: 2rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
             border-top: 2px solid #ecf0f1;
         }
 
         .like-section {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             gap: 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 480px) {
+            .like-section {
+                flex-direction: row;
+                align-items: center;
+            }
         }
 
         .like-btn {
             background: none;
             border: 2px solid #e74c3c;
             color: #e74c3c;
-            padding: 0.8rem 2rem;
+            padding: 0.8rem 1.5rem;
             border-radius: 5px;
-            font-size: 1.2rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            width: fit-content;
         }
 
         .like-btn:hover {
@@ -639,27 +873,28 @@
         }
 
         .like-count {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #2c3e50;
         }
 
         .share-section {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .share-section h4 {
             color: #2c3e50;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
         }
 
         .share-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             flex-wrap: wrap;
         }
 
         .share-btn {
-            padding: 0.8rem 1.5rem;
+            padding: 0.6rem 1rem;
             border: none;
             border-radius: 5px;
             color: white;
@@ -668,7 +903,9 @@
             transition: transform 0.3s;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.3rem;
+            font-size: 0.85rem;
+            flex: 1 1 auto;
         }
 
         .share-btn:hover {
@@ -696,40 +933,43 @@
         }
 
         .comments-section {
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
 
         .comments-section h4 {
             color: #2c3e50;
             margin-bottom: 1rem;
+            font-size: 1rem;
         }
 
         .comment-form {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .comment-form input,
         .comment-form textarea {
             width: 100%;
             padding: 0.8rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             border: 1px solid #ddd;
             border-radius: 5px;
+            font-size: 0.95rem;
         }
 
         .comment-form textarea {
-            height: 100px;
+            height: 80px;
             resize: vertical;
         }
 
         .comment-form button {
             background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
-            padding: 0.8rem 2rem;
+            padding: 0.8rem 1.5rem;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
+            width: 100%;
         }
 
         .comments-list {
@@ -741,15 +981,23 @@
             background-color: #f8f9fa;
             padding: 1rem;
             border-radius: 5px;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .comment-header {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 0.3rem;
             margin-bottom: 0.5rem;
             color: #7f8c8d;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+        }
+
+        @media (min-width: 480px) {
+            .comment-header {
+                flex-direction: row;
+                justify-content: space-between;
+            }
         }
 
         .comment-author {
@@ -759,25 +1007,27 @@
 
         .comment-text {
             color: #34495e;
-            line-height: 1.6;
+            line-height: 1.5;
+            font-size: 0.9rem;
         }
 
-        /* Sidebar */
+        /* Sidebar Responsiva */
         .sidebar {
             background-color: white;
-            padding: 1.5rem;
+            padding: 1.2rem;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             height: fit-content;
             position: sticky;
-            top: 100px;
+            top: 80px;
         }
 
         .sidebar h3 {
             color: #2c3e50;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid #f1c40f;
+            font-size: 1.1rem;
         }
 
         .trending-articles {
@@ -787,8 +1037,8 @@
         .trending-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 1rem 0;
+            gap: 0.8rem;
+            padding: 0.8rem 0;
             border-bottom: 1px solid #ecf0f1;
             cursor: pointer;
             transition: background-color 0.3s;
@@ -799,8 +1049,8 @@
         }
 
         .trending-number {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             background: linear-gradient(135deg, #f1c40f, #e67e22);
             color: white;
             border-radius: 50%;
@@ -808,26 +1058,27 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            font-size: 0.8rem;
             flex-shrink: 0;
         }
 
         .trending-info h4 {
             color: #2c3e50;
-            margin-bottom: 0.3rem;
-            font-size: 1rem;
+            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
         }
 
         .trending-info p {
             color: #7f8c8d;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .trending-views {
             display: flex;
             align-items: center;
-            gap: 0.3rem;
+            gap: 0.2rem;
             color: #f39c12;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .back-btn {
@@ -840,6 +1091,7 @@
             margin-bottom: 1rem;
             font-weight: bold;
             transition: transform 0.3s;
+            width: 100%;
         }
 
         .back-btn:hover {
@@ -848,19 +1100,20 @@
 
         .category-filter {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
         }
 
         .category-btn {
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
             background-color: #ecf0f1;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 500;
+            font-size: 0.8rem;
         }
 
         .category-btn:hover,
@@ -871,6 +1124,7 @@
 
         .category-stats {
             transition: background-color 0.3s;
+            font-size: 0.85rem;
         }
 
         .category-stats:hover {
@@ -881,8 +1135,9 @@
             background-color: #2c3e50;
             color: white;
             text-align: center;
-            padding: 2rem;
-            margin-top: 2rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
         }
 
         .image-error {
@@ -903,6 +1158,7 @@
             margin-bottom: 1rem;
             text-align: center;
             animation: fadeOut 3s forwards;
+            font-size: 0.9rem;
         }
 
         @keyframes fadeOut {
@@ -984,26 +1240,30 @@
     <div id="adModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeAdModal()">&times;</span>
-            <h2>Adicionar Anúncio</h2>
+            <h2>Adicionar Código de Anúncio</h2>
             <form id="adForm" onsubmit="saveAd(event)">
                 <div class="form-group">
-                    <label for="adTitle">Título do Anúncio:</label>
-                    <input type="text" id="adTitle" required>
+                    <label for="adName">Nome do Anúncio (para identificação):</label>
+                    <input type="text" id="adName" placeholder="Ex: AdSense Topo, Taboola Meio" required>
                 </div>
                 <div class="form-group">
-                    <label for="adLink">Link de Destino:</label>
-                    <input type="url" id="adLink" required>
-                </div>
-                <div class="form-group">
-                    <label for="adImage">URL da Imagem (opcional):</label>
-                    <input type="url" id="adImage">
+                    <label for="adCode">Código do Anúncio (HTML/JavaScript):</label>
+                    <textarea id="adCode" rows="5" placeholder="Cole aqui o código do anúncio (Google AdSense, Taboola, etc.)" required></textarea>
                 </div>
                 <div class="form-group">
                     <label for="adPosition">Posição no Artigo:</label>
                     <select id="adPosition" required>
-                        <option value="top">Topo do artigo</option>
-                        <option value="middle">Meio do artigo</option>
-                        <option value="bottom">Final do artigo</option>
+                        <option value="top">Topo do artigo (antes do conteúdo)</option>
+                        <option value="middle">Meio do artigo (após 50% do conteúdo)</option>
+                        <option value="bottom">Final do artigo (após o conteúdo)</option>
+                        <option value="between">Entre parágrafos (a cada 3 parágrafos)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="adStatus">Status:</label>
+                    <select id="adStatus">
+                        <option value="active">Ativo</option>
+                        <option value="inactive">Inativo</option>
                     </select>
                 </div>
                 <button type="submit" class="submit-btn">Salvar Anúncio</button>
@@ -1021,11 +1281,12 @@
             
             <div class="admin-tabs">
                 <button class="tab-btn active" onclick="switchTab('single')">Publicar Artigo</button>
+                <button class="tab-btn" onclick="switchTab('bulk')">Publicar em Lote</button>
                 <button class="tab-btn" onclick="switchTab('manage')">Gerenciar Artigos</button>
                 <button class="tab-btn" onclick="switchTab('ads')">Gerenciar Anúncios</button>
             </div>
             
-            <!-- Aba de Publicar Artigo -->
+            <!-- Aba de Publicar Artigo Único -->
             <div id="singleTab" class="tab-content active">
                 <div class="article-form">
                     <h3>Escrever Novo Artigo</h3>
@@ -1042,8 +1303,50 @@
                         <option value="Finanças Pessoais">Finanças Pessoais</option>
                         <option value="Aposentadoria">Aposentadoria</option>
                     </select>
-                    <textarea id="articleContent" placeholder="Escreva seu artigo aqui..." required></textarea>
+                    <textarea id="articleContent" placeholder="Escreva seu artigo aqui... Para inserir anúncios manualmente, use a tag {{AD_TOP}}, {{AD_MIDDLE}} ou {{AD_BOTTOM}} onde desejar" required></textarea>
                     <button class="publish-btn" onclick="publishArticle()">Publicar Artigo</button>
+                </div>
+            </div>
+            
+            <!-- Aba de Publicar em Lote -->
+            <div id="bulkTab" class="tab-content">
+                <div class="bulk-form">
+                    <h3>Publicar Múltiplos Artigos de Uma Vez</h3>
+                    
+                    <div class="bulk-info">
+                        <p><strong>📝 Formato para publicação em lote:</strong></p>
+                        <p>Cada artigo deve ser separado por uma linha com <code>===</code> e seguir o formato abaixo:</p>
+                        <p>Use <code>{{AD_TOP}}</code>, <code>{{AD_MIDDLE}}</code> ou <code>{{AD_BOTTOM}}</code> para posicionar anúncios manualmente.</p>
+                    </div>
+                    
+                    <div class="bulk-example">
+# Título do Artigo
+Categoria: Investimentos
+Imagem: https://exemplo.com/imagem.jpg (opcional)
+---
+Conteúdo do artigo aqui. Pode ter vários parágrafos.
+
+{{AD_MIDDLE}}
+
+Segundo parágrafo com mais texto.
+
+=== (linha separadora entre artigos)
+
+# Segundo Artigo
+Categoria: Ações
+---
+Conteúdo do segundo artigo...
+                    </div>
+                    
+                    <textarea id="bulkArticles" placeholder="Cole aqui seus artigos no formato especificado..."></textarea>
+                    
+                    <button class="publish-bulk-btn" onclick="publishBulkArticles()">
+                        📦 Publicar Todos os Artigos (Em Lote)
+                    </button>
+                    
+                    <p style="text-align: center; margin-top: 1rem; color: #7f8c8d; font-size: 0.85rem;">
+                        Os artigos serão publicados na ordem em que aparecem
+                    </p>
                 </div>
             </div>
             
@@ -1058,8 +1361,8 @@
             <!-- Aba de Gerenciar Anúncios -->
             <div id="adsTab" class="tab-content">
                 <div class="ads-section">
-                    <h3>Anúncios no Blog</h3>
-                    <button class="add-ad-btn" onclick="openAdModal()">+ Adicionar Novo Anúncio</button>
+                    <h3>Códigos de Anúncios</h3>
+                    <button class="add-ad-btn" onclick="openAdModal()">+ Adicionar Novo Código de Anúncio</button>
                     <div id="adsList" class="ads-list"></div>
                 </div>
             </div>
@@ -1098,8 +1401,8 @@
             <h3>📈 Artigos Mais Acessados</h3>
             <div id="trendingArticles" class="trending-articles"></div>
 
-            <h3 style="margin-top: 2rem;">📚 Categorias</h3>
-            <div style="margin-top: 1rem;">
+            <h3 style="margin-top: 1.5rem;">📚 Categorias</h3>
+            <div style="margin-top: 0.8rem;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; cursor: pointer; padding: 0.3rem; border-radius: 3px;" onclick="filterByCategory('Investimentos', null)" class="category-stats">
                     <span>Investimentos</span>
                     <span id="catInvestimentos">0</span>
@@ -1254,12 +1557,15 @@
             if (tab === 'single') {
                 document.querySelectorAll('.tab-btn')[0].classList.add('active');
                 document.getElementById('singleTab').classList.add('active');
-            } else if (tab === 'manage') {
+            } else if (tab === 'bulk') {
                 document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('bulkTab').classList.add('active');
+            } else if (tab === 'manage') {
+                document.querySelectorAll('.tab-btn')[2].classList.add('active');
                 document.getElementById('manageTab').classList.add('active');
                 displayArticlesList();
             } else {
-                document.querySelectorAll('.tab-btn')[2].classList.add('active');
+                document.querySelectorAll('.tab-btn')[3].classList.add('active');
                 document.getElementById('adsTab').classList.add('active');
                 displayAdsList();
             }
@@ -1276,7 +1582,7 @@
             }, 3000);
         }
 
-        // Publicar artigo
+        // Publicar artigo único
         function publishArticle() {
             const title = document.getElementById('articleTitle').value.trim();
             const image = document.getElementById('articleImage').value.trim();
@@ -1294,7 +1600,7 @@
                 image: image || null,
                 category: category,
                 content: content,
-                excerpt: content.substring(0, 200) + (content.length > 200 ? '...' : ''),
+                excerpt: content.replace(/{{AD_[^}]+}}/g, '').substring(0, 200) + (content.length > 200 ? '...' : ''),
                 date: new Date().toLocaleDateString('pt-BR'),
                 views: 0,
                 likes: 0
@@ -1314,6 +1620,113 @@
             displayArticlesList();
             
             showSuccessMessage('✅ Artigo publicado com sucesso!');
+        }
+
+        // Publicar múltiplos artigos em lote
+        function publishBulkArticles() {
+            const bulkText = document.getElementById('bulkArticles').value.trim();
+            
+            if (!bulkText) {
+                alert('❌ Cole os artigos no formato especificado!');
+                return;
+            }
+
+            const articleBlocks = bulkText.split('===').filter(block => block.trim() !== '');
+            
+            let successCount = 0;
+            let errorCount = 0;
+            const errors = [];
+            const newArticles = [];
+
+            articleBlocks.forEach((block, index) => {
+                try {
+                    const lines = block.trim().split('\n');
+                    
+                    let title = '';
+                    let category = '';
+                    let image = null;
+                    let content = '';
+                    
+                    let i = 0;
+                    
+                    while (i < lines.length) {
+                        const line = lines[i].trim();
+                        if (line.startsWith('#')) {
+                            title = line.replace(/^#+\s*/, '').trim();
+                            i++;
+                            break;
+                        }
+                        i++;
+                    }
+                    
+                    if (!title) {
+                        throw new Error('Título não encontrado (use # antes do título)');
+                    }
+                    
+                    while (i < lines.length) {
+                        const line = lines[i].trim();
+                        if (line.toLowerCase().startsWith('categoria:')) {
+                            category = line.substring(9).trim();
+                        } else if (line.toLowerCase().startsWith('imagem:')) {
+                            image = line.substring(7).trim();
+                        } else if (line === '---') {
+                            i++;
+                            break;
+                        }
+                        i++;
+                    }
+                    
+                    if (!category) {
+                        throw new Error('Categoria não encontrada (use "Categoria: Nome")');
+                    }
+                    
+                    content = lines.slice(i).join('\n').trim();
+                    
+                    if (!content) {
+                        throw new Error('Conteúdo não encontrado');
+                    }
+                    
+                    const newArticle = {
+                        id: Date.now() + index + Math.random(),
+                        title: title,
+                        image: image || null,
+                        category: category,
+                        content: content,
+                        excerpt: content.replace(/{{AD_[^}]+}}/g, '').substring(0, 200) + (content.length > 200 ? '...' : ''),
+                        date: new Date().toLocaleDateString('pt-BR'),
+                        views: 0,
+                        likes: 0
+                    };
+                    
+                    newArticles.push(newArticle);
+                    successCount++;
+                    
+                } catch (error) {
+                    errorCount++;
+                    errors.push(`Artigo ${index + 1}: ${error.message}`);
+                }
+            });
+            
+            if (successCount > 0) {
+                articles = [...newArticles, ...articles];
+                localStorage.setItem('articles', JSON.stringify(articles));
+                
+                updateCategoryCounts();
+                displayArticles();
+                updateTrendingArticles();
+                displayArticlesList();
+                
+                let message = `✅ ${successCount} artigo(s) publicado(s) com sucesso!`;
+                if (errorCount > 0) {
+                    message += `\n⚠️ ${errorCount} artigo(s) com erros:`;
+                    errors.forEach(err => message += `\n- ${err}`);
+                }
+                
+                alert(message);
+                document.getElementById('bulkArticles').value = '';
+            } else {
+                alert('❌ Nenhum artigo foi publicado. Verifique o formato:\n' + errors.join('\n'));
+            }
         }
 
         // Exibir lista de artigos na administração
@@ -1379,7 +1792,7 @@
                     image: image || null,
                     category: category,
                     content: content,
-                    excerpt: content.substring(0, 200) + (content.length > 200 ? '...' : '')
+                    excerpt: content.replace(/{{AD_[^}]+}}/g, '').substring(0, 200) + (content.length > 200 ? '...' : '')
                 };
 
                 localStorage.setItem('articles', JSON.stringify(articles));
@@ -1422,23 +1835,23 @@
         function saveAd(event) {
             event.preventDefault();
             
-            const title = document.getElementById('adTitle').value.trim();
-            const link = document.getElementById('adLink').value.trim();
-            const image = document.getElementById('adImage').value.trim();
+            const name = document.getElementById('adName').value.trim();
+            const code = document.getElementById('adCode').value.trim();
             const position = document.getElementById('adPosition').value;
+            const status = document.getElementById('adStatus').value;
 
-            if (!title || !link) {
+            if (!name || !code) {
                 alert('❌ Preencha todos os campos obrigatórios!');
                 return;
             }
 
             const newAd = {
                 id: Date.now(),
-                title: title,
-                link: link,
-                image: image || null,
+                name: name,
+                code: code,
                 position: position,
-                active: true
+                status: status,
+                createdAt: new Date().toLocaleDateString('pt-BR')
             };
 
             ads.push(newAd);
@@ -1446,7 +1859,7 @@
             
             closeAdModal();
             displayAdsList();
-            showSuccessMessage('✅ Anúncio adicionado com sucesso!');
+            showSuccessMessage('✅ Código de anúncio adicionado com sucesso!');
         }
 
         function displayAdsList() {
@@ -1459,13 +1872,29 @@
 
             list.innerHTML = ads.map(ad => `
                 <div class="ad-item">
-                    <div>
-                        <strong>${ad.title}</strong>
-                        <p style="color: #7f8c8d; font-size: 0.9rem;">Posição: ${ad.position}</p>
+                    <div class="ad-info">
+                        <strong>${ad.name}</strong>
+                        <p>Posição: ${ad.position} • Criado em: ${ad.createdAt}</p>
+                        <div class="ad-code-preview">${ad.code.substring(0, 100)}${ad.code.length > 100 ? '...' : ''}</div>
                     </div>
-                    <button class="delete-btn" onclick="deleteAd(${ad.id})">🗑️ Excluir</button>
+                    <div class="ad-actions">
+                        <button class="toggle-ad-btn ${ad.status === 'active' ? 'active' : 'inactive'}" onclick="toggleAdStatus(${ad.id})">
+                            ${ad.status === 'active' ? '✅ Ativo' : '⛔ Inativo'}
+                        </button>
+                        <button class="delete-btn" onclick="deleteAd(${ad.id})">🗑️ Excluir</button>
+                    </div>
                 </div>
             `).join('');
+        }
+
+        function toggleAdStatus(adId) {
+            const ad = ads.find(a => a.id === adId);
+            if (ad) {
+                ad.status = ad.status === 'active' ? 'inactive' : 'active';
+                localStorage.setItem('ads', JSON.stringify(ads));
+                displayAdsList();
+                showSuccessMessage(`✅ Anúncio ${ad.status === 'active' ? 'ativado' : 'desativado'}!`);
+            }
         }
 
         function deleteAd(adId) {
@@ -1477,13 +1906,58 @@
             }
         }
 
+        // Função para renderizar anúncios no conteúdo
+        function renderAdsInContent(content, position) {
+            const activeAds = ads.filter(ad => ad.status === 'active' && ad.position === position);
+            
+            if (activeAds.length === 0) return content;
+
+            // Substituir tags manuais
+            let processedContent = content;
+            
+            if (position === 'top') {
+                const adHtml = activeAds.map(ad => `
+                    <div class="ad-container">
+                        <div class="ad-label">Publicidade</div>
+                        <div class="ad-code">${ad.code}</div>
+                    </div>
+                `).join('');
+                
+                processedContent = processedContent.replace(/{{AD_TOP}}/g, adHtml);
+            }
+            
+            if (position === 'middle') {
+                const adHtml = activeAds.map(ad => `
+                    <div class="ad-container">
+                        <div class="ad-label">Publicidade</div>
+                        <div class="ad-code">${ad.code}</div>
+                    </div>
+                `).join('');
+                
+                processedContent = processedContent.replace(/{{AD_MIDDLE}}/g, adHtml);
+            }
+            
+            if (position === 'bottom') {
+                const adHtml = activeAds.map(ad => `
+                    <div class="ad-container">
+                        <div class="ad-label">Publicidade</div>
+                        <div class="ad-code">${ad.code}</div>
+                    </div>
+                `).join('');
+                
+                processedContent = processedContent.replace(/{{AD_BOTTOM}}/g, adHtml);
+            }
+
+            return processedContent;
+        }
+
         // Exibir artigos na página inicial
         function displayArticles() {
             const grid = document.getElementById('articlesGrid');
             
             if (!articles || articles.length === 0) {
                 grid.innerHTML = `
-                    <div style="text-align: center; padding: 3rem; color: #7f8c8d; grid-column: 1/-1; background: white; border-radius: 10px;">
+                    <div style="text-align: center; padding: 2rem; color: #7f8c8d; grid-column: 1/-1; background: white; border-radius: 10px;">
                         <h3>📝 Nenhum artigo publicado ainda.</h3>
                         <p>Em breve teremos novidades!</p>
                     </div>
@@ -1497,7 +1971,7 @@
             
             if (filteredArticles.length === 0) {
                 grid.innerHTML = `
-                    <div style="text-align: center; padding: 3rem; color: #7f8c8d; grid-column: 1/-1; background: white; border-radius: 10px;">
+                    <div style="text-align: center; padding: 2rem; color: #7f8c8d; grid-column: 1/-1; background: white; border-radius: 10px;">
                         <h3>📭 Nenhum artigo encontrado nesta categoria.</h3>
                     </div>
                 `;
@@ -1545,28 +2019,38 @@
                 const comments = JSON.parse(localStorage.getItem('articleComments') || '{}');
                 const articleComments = comments[articleId] || [];
                 
-                const contentWithParagraphs = article.content.split('\n\n').map(paragraph => 
+                // Processar conteúdo com anúncios
+                let contentWithAds = article.content;
+                
+                // Renderizar anúncios manuais
+                contentWithAds = renderAdsInContent(contentWithAds, 'top');
+                contentWithAds = renderAdsInContent(contentWithAds, 'middle');
+                contentWithAds = renderAdsInContent(contentWithAds, 'bottom');
+                
+                // Converter quebras de linha em parágrafos
+                const contentWithParagraphs = contentWithAds.split('\n\n').map(paragraph => 
                     `<p>${paragraph.replace(/\n/g, '<br>')}</p>`
                 ).join('');
                 
-                // Inserir anúncios no meio do conteúdo
+                // Adicionar anúncios automáticos entre parágrafos
                 let finalContent = '';
                 const paragraphs = contentWithParagraphs.split('</p>').filter(p => p.trim());
+                
+                const betweenAds = ads.filter(ad => ad.status === 'active' && ad.position === 'between');
                 
                 for (let i = 0; i < paragraphs.length; i++) {
                     finalContent += paragraphs[i] + '</p>';
                     
-                    // Inserir anúncio no meio
-                    if (i === Math.floor(paragraphs.length / 2)) {
-                        const activeAds = ads.filter(ad => ad.position === 'middle');
-                        if (activeAds.length > 0) {
-                            const ad = activeAds[0];
+                    // Inserir anúncio a cada 3 parágrafos
+                    if (betweenAds.length > 0 && (i + 1) % 3 === 0 && i < paragraphs.length - 1) {
+                        betweenAds.forEach(ad => {
                             finalContent += `
-                                <div class="ad-placeholder" onclick="window.open('${ad.link}', '_blank')">
-                                    <a href="${ad.link}" target="_blank">📢 ${ad.title}</a>
+                                <div class="ad-container">
+                                    <div class="ad-label">Publicidade</div>
+                                    <div class="ad-code">${ad.code}</div>
                                 </div>
                             `;
-                        }
+                        });
                     }
                 }
                 
@@ -1640,6 +2124,18 @@
                     </div>
                 `;
                 
+                // Executar scripts dos anúncios
+                const scripts = document.getElementById('fullArticle').getElementsByTagName('script');
+                for (let script of scripts) {
+                    const newScript = document.createElement('script');
+                    if (script.src) {
+                        newScript.src = script.src;
+                    } else {
+                        newScript.textContent = script.textContent;
+                    }
+                    document.body.appendChild(newScript);
+                }
+                
                 updateTrendingArticles();
             }
         }
@@ -1661,7 +2157,6 @@
                 localStorage.setItem('articleLikes', JSON.stringify(likes));
                 localStorage.setItem('articles', JSON.stringify(articles));
                 
-                // Atualizar interface
                 const likeBtn = document.querySelector('.like-btn');
                 const likeCount = document.querySelector('.like-count');
                 
@@ -1731,7 +2226,6 @@
             document.getElementById('commentName').value = '';
             document.getElementById('commentText').value = '';
             
-            // Recarregar artigo para mostrar novo comentário
             showFullArticle(articleId);
         }
 
